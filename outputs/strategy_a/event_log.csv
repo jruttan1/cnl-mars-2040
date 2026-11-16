@@ -1,0 +1,28 @@
+hour,action,reason,astronaut,repair
+0.0,start,Next priority repair; preset launch conditions satisfied,Crew 1,communications
+1.0,continue,No permitted operational abort condition triggered,Crew 1,communications
+2.0,continue,No permitted operational abort condition triggered,Crew 1,communications
+3.0,continue,No permitted operational abort condition triggered,Crew 1,communications
+4.0,continue,No permitted operational abort condition triggered,Crew 1,communications
+5.0,continue,No permitted operational abort condition triggered,Crew 1,communications
+6.0,continue,No permitted operational abort condition triggered,Crew 1,communications
+7.0,completed,Planned EVA repair completed,Crew 1,communications
+7.0,wait,Minimum turnaround period has not elapsed,,
+8.0,start,Next priority repair; preset launch conditions satisfied,Crew 2,monitoring
+9.0,continue,No permitted operational abort condition triggered,Crew 2,monitoring
+10.0,continue,No permitted operational abort condition triggered,Crew 2,monitoring
+11.0,continue,No permitted operational abort condition triggered,Crew 2,monitoring
+12.0,continue,No permitted operational abort condition triggered,Crew 2,monitoring
+13.0,continue,No permitted operational abort condition triggered,Crew 2,monitoring
+14.0,continue,No permitted operational abort condition triggered,Crew 2,monitoring
+15.0,completed,Planned EVA repair completed,Crew 2,monitoring
+15.0,wait,Minimum turnaround period has not elapsed,,
+16.0,start,Next priority repair; preset launch conditions satisfied,Crew 3,propulsion
+17.0,continue,No permitted operational abort condition triggered,Crew 3,propulsion
+18.0,continue,No permitted operational abort condition triggered,Crew 3,propulsion
+19.0,continue,No permitted operational abort condition triggered,Crew 3,propulsion
+20.0,continue,No permitted operational abort condition triggered,Crew 3,propulsion
+21.0,continue,No permitted operational abort condition triggered,Crew 3,propulsion
+22.0,continue,No permitted operational abort condition triggered,Crew 3,propulsion
+23.0,completed,Planned EVA repair completed,Crew 3,propulsion
+23.0,mission_ended,all_repairs_completed,,

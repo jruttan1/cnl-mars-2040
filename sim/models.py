@@ -1,0 +1,102 @@
+"""Mission records and the deliberately restricted Strategy A observation."""
+from dataclasses import dataclass, field
+from typing import Literal
+from sim.assumptions import MissionAssumptions, DEFAULT_ASSUMPTIONS
+
+RepairType = Literal['communications', 'monitoring', 'propulsion']
+EngineType = Literal['NTP', 'NEP']
+
+
+@dataclass(frozen=True)
+class Scenario:
+    shielding: float = DEFAULT_ASSUMPTIONS.external_shielding_g_cm2
+    severity: str = DEFAULT_ASSUMPTIONS.default_spe_severity
+    cabin_shielding: float = DEFAULT_ASSUMPTIONS.cabin_shielding_g_cm2
+    timing_variant: str = DEFAULT_ASSUMPTIONS.timing_variant
+    storm_start_hour: float = DEFAULT_ASSUMPTIONS.storm_start_hour  # Mission hour 0 matches the existing emergency window.
+    engine_type: EngineType = DEFAULT_ASSUMPTIONS.engine_type
+
+
+    @classmethod
+    def from_assumptions(cls, config: MissionAssumptions):
+        return cls(config.external_shielding_g_cm2, config.default_spe_severity,
+                   config.cabin_shielding_g_cm2, config.timing_variant,
+                   config.storm_start_hour, config.engine_type)
+
+
+@dataclass
+class Astronaut:
+    name: str
+    gender: str = 'unspecified'
+    weight: float = 0.0  # Retained descriptive field; no anatomical dose adjustment.
+    radiation_baseline: float = 0.0  # Initial modeled tissue-target mGy, not an estimate.
+    accumulated_radiation: float = 0.0
+    available_from: float = 0.0
+    inside_hours: float = 0.0
+    outside_hours: float = 0.0
+    estimated_dose_mGy: float | None = None
+
+
+@dataclass
+class EVA:
+    start_time: float
+    scheduled_end_time: float
+    reported_end_time: float | None
+    completed: bool
+    astronaut: Astronaut
+    repair_type: RepairType
+    engine_type: EngineType
+    aborted: bool = False
+    end_reason: str = ''
+    last_update_time: float | None = None
+    modeled_dose_mGy: float = 0.0
+
+
+# Backward-compatible import name; configuration is defined only in assumptions.py.
+MissionConfig = MissionAssumptions
+
+
+@dataclass(frozen=True)
+class ActiveEVAObservation:
+    astronaut: str
+    repair_type: str
+    elapsed_hours: float
+    estimated_dose_mGy: float | None
+
+
+@dataclass(frozen=True)
+class State:
+    """Permitted observation only: no astronaut objects, true dose, CSV or forecast."""
+    current_mission_time: float
+    available_astronauts: tuple[str, ...]
+    outstanding_repairs: tuple[str, ...]
+    completed_repairs: tuple[str, ...]
+    active_eva: ActiveEVAObservation | None
+    launch_allowed: bool
+    restriction_reason: str
+    operational_abort: bool
+    max_continuous_eva_hours: float
+    radiation_abort_threshold_mGy: float
+
+
+@dataclass(frozen=True)
+class Decision:
+    action: Literal['start', 'wait', 'abort', 'continue']
+    reason: str
+    astronaut: str | None = None
+    repair_type: str | None = None
+
+
+@dataclass
+class MissionState:
+    scenario: Scenario
+    config: MissionConfig
+    astronauts: list[Astronaut]
+    required_repairs: tuple[str, ...]
+    current_mission_time: float = 0.0
+    completed_repairs: list[str] = field(default_factory=list)
+    active_eva: EVA | None = None
+    progress: list[EVA] = field(default_factory=list)
+    event_log: list[dict] = field(default_factory=list)
+    next_eva_time: float = 0.0
+    status: str = 'running'

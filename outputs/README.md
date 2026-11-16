@@ -20,3 +20,7 @@ print(baseline_interval_dose("SAPPHIRE-1-in-100", 0.4, 16, 23,
 ```
 
 Edit individual figures in `../charts/`. Keep the frozen baseline unchanged while developing strategy code. Generated `.txt` captions were removed; plotting scripts may recreate them, and Git ignores them.
+
+## Strategy A results
+
+`strategy_a/summary.json` and `strategy_a/event_log.csv` contain the most recent mission run. `charts/09_strategy_a_mission_timeline.png` shows completed/aborted attempts and cabin time. Regenerate with `python run_strategy_a.py` from the project root. These outputs are an operational simulation using the frozen baseline; they are not new transport results or clinical predictions.
