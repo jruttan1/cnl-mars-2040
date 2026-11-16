@@ -153,7 +153,7 @@ python run_strategy_a.py --scenario SAPPHIRE-1-in-1000 --engine NEP
 
 These rerun the same output paths. The first example aborts the initial attempt at hour 3, keeps that repair outstanding and retries when the restriction ends. `--eva-time-cap`, `--turnaround`, `--max-hours`, `--time-step` and `--storm-start` control other assumptions. Smaller steps are supported and exposure uses exact fractional-bin integration. Operational boundaries split steps; radiation peaks do not drive decisions. At an exact completion boundary, an active restriction or exceeded optional estimate takes precedence over repair success.
 
-Repair priorities are `repair_order_ntp` and `repair_order_nep` in `sim/assumptions.py`; both inherit `required_repair_types` (communications, monitoring, propulsion) because no distinct engineering priorities are established here. Pass an explicit repair sequence to `simulate_mission()` to override them. No repair deadlines are assumed. Crew `available_from` times can delay assignment.
+Repair priorities are `repair_order_ntp` and `repair_order_nep` in `sim/defaults.py`; both inherit `required_repair_types` (communications, monitoring, propulsion) because no distinct engineering priorities are established here. Pass an explicit repair sequence to `simulate_mission()` to override them. No repair deadlines are assumed. Crew `available_from` times can delay assignment.
 
 Runs terminate when repairs finish, the configured emergency duration is reached, or the radiation record ends. An in-progress attempt at the terminal boundary is aborted unless it has completed its full seven hours and no abort rule applies. No exposure extrapolation is permitted. Inputs are copied so repeated runs start fresh. A repair-completed status is not proof of mission survival or medical safety; all reported mGy remain **idealized tissue-target absorbed dose**.
 
@@ -161,7 +161,7 @@ Code responsibilities: `sim/models.py` holds shared records and restricted obser
 
 ## Centralized mission assumptions
 
-Edit `MissionAssumptions` in `sim/assumptions.py`. The runner passes one shared object through the mission. `MissionConfig` remains a compatibility alias, not a separate configuration. Explicit crew/scenario/repair arguments to `simulate_mission()` override automatic construction; otherwise everything comes from this object.
+Edit the four everyday settings in `sim/assumptions.py`: crew size, astronauts per EVA, EVA duration and turnaround. Advanced defaults live in `sim/defaults.py` and are inherited automatically; you normally do not need to edit them. The runner passes one shared object through the mission. `MissionConfig` remains a compatibility alias, not a separate configuration. Explicit crew/scenario/repair arguments to `simulate_mission()` override automatic construction; otherwise everything comes from this object.
 
 | Parameter | Default | Basis |
 |---|---|---|
