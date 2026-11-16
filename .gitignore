@@ -15,14 +15,14 @@ htmlcov/
 .env.*
 !.env.example
 
-# Historical backups stay on disk; retain inputs needed by prepare_data.py.
+# Historical backups stay on disk; retain small importer inputs.
+# Full source rebuilding also needs the local-only archived shielding_dose.csv.
 /data/raw/archive/*
 !/data/raw/archive/previous_processed/
 /data/raw/archive/previous_processed/*
 !/data/raw/archive/previous_processed/spe_hourly.csv
 !/data/raw/archive/previous_processed/spe_spectra.csv
 !/data/raw/archive/previous_processed/exposure_settings.csv
-!/data/raw/archive/previous_processed/shielding_dose.csv
 !/data/raw/archive/previous_processed/organ_dose.csv
 !/data/raw/archive/before_verified_sapphire/
 /data/raw/archive/before_verified_sapphire/*
@@ -36,3 +36,7 @@ htmlcov/
 /outputs/charts/**/*.txt
 
 /outputs/model/sapphire_transport_audit.txt
+
+# Large raw databases remain local; processed timing/dose CSVs stay tracked.
+/data/raw/oltaris/**/particle_fluence_vs_energy_isotope_and_depth.dat
+/data/processed/raw_nasa_omni2/

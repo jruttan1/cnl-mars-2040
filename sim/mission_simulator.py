@@ -11,14 +11,14 @@ class RadiationEnvironment:
     """Read the frozen CSV once. Never supplied to a strategy."""
     def __init__(self, scenario: Scenario):
         self.scenario = scenario
-        data = load_baseline()
+        data = load_baseline(historical_template=scenario.historical_template)
         self.data = data[data.scenario.eq(scenario.severity) &
                          data.timing_variant.eq(scenario.timing_variant)].copy()
         if self.data.empty:
             raise ValueError('Unknown scenario or timing variant')
         for depth in (scenario.shielding, scenario.cabin_shielding):
-            baseline_interval_dose(scenario.severity, depth, 0, 264,
-                                   scenario.timing_variant, baseline=self.data)
+            baseline_interval_dose(scenario.severity, depth, float(self.data.hour.min()), float(self.data.hour_end.max()),
+                                   scenario.timing_variant, baseline=self.data, historical_template=scenario.historical_template)
         self.start_hour = float(self.data.hour.min())
         self.end_hour = float(self.data.hour_end.max())
 
@@ -26,7 +26,7 @@ class RadiationEnvironment:
         return baseline_interval_dose(self.scenario.severity, shielding,
             mission_start + self.scenario.storm_start_hour,
             mission_end + self.scenario.storm_start_hour,
-            self.scenario.timing_variant, baseline=self.data)
+            self.scenario.timing_variant, baseline=self.data, historical_template=self.scenario.historical_template)
 
 
 def get_hourly_exposure(hour: float, scenario: Scenario, environment=None) -> float:

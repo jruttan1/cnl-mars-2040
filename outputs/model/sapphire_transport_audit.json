@@ -190,15 +190,21 @@
     ],
     "user_reported_simulation_distance_AU": 1.25,
     "applied_radial_scaling_factor": 1.0,
-    "radial_scaling_note": "Use exported SAPPHIRE fluences unchanged; no physically specific radial attenuation is calculated. Reports display 1.2 AU; 1.25 AU is user-reported."
+    "radial_scaling_note": "Use exported SAPPHIRE fluences unchanged; no physically specific radial attenuation is calculated. Reports display 1.2 AU; 1.25 AU is user-reported.",
+    "historical_template": "august_1972",
+    "template_emergency_start_utc": {
+      "october_2003_goes10": "2003-10-28T00:00:00Z"
+    },
+    "template_label": "August 1972 (IMP-5/OMNIWeb)",
+    "template_duration_hours": 264
   },
-  "config_sha256": "b644867c82f0e0359574583d88d53366f587d6286931886357ad85623891bae7",
-  "model_source_sha256": "94dd74221234eae1447a72625d0c4135d44bfe5a85dde027f03e38ef1442b9f4",
+  "config_sha256": "053329dfcb644e0110e431ad16b156130aab6dc40fcc97c9269e32175ecc1816",
+  "model_source_sha256": "55c0afba1ef29d65ea3c9992fbd5839526039cf340a6af776486cf83700f8c07",
   "full_template_duration_hours": 264,
   "template_record_assumption": "Available 264-hour record defines the complete assumed synthetic event; physical event closure is unverified.",
   "spectral_timing_assumption": "Fixed SAPPHIRE spectrum through time; historical threshold channels are alternative timing proxies, not independent spectral dose components.",
-  "timing_uncertainty": "Interior log-linear, linear and PCHIP fills; nine timing members; no confidence intervals or bound on unobserved peaks.",
-  "mission_date_note": "1972 timestamps identify the historical template; they are not a predicted 2040 event date.",
+  "timing_uncertainty": "Interior log-linear, linear and PCHIP fills; nine member identifiers. Gap methods coincide on complete GOES-10 data. No confidence intervals or bounds on unobserved peaks.",
+  "mission_date_note": "Timestamps identify the selected historical template; they are not a predicted 2040 event date.",
   "distance_note": "Use exported SAPPHIRE fluences unchanged; no physically specific radial attenuation is calculated. Reports display 1.2 AU; 1.25 AU is user-reported.",
   "verified_references": [
     {

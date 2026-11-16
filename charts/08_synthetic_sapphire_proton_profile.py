@@ -41,20 +41,20 @@ def main():
         ax.ticklabel_format(axis='y',style='sci',scilimits=(0,0),useMathText=True)
     ax.legend();ax.grid(axis='y',alpha=0.15)
     fig.suptitle('Synthetic SAPPHIRE SPE scenarios',fontsize=18,y=0.98)
-    fig.text(0.5,0.925,'August 1972 historical temporal template • 100-year main / 1,000-year worst-case',ha='center',fontsize=11)
+    fig.text(0.5,0.925,f"{cfg['template_label']} timing • 100-year main / 1,000-year worst-case",ha='center',fontsize=11)
     scale_note = 'Logarithmic y-axis: each major tick is a ×10 change; lower fluence remains visible.' if LOG_Y_AXIS else 'Linear y-axis: equal vertical distances represent equal fluence differences.'
     fig.text(0.5,0.025,scale_note+'\n'
              'Bands show timing sensitivity. Synthetic hourly fluence, not measured flux or absorbed dose.\n'
-             'SAPPHIRE event totals are distributed over the full 264-hour historical template.',ha='center',fontsize=9)
-    caption=(f'Figure 8. Synthetic SAPPHIRE SPE scenarios using an August 1972 historical temporal template, '
+             f"SAPPHIRE event totals are distributed over the full {cfg['template_duration_hours']}-hour template.",ha='center',fontsize=9)
+    caption=(f'Figure 8. Synthetic SAPPHIRE SPE scenarios using the {cfg["template_label"]} historical temporal template, '
              f'for integral proton fluence above {ENERGY_THRESHOLD_MEV:g} MeV. The 100-year event is the main case '
              'and the 1,000-year event is the worst-case stress test. Each event fluence is allocated across '
-             'the complete assumed 264-hour event using unit-sum OMNI timing weights. Only the configured '
+             f"the complete assumed {cfg['template_duration_hours']}-hour event using unit-sum historical timing weights. Only the configured "
              'emergency window is displayed. Central curves use the configured channel and gap method; bands '
-             'span all nine timing alternatives and are not confidence intervals. A fixed spectrum over time '
+             'span nine timing alternatives (gap methods coincide for complete data) and are not confidence intervals. A fixed spectrum over time '
              'is assumed. No conversion to absorbed dose, sr conversion or additional radial attenuation is made. '
              'The user reports 1.25 AU; exported reports display 1.2 AU and spacecraft/model spectra are equal. '
-             'The 1972 timestamps identify the template, not a forecast for 2040.\n\n'
+             'Historical timestamps identify the template, not a forecast for 2040.\n\n'
              'Data: data/processed/spe_scenarios.csv; outputs/model/synthetic_sapphire_temporal_weights.csv. '
              'Hourly spectral values: outputs/model/synthetic_sapphire_hourly_fluence.csv.')
     caption += '\n\n'+scale_note+' Axis scaling changes only the display, not the calculated fluence.'

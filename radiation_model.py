@@ -1,4 +1,4 @@
-"""Synthetic SAPPHIRE environment with historical OMNI timing.
+"""Synthetic SAPPHIRE environment with selectable historical proton timing.
 
 SAPPHIRE defines the event spectrum and magnitude. Only spectrum-linked SPENVIS
 absorbed-dose results may normalize synthetic doses. King outputs are retained
@@ -9,6 +9,7 @@ import hashlib
 import json
 import shutil
 import platform
+import os
 import numpy as np
 import pandas as pd
 import scipy
@@ -19,6 +20,23 @@ CONFIG = ROOT / 'radiation_config.json'
 SCENARIO = 'Aug1972_King_OMNI_temporal_proxy'
 MODEL_VERSION = '1.0'
 FLUX_UNIT = 'protons/(cm²·s·sr)'
+DEFAULT_TEMPLATE = 'august_1972'
+HISTORICAL_TEMPLATES = {
+    'august_1972': dict(label='August 1972 (IMP-5/OMNIWeb)',
+        path='data/processed/spe_hourly.csv', hours=264, enabled=True),
+    'october_2003_goes10': dict(label='October–November 2003 (GOES-10)',
+        path='data/processed/october_2003_goes10_hourly_proton_flux.csv', hours=336, enabled=True),
+    'october_1989': dict(label='October 1989 (OMNI2)',
+        path='data/processed/october_1989_hourly_proton_flux.csv', hours=360, enabled=False),
+}
+
+
+def template_info(template):
+    require(template in HISTORICAL_TEMPLATES, f'Unknown historical template: {template}')
+    info = HISTORICAL_TEMPLATES[template]
+    require(info['enabled'], 'October 1989 is disabled: 96/360 hours missing, longest gap 29 h; needs a reviewed gap policy.')
+    return info
+
 
 
 def require(condition, message):
@@ -49,8 +67,15 @@ def write_preserving(path, content):
     temporary.replace(path)
 
 
-def load_config(path=CONFIG, historical=False):
+def load_config(path=CONFIG, historical=False, historical_template=None):
     cfg = json.loads(Path(path).read_text())
+    template = DEFAULT_TEMPLATE if historical else (historical_template or os.environ.get('CNL_HISTORICAL_TEMPLATE') or cfg.get('historical_template', DEFAULT_TEMPLATE))
+    info = template_info(template)
+    cfg['historical_template'] = template
+    cfg['template_label'] = info['label']
+    cfg['template_duration_hours'] = info['hours']
+    if template != DEFAULT_TEMPLATE:
+        cfg['emergency_start_utc'] = cfg['template_emergency_start_utc'][template]
     if historical:
         cfg['environments'] = cfg['historical_reference_environments']
     require(set(cfg['environments']) == {'external_eva_reference', 'spacecraft_cabin_reference'},
@@ -65,9 +90,30 @@ def load_config(path=CONFIG, historical=False):
     return cfg
 
 
-def load_hourly():
+def load_hourly(historical_template=DEFAULT_TEMPLATE):
     """Verify the processed measurements against the original six-field export."""
-    data = pd.read_csv(ROOT / 'data/processed/spe_hourly.csv')
+    info = template_info(historical_template)
+    if historical_template != DEFAULT_TEMPLATE:
+        data = pd.read_csv(ROOT / info['path'])
+        times = pd.to_datetime(data.timestamp_utc, utc=True, errors='raise')
+        require(len(data) == info['hours'] and not times.isna().any() and
+                not times.duplicated().any() and times.is_monotonic_increasing and
+                times.diff().iloc[1:].eq(pd.Timedelta(hours=1)).all(), 'Invalid historical hourly timeline.')
+        require(str(times.iloc[0]) == '2003-10-26 00:00:00+00:00', 'Unexpected GOES-10 event start.')
+        np.testing.assert_array_equal(data.hours_since_start, np.arange(len(data)))
+        for name, expected in [('year', times.dt.year), ('day_of_year', times.dt.dayofyear), ('hour_utc', times.dt.hour)]:
+            np.testing.assert_array_equal(data[name], expected)
+        values = data[[f'proton_flux_gt{e}_MeV' for e in (10,30,60)]].to_numpy(float)
+        require(np.isfinite(values).all() and (values >= 0).all() and
+                not (values == 99999.99).any() and data.missing_measurement.eq(0).all(),
+                'GOES-10 must be complete; invalid or missing measurements found.')
+        require((values[:,0] >= values[:,1]).all() and (values[:,1] >= values[:,2]).all(),
+                'Integral proton channels must decrease with increasing threshold.')
+        data['timestamp_utc'] = times
+        data['flux_unit'] = 'not recorded in supplied CSV; used only as relative weights'
+        data['bin_duration_h'] = 1.0
+        return data
+    data = pd.read_csv(ROOT / info['path'])
     data['timestamp_utc'] = pd.to_datetime(data.timestamp_utc, utc=True)
     times = data.timestamp_utc
     require(not times.isna().any() and not times.duplicated().any() and times.is_monotonic_increasing,
@@ -195,7 +241,7 @@ def accumulated_dose(intervals, start_hour, end_hour):
     """Integrate one location/member using exact bin overlaps, including partial hours."""
     require(np.isfinite([start_hour, end_hour]).all() and end_hour >= start_hour,
             'Exposure endpoints must be finite and ordered.')
-    for column in ('scenario_id', 'location', 'member_id'):
+    for column in ('historical_template', 'scenario_id', 'location', 'member_id'):
         if column in intervals:
             require(intervals[column].nunique() == 1, f'Select one {column} before integrating.')
     bins = intervals.sort_values('hour_since_emergency')
@@ -331,7 +377,9 @@ class MissingTransportError(ValueError):
 
 def build_temporal_profiles(cfg):
     """Unit-sum timing templates for the complete available record, with gap flags."""
-    hourly = load_hourly()
+    template = cfg.get('historical_template', DEFAULT_TEMPLATE)
+    hourly = load_hourly(template)
+    info = template_info(template)
     mask, start = select_window(hourly, cfg)
     records = []
     for channel in cfg['sensitivity_proxy_MeV']:
@@ -340,13 +388,17 @@ def build_temporal_profiles(cfg):
         for method in cfg['gap_methods']:
             filled = fill_gaps(observed, method)
             records.append(pd.DataFrame({
+                'historical_template': template,
+                'template_source_path': info['path'],
+                'template_source_sha256': sha256(ROOT / info['path']),
+                'template_duration_hours': len(hourly),
                 'template_timestamp_utc': hourly.timestamp_utc,
                 'hour_since_event_start': hourly.hours_since_start,
                 'hour_since_emergency': (hourly.timestamp_utc-start).dt.total_seconds()/3600,
                 'bin_duration_h': hourly.bin_duration_h,
                 'member_id': f'gt{channel}MeV__{method}', 'proxy_threshold_MeV': channel,
                 'gap_method': method, 'observed_proton_flux': observed, 'modeled_proton_flux': filled,
-                'observed_flux_unit': FLUX_UNIT, 'is_gap_filled': np.isnan(observed),
+                'observed_flux_unit': hourly.flux_unit.iloc[0], 'is_gap_filled': np.isnan(observed),
                 'normalized_bin_weight': normalize_profile(filled, hourly.bin_duration_h),
                 'in_emergency_window': mask,
                 'estimate_type': 'central' if channel == cfg['central_proxy_MeV'] and method == cfg['central_gap_method'] else 'sensitivity_member'}))
@@ -356,7 +408,7 @@ def build_temporal_profiles(cfg):
 def build_synthetic_fluence(spectra, profiles, cfg):
     """Allocate each spectral bin's event fluence using the central timing template.
 
-No sr-to-area conversion is applied: OMNI contributes dimensionless weights only.
+No sr-to-area conversion is applied: historical flux contributes dimensionless weights only.
 The spectrum is assumed fixed through time. Alternative timing members are saved
 separately so their weights can be applied without duplicating the entire spectrum.
 """
@@ -372,7 +424,7 @@ separately so their weights can be applied without duplicating the entire spectr
         product['differential_fluence_in_bin_protons_cm2_MeV'] = product.spacecraft_differential_protons_cm2_MeV*product.normalized_bin_weight
         product['user_reported_simulation_distance_AU'] = cfg['user_reported_simulation_distance_AU']
         product['applied_radial_scaling_factor'] = cfg['applied_radial_scaling_factor']
-        product['source_model'] = 'Synthetic SAPPHIRE SPE using August 1972 historical temporal template'
+        product['source_model'] = f"Synthetic SAPPHIRE SPE using {cfg['template_label']} historical temporal template"
         for energy, group in product.groupby('energy_MeV'):
             np.testing.assert_allclose(group.integral_fluence_in_bin_protons_cm2.sum(),group.spacecraft_integral_protons_cm2.iloc[0],rtol=1e-12)
             np.testing.assert_allclose(group.differential_fluence_in_bin_protons_cm2_MeV.sum(),group.spacecraft_differential_protons_cm2_MeV.iloc[0],rtol=1e-12)
@@ -437,7 +489,7 @@ file/hash, as well as the transport source hash. Changing a folder label is insu
                 source_report_path=row.source_report_path,source_report_sha256=row.source_report_sha256,
                 transport_report_path=row.transport_report_path,transport_report_sha256=row.transport_report_sha256,
                 event_absorbed_dose_mGy=float(row.dose_value)*{'mGy':1,'Gy':1000,'rad':10}[row.dose_unit],
-                source_model=f'{row.tool} / SAPPHIRE + August 1972 temporal template',
+                source_model=f"{row.tool} / SAPPHIRE + {('August 1972' if cfg['historical_template'] == DEFAULT_TEMPLATE else cfg['template_label'])} temporal template",
                 source_path=row.source_path,source_sha256=row.source_sha256,input_spectrum_sha256=spectrum_hash,
                 input_link_evidence_path=row.input_link_evidence_path,input_link_evidence_sha256=row.input_link_evidence_sha256))
     return matches, missing
@@ -455,7 +507,7 @@ def calculate_sapphire_dose(profiles, references):
             increments = frame.absorbed_dose_rate_mGy_h*frame.bin_duration_h
             np.testing.assert_allclose(increments.sum(),ref['event_absorbed_dose_mGy'],rtol=1e-12)
             frame['cumulative_event_absorbed_dose_mGy'] = increments.cumsum()
-            frame['spectrum_time_assumption'] = 'fixed SAPPHIRE spectrum; historical OMNI timing independent of event magnitude'
+            frame['spectrum_time_assumption'] = 'fixed SAPPHIRE spectrum; historical timing independent of event magnitude'
             full.append(frame)
             cut = frame[frame.in_emergency_window].copy()
             amounts = cut.absorbed_dose_rate_mGy_h*cut.bin_duration_h
@@ -474,10 +526,10 @@ def calculate_sapphire_dose(profiles, references):
     return full_frame,mission
 
 
-def build_environment(config_path=CONFIG):
+def build_environment(config_path=CONFIG, historical_template=None):
     """Build synthetic inputs; unavailable dose is explicit, never borrowed from OLTARIS."""
     from spenvis_audit import load_verified_spectra,audit_transport
-    cfg = load_config(config_path)
+    cfg = load_config(config_path, historical_template=historical_template)
     require(cfg['applied_radial_scaling_factor']==1.0,'Use the exported fluences without additional radial attenuation.')
     require([(s['return_period_years'],s['role']) for s in cfg['synthetic_scenarios']]==[(100,'main'),(1000,'worst_case')],
             'Use 100-year main and 1,000-year worst-case scenarios separately.')
@@ -491,18 +543,20 @@ def build_environment(config_path=CONFIG):
     if not mission.empty:
         for (scenario,location,member),group in mission.groupby(['scenario_id','location','member_id']):
             a=cfg['eva_start_hour']; b=a+cfg['eva_duration_hours']
-            exposures.append(dict(scenario_id=scenario,location=location,member_id=member,
+            exposures.append(dict(historical_template=cfg['historical_template'],
+                template_duration_hours=cfg['template_duration_hours'],
+                scenario_id=scenario,location=location,member_id=member,
                 interval_start_hour=a,interval_end_hour=b,absorbed_dose_mGy=accumulated_dose(group,a,b),
                 shielding_g_cm2=group.shielding_g_cm2.iloc[0],estimate_type=group.estimate_type.iloc[0],
                 scenario_role=group.scenario_role.iloc[0],dose_quantity='absorbed_dose',target_type='idealized_tissue',
                 geometry=group.geometry.iloc[0],target_geometry='centre_of_aluminium_spheres',unit='mGy',nuclear_attenuation=False))
     audit.update(status='blocked_missing_transport' if not references else ('partial' if missing else 'ready'),
         missing_matches=missing,config=cfg,config_sha256=sha256(config_path),
-        model_source_sha256=sha256(Path(__file__)),full_template_duration_hours=264,
-        template_record_assumption='Available 264-hour record defines the complete assumed synthetic event; physical event closure is unverified.',
+        model_source_sha256=sha256(Path(__file__)),full_template_duration_hours=cfg['template_duration_hours'],
+        template_record_assumption=f"Available {cfg['template_duration_hours']}-hour record defines the complete assumed synthetic event; physical event closure is unverified.",
         spectral_timing_assumption='Fixed SAPPHIRE spectrum through time; historical threshold channels are alternative timing proxies, not independent spectral dose components.',
-        timing_uncertainty='Interior log-linear, linear and PCHIP fills; nine timing members; no confidence intervals or bound on unobserved peaks.',
-        mission_date_note='1972 timestamps identify the historical template; they are not a predicted 2040 event date.',
+        timing_uncertainty='Interior log-linear, linear and PCHIP fills; nine member identifiers. Gap methods coincide on complete GOES-10 data. No confidence intervals or bounds on unobserved peaks.',
+        mission_date_note='Timestamps identify the selected historical template; they are not a predicted 2040 event date.',
         distance_note=cfg['radial_scaling_note'],verified_references=references)
     return dict(config=cfg,spectra=spectra,profiles=profiles,fluence=fluence,full_dose=full,
                 mission=mission,exposures=pd.DataFrame(exposures),audit=audit)
@@ -510,7 +564,7 @@ def build_environment(config_path=CONFIG):
 
 BASELINE_PATH = ROOT / 'data/processed/mission_radiation_environment.csv'
 BASELINE_MANIFEST = ROOT / 'outputs/model/baseline_manifest.json'
-BASELINE_VERSION = '1.0'
+BASELINE_VERSION = '1.1'
 
 
 def baseline_dataset(full_event):
@@ -526,11 +580,12 @@ def baseline_dataset(full_event):
     frame['timing_variant']=frame.member_id
     frame['data_quality']=np.where(frame.is_gap_filled,'interpolated_template_gap','observed_template_hour')
     frame['baseline_version']=BASELINE_VERSION
+    frame['template_timestamp_utc']=frame.template_timestamp_utc.astype(str)
     for metric in ['dose_rate_mGy_h','cumulative_dose_mGy','cumulative_end_dose_mGy']:
-        group=frame.groupby(['scenario','shielding_g_cm2','hour'])[metric]
+        group=frame.groupby(['historical_template','scenario','shielding_g_cm2','hour'])[metric]
         frame[metric+'_sensitivity_lower']=group.transform('min')
         frame[metric+'_sensitivity_upper']=group.transform('max')
-    columns=['scenario','hour','shielding_g_cm2','dose_rate_mGy_h','cumulative_dose_mGy',
+    columns=['historical_template','template_source_path','template_source_sha256','template_duration_hours','scenario','hour','shielding_g_cm2','dose_rate_mGy_h','cumulative_dose_mGy',
              'timing_variant','data_quality','hour_end','bin_duration_h','cumulative_end_dose_mGy',
              'event_absorbed_dose_mGy','scenario_role','location','estimate_type','proxy_threshold_MeV',
              'gap_method','normalized_bin_weight','template_timestamp_utc','observed_proton_flux','is_gap_filled',
@@ -546,6 +601,13 @@ def baseline_dataset(full_event):
 def write_baseline(frame):
     """Never silently replace a frozen baseline with a different calculation."""
     content=frame.to_csv(index=False)
+    if BASELINE_MANIFEST.exists() and 'historical_template' in frame:
+        stored = load_baseline(historical_template=None)
+        stored = stored[stored.historical_template.isin(frame.historical_template.unique())]
+        keys = ['historical_template','scenario','shielding_g_cm2','timing_variant','hour']
+        pd.testing.assert_frame_equal(stored.sort_values(keys).reset_index(drop=True),
+            frame.sort_values(keys).reset_index(drop=True), check_dtype=False, rtol=1e-12, atol=1e-12)
+        return
     if BASELINE_MANIFEST.exists():
         manifest=json.loads(BASELINE_MANIFEST.read_text())
         require(hashlib.sha256(content.encode('utf-8')).hexdigest()==manifest['csv_sha256'],
@@ -553,28 +615,39 @@ def write_baseline(frame):
     write_preserving(BASELINE_PATH,content)
 
 
-def load_baseline(path=BASELINE_PATH):
+def load_baseline(path=BASELINE_PATH, historical_template=DEFAULT_TEMPLATE):
     """Read the shared CSV only; no source parsing or transport/model reconstruction."""
     path=Path(path)
     if path.resolve()==BASELINE_PATH.resolve() and BASELINE_MANIFEST.exists():
         require(sha256(path)==json.loads(BASELINE_MANIFEST.read_text())['csv_sha256'],
                 'Frozen baseline checksum mismatch; restore the reviewed artifact before using it.')
-    frame=pd.read_csv(path)
+    frame=pd.read_csv(path, dtype={'baseline_version': str})
     needed={'scenario','hour','hour_end','bin_duration_h','shielding_g_cm2','dose_rate_mGy_h',
             'cumulative_dose_mGy','cumulative_end_dose_mGy','timing_variant','data_quality','estimate_type'}
     require(needed.issubset(frame.columns),'Baseline CSV has an unsupported schema.')
-    require(not frame.duplicated(['scenario','shielding_g_cm2','timing_variant','hour']).any(),'Duplicate baseline bins.')
+    if 'historical_template' not in frame:
+        frame['historical_template'] = DEFAULT_TEMPLATE
+    require(not frame.duplicated(['historical_template','scenario','shielding_g_cm2','timing_variant','hour']).any(),'Duplicate baseline bins.')
+    if historical_template is not None:
+        template_info(historical_template)
+        frame = frame[frame.historical_template.eq(historical_template)].copy()
+        require(not frame.empty, 'Selected historical template has not been exported.')
     return frame
 
 
 def baseline_interval_dose(scenario, shielding_g_cm2, start_hour, end_hour,
-                           timing_variant=None, *, baseline=None):
+                           timing_variant=None, *, baseline=None, historical_template=DEFAULT_TEMPLATE):
     """Return tissue-target mGy over [start, end), measured from STORM start.
 
 Load once with load_baseline() and pass baseline=frame for repeated strategy calls.
 None selects the central timing member. No extrapolation or shielding interpolation.
 """
-    frame=load_baseline() if baseline is None else baseline
+    template_info(historical_template)
+    frame=load_baseline(historical_template=historical_template) if baseline is None else baseline
+    if 'historical_template' in frame:
+        frame=frame[frame.historical_template.eq(historical_template)]
+    else:
+        require(historical_template == DEFAULT_TEMPLATE, 'Baseline has no template identity.')
     selected=frame[frame.scenario.eq(scenario)&frame.shielding_g_cm2.eq(shielding_g_cm2)]
     selected=selected[selected.estimate_type.eq('central')] if timing_variant is None else selected[selected.timing_variant.eq(timing_variant)]
     require(not selected.empty and selected.timing_variant.nunique()==1,'Select an available scenario, exact shielding and one timing variant.')
@@ -584,8 +657,44 @@ None selects the central timing member. No extrapolation or shielding interpolat
     return accumulated_dose(bins,start_hour,end_hour)
 
 
-def export_environment(config_path=CONFIG, require_dose=False):
-    result = build_environment(config_path)
+def update_baseline_templates(config_path=CONFIG):
+    """Explicit, guarded extension. Existing template calculations must remain equal."""
+    old = load_baseline(historical_template=None) if BASELINE_PATH.exists() else None
+    previous = json.loads(BASELINE_MANIFEST.read_text()) if BASELINE_MANIFEST.exists() else {}
+    frames = [baseline_dataset(build_environment(config_path, historical_template=name)['full_dose'])
+              for name, info in HISTORICAL_TEMPLATES.items() if info['enabled']]
+    frame = pd.concat(frames, ignore_index=True)
+    keys = ['historical_template','scenario','shielding_g_cm2','timing_variant','hour']
+    require(not frame.duplicated(keys).any(), 'Duplicate template bins in rebuilt baseline.')
+    if old is not None:
+        retained = frame[frame.historical_template.isin(old.historical_template.unique())]
+        columns = [c for c in old if c != 'baseline_version']
+        pd.testing.assert_frame_equal(old.sort_values(keys)[columns].reset_index(drop=True),
+            retained.sort_values(keys)[columns].reset_index(drop=True),
+            check_dtype=False, rtol=1e-12, atol=1e-12)
+    content = frame.to_csv(index=False)
+    write_preserving(BASELINE_PATH, content)
+    write_preserving(ROOT / 'outputs/mission_radiation_environment.csv', content)
+    manifest = dict(baseline_version=BASELINE_VERSION, status='frozen',
+        csv_path=str(BASELINE_PATH.relative_to(ROOT)), csv_sha256=sha256(BASELINE_PATH),
+        rows=len(frame), default_historical_template=DEFAULT_TEMPLATE,
+        templates={name: dict(**info, source_sha256=sha256(ROOT/info['path']))
+                   for name, info in HISTORICAL_TEMPLATES.items()},
+        scenarios=sorted(frame.scenario.unique()), shielding_g_cm2=sorted(frame.shielding_g_cm2.unique()),
+        timing_variants=sorted(frame.timing_variant.unique()),
+        previous_baseline_sha256=previous.get('previous_baseline_sha256', previous.get('csv_sha256')),
+        hour_convention='storm-relative bin start; half-open intervals',
+        cumulative_convention='cumulative_dose_mGy at bin start; cumulative_end_dose_mGy at bin end',
+        validation_scope='Existing template values preserved; each template independently normalized. No clinical validation.',
+        provenance_note='GOES-10 identity supplied by user; original download, unit metadata and aggregation procedure unavailable. CSV channels used only for dimensionless timing.',
+        config_sha256=sha256(config_path), model_source_sha256=sha256(Path(__file__)))
+    write_preserving(BASELINE_MANIFEST, json.dumps(manifest, indent=2)+'\n')
+    print(f'Frozen baseline {BASELINE_VERSION}: {len(frame):,} rows across {len(frames)} historical templates.')
+    return frame
+
+
+def export_environment(config_path=CONFIG, require_dose=False, historical_template=None):
+    result = build_environment(config_path, historical_template=historical_template)
     directory=ROOT/'outputs/model'
     for name,key in [('synthetic_sapphire_temporal_weights.csv','profiles'),('synthetic_sapphire_hourly_fluence.csv','fluence')]:
         write_preserving(directory/name,result[key].to_csv(index=False))
@@ -625,5 +734,10 @@ if __name__ == '__main__':
     import argparse
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--historical-reference',action='store_true')
+    parser.add_argument('--template', choices=[k for k,v in HISTORICAL_TEMPLATES.items() if v['enabled']])
+    parser.add_argument('--update-baseline', action='store_true', help='Explicitly extend the frozen baseline after validating existing values')
     args=parser.parse_args()
-    export_historical_environment() if args.historical_reference else export_environment()
+    if args.update_baseline:
+        update_baseline_templates()
+    else:
+        export_historical_environment() if args.historical_reference else export_environment(historical_template=args.template)

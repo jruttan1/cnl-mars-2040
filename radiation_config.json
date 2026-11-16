@@ -56,5 +56,9 @@
   ],
   "user_reported_simulation_distance_AU": 1.25,
   "applied_radial_scaling_factor": 1.0,
-  "radial_scaling_note": "Use exported SAPPHIRE fluences unchanged; no physically specific radial attenuation is calculated. Reports display 1.2 AU; 1.25 AU is user-reported."
+  "radial_scaling_note": "Use exported SAPPHIRE fluences unchanged; no physically specific radial attenuation is calculated. Reports display 1.2 AU; 1.25 AU is user-reported.",
+  "historical_template": "august_1972",
+  "template_emergency_start_utc": {
+    "october_2003_goes10": "2003-10-28T00:00:00Z"
+  }
 }

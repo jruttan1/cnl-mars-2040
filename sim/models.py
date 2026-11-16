@@ -15,13 +15,14 @@ class Scenario:
     timing_variant: str = DEFAULT_ASSUMPTIONS.timing_variant
     storm_start_hour: float = DEFAULT_ASSUMPTIONS.storm_start_hour  # Mission hour 0 matches the existing emergency window.
     engine_type: EngineType = DEFAULT_ASSUMPTIONS.engine_type
+    historical_template: str = DEFAULT_ASSUMPTIONS.historical_template
 
 
     @classmethod
     def from_assumptions(cls, config: MissionAssumptions):
         return cls(config.external_shielding_g_cm2, config.default_spe_severity,
                    config.cabin_shielding_g_cm2, config.timing_variant,
-                   config.storm_start_hour, config.engine_type)
+                   config.storm_start_hour, config.engine_type, config.historical_template)
 
 
 @dataclass

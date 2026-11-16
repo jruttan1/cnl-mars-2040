@@ -43,7 +43,9 @@ def plot_dose(cumulative=False, roles=('main','worst_case')):
             if cumulative:
                 ax.plot(edges,np.r_[0,center[metric]],color=color,ls=style,lw=2,label=label)
                 ax.fill_between(edges,np.r_[0,bounds['min']],np.r_[0,bounds['max']],color=color,alpha=0.13)
-                interval_labels.append(f'{spec["return_period_years"]:,}-year: {accumulated_dose(center,a,b):,.2f} mGy')
+                interval_dose = accumulated_dose(center,a,b)
+                display_dose = f"{interval_dose:.3g}" if interval_dose < 0.1 else f"{interval_dose:,.2f}"
+                interval_labels.append(f'{spec["return_period_years"]:,}-year: {display_dose} mGy')
             else:
                 ax.stairs(center[metric],edges,baseline=None,color=color,linestyle=style,lw=2,label=label)
                 ax.fill_between(edges,np.r_[bounds['min'],bounds['min'].iloc[-1]],np.r_[bounds['max'],bounds['max'].iloc[-1]],step='post',color=color,alpha=0.13)
@@ -76,17 +78,17 @@ def plot_dose(cumulative=False, roles=('main','worst_case')):
     title='Synthetic SPE — Cumulative Tissue-Target Absorbed Dose' if cumulative else 'Synthetic SPE — Tissue-Target Absorbed Dose Rate'
     fig.suptitle(title,fontsize=16,y=0.985)
     note='Separate linear dose scales' if cumulative else 'One shared logarithmic dose axis; each major tick = ×10'
-    fig.text(0.5,0.94,'SAPPHIRE • synthetic August 1972 timing template • '+note,ha='center',fontsize=10)
+    fig.text(0.5,0.94,f"SAPPHIRE • {cfg['template_label']} timing • "+note,ha='center',fontsize=10)
     fig.text(0.5,0.025,'SHIELDOSE-2; tissue at centre of aluminium spheres; proton results without nuclear attenuation.\n'
              'Shading: timing sensitivity, not confidence intervals. EVA/cabin are idealized shielding references, not verified hardware.',ha='center',fontsize=9)
     stem='05_cumulative_exposure' if cumulative else '04_radiation_dose_rate'
-    caption=(f'{title} for synthetic SAPPHIRE SPE scenarios using an August 1972 historical temporal template. '
+    caption=(f'{title} for synthetic SAPPHIRE SPE scenarios using the {cfg["template_label"]} historical temporal template. '
              'The 100-year event is the main scenario and the 1,000-year event is the extreme stress test. '
              'The references use exact 0.4 and 20 g/cm² SHIELDOSE-2 results for tissue at the centre of aluminium spheres, '
              '4π irradiation, without proton nuclear attenuation. Numerical rad values are converted using 1 rad = 10 mGy. '
-             'Event dose is allocated over all 264 hourly bins; the configured window is only the displayed subset. '
+             f"Event dose is allocated over all {cfg['template_duration_hours']} hourly bins; the configured window is only the displayed subset. "
              'Nine timing members compare three proton thresholds and three gap methods; bands are sensitivity envelopes, '
-             'not confidence intervals or transport uncertainty. A fixed spectrum through time is assumed. '
+             'not confidence intervals or transport uncertainty. Gap methods coincide for complete GOES-10 data; only channel timing differs. A fixed spectrum through time is assumed. '
              f'Central timing: >{cfg["central_proxy_MeV"]} MeV, {cfg["central_gap_method"]}. '
              + (f'Cumulative dose starts at zero in the emergency window. Panels have separate linear y-scales. '
                 f'The preselected {b-a:g}-hour interval starts at hour {a:g}; labels show the modeled tissue-target dose accumulated during that interval, not validated astronaut whole-body exposure. '

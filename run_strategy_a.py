@@ -9,6 +9,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
 from sim.assumptions import DEFAULT_ASSUMPTIONS
+from radiation_model import load_config, HISTORICAL_TEMPLATES
 from sim.mission_simulator import simulate_mission
 from sim.strategies import strategy_a
 
@@ -43,6 +44,8 @@ def main():
     defaults = DEFAULT_ASSUMPTIONS
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--scenario',choices=[defaults.default_spe_severity,defaults.worst_case_spe_severity],default=defaults.default_spe_severity)
+    parser.add_argument('--template', choices=[name for name, info in HISTORICAL_TEMPLATES.items() if info['enabled']],
+                        default=load_config()['historical_template'])
     parser.add_argument('--timing-variant',default=defaults.timing_variant)
     parser.add_argument('--engine',choices=['NTP','NEP'],default=defaults.engine_type)
     parser.add_argument('--storm-start',type=float,default=defaults.storm_start_hour)
@@ -57,7 +60,7 @@ def main():
                         help='Experimental estimated-dose policy parameter; NOT a medical limit')
     parser.add_argument('--restriction',type=float,nargs=2,action='append',default=None,metavar=('START','END'))
     args=parser.parse_args()
-    cfg=replace(defaults, default_spe_severity=args.scenario,
+    cfg=replace(defaults, default_spe_severity=args.scenario, historical_template=args.template,
         timing_variant=args.timing_variant, storm_start_hour=args.storm_start,
         engine_type=args.engine, max_hours=args.max_hours,time_step_hours=args.time_step,
         turnaround_hours=args.turnaround,max_continuous_eva_hours=args.eva_time_cap,
@@ -79,7 +82,7 @@ def main():
         evas=[{**{k:v for k,v in asdict(e).items() if k!='astronaut'},'astronaut':e.astronaut.name} for e in result.progress])
     (out/'summary.json').write_text(json.dumps(summary,indent=2)+'\n')
     plot_timeline(result,ROOT/'outputs/charts/09_strategy_a_mission_timeline.png')
-    print(f'Strategy A | {scenario.severity} | {scenario.timing_variant} | {scenario.engine_type}')
+    print(f'Strategy A | {scenario.severity} | {scenario.historical_template} | {scenario.timing_variant} | {scenario.engine_type}')
     print(f'Mission hour 0 = storm hour {scenario.storm_start_hour:g}; outside {scenario.shielding:g}, inside {scenario.cabin_shielding:g} g/cm²')
     print('Required repairs:',', '.join(result.required_repairs))
     print('Abort policy:', 'time cap and preset restrictions; no reliable dose estimate' if args.estimated_external_rate is None else 'time cap, preset restrictions and assumed imperfect dose estimate')

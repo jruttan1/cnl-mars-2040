@@ -5,13 +5,10 @@
     "cabin_shielding": 20.0,
     "timing_variant": "gt10MeV__log_linear",
     "storm_start_hour": 48.0,
-    "engine_type": "NTP"
+    "engine_type": "NTP",
+    "historical_template": "august_1972"
   },
   "assumptions": {
-    "crew_size": 5,
-    "astronauts_per_eva": 1,
-    "eva_duration_hours": 7.0,
-    "turnaround_hours": 1.0,
     "max_simultaneous_evas": 1,
     "crew_rotation": true,
     "allow_consecutive_evas": false,
@@ -26,6 +23,7 @@
     "cabin_shielding_g_cm2": 20.0,
     "time_step_hours": 1.0,
     "max_hours": 264.0,
+    "historical_template": "august_1972",
     "timing_variant": "gt10MeV__log_linear",
     "storm_start_hour": 48.0,
     "engine_type": "NTP",
@@ -35,7 +33,11 @@
     "estimated_cabin_rate_mGy_h": 0.0,
     "operational_restrictions": [],
     "repair_order_ntp": null,
-    "repair_order_nep": null
+    "repair_order_nep": null,
+    "crew_size": 5,
+    "astronauts_per_eva": 1,
+    "eva_duration_hours": 7.0,
+    "turnaround_hours": 1.0
   },
   "quantity": "idealized tissue-target absorbed dose (mGy)",
   "status": "all_repairs_completed",

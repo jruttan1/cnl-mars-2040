@@ -13,14 +13,49 @@ Clinical reference levels in Chart 07 apply to the stated human exposure conditi
 
 ## How the sources connect
 
-- **OMNIWeb:** measured August 1972 proton intensity supplies the hourly peaks, dips and decay.
+- **Historical timing:** August 1972 IMP-5/OMNIWeb is the default; October–November 2003 GOES-10 is an alternative. Each supplies relative hourly peaks, dips and decay.
 - **SAPPHIRE:** supplies a separate event-integrated energy spectrum for each event severity.
 - **SHIELDOSE-2:** supplies absorbed dose in its idealized tissue target behind aluminium for the corresponding SAPPHIRE spectrum.
 - **OLTARIS King:** remains an independent historical reference; its doses do not normalize synthetic SAPPHIRE events.
 
-The model calculates `hourly dose = event dose × normalized hourly weight`. Weights sum to one across the **complete assumed 264-hour event**, not only the displayed 72 hours. Dose rate is hourly dose divided by the one-hour bin duration. Integrating the whole modeled event reproduces the supplied transport total.
+The model calculates `hourly dose = event dose × normalized hourly weight`. Weights sum to one across the **complete selected event (264 or 336 hours)**, not only the displayed 72 hours. Dose rate is hourly dose divided by the one-hour bin duration. Integrating the whole modeled event reproduces the supplied transport total.
 
-This is a **synthetic reconstruction using the August 1972 timing template**, not a measured 2040 storm. It assumes a fixed spectrum through time and that the available historical record defines the complete modeled event. The 1972 timestamps identify the template, not a forecast date.
+This is a **synthetic reconstruction using a selected historical timing template**, not a measured 2040 storm. It assumes a fixed spectrum through time and that the available historical record defines the complete modeled event. Historical timestamps identify the template, not a forecast date.
+
+## Selecting a historical timing template
+
+| Identifier | Record | Completeness | Status |
+|---|---|---|---|
+| `august_1972` | Aug 2–12, 1972; 264 h | Eight missing hours per channel; existing gap methods retained | Default |
+| `october_2003_goes10` | Oct 26–Nov 8, 2003; 336 h | All three channels complete | Enabled |
+| `october_1989` | Oct 18–Nov 1, 1989; 360 h | 96 missing hours (26.7%); longest gap 29 h | Disabled pending a reviewed gap policy |
+
+Set `historical_template` in `radiation_config.json` for Charts 01, 04, 05 and 08 and the Strategy A command-line runner (unless overridden by `--template`). The 1972 display uses `emergency_start_utc`; the GOES-10 display uses `template_emergency_start_utc.october_2003_goes10` (default October 28, hour 48). Both display 72 hours. This date is illustrative, not an optimized EVA schedule. Other charts retain their existing spectra, shielding and clinical reference purposes; historical King charts always use 1972.
+
+For a temporary selection or a mission run:
+
+```bash
+CNL_HISTORICAL_TEMPLATE=october_2003_goes10 python charts/04_radiation_dose_rate.py
+CNL_HISTORICAL_TEMPLATE=october_2003_goes10 python charts/05_cumulative_exposure.py
+python run_strategy_a.py --template october_2003_goes10
+```
+
+The simulator also accepts `MissionAssumptions(historical_template="october_2003_goes10")`. Its existing maximum mission duration stays 264 h; use `--max-hours 336 --storm-start 0` to permit the whole longer record. It always stops at the selected record's boundary. Template choice is part of the shared simulation scenario and is not exposed as a radiation forecast to a strategy. B–D remain unimplemented.
+
+```python
+from radiation_model import load_baseline, baseline_interval_dose
+baseline = load_baseline(historical_template="october_2003_goes10")
+dose = baseline_interval_dose("SAPPHIRE-1-in-100", 0.4, 16, 23,
+    baseline=baseline, historical_template="october_2003_goes10")
+```
+
+Queries use **storm hours**, not emergency-relative hours. `load_baseline()` still returns only August 1972; `load_baseline(historical_template=None)` returns both. The single exported CSV has explicit template identity, source path/checksum and record duration. Filter the template before grouping or integrating. Each template independently reproduces the same SHIELDOSE-2 total; longer duration does not increase event magnitude.
+
+GOES-10 channel values and missing flags were checked directly against the supplied CSV. Its instrument attribution comes from the user; the original download, flux-unit declaration and hourly aggregation procedure were not supplied, so those cannot be independently verified here. No absolute flux-to-dose conversion is performed. The separate `october_2003_hourly_proton_flux.csv` is an incomplete OMNI2 record (205 missing hours), not the GOES-10 input. Both it and 1989 remain untouched and excluded.
+
+Nine timing variants are retained for compatibility. With no GOES-10 gaps, its three gap methods coincide for each channel: there are only three distinct channel profiles, not nine independent estimates. Bands remain timing sensitivity, not confidence intervals. Complete coverage does not prove physical event closure or that an Earth-observed profile predicts a Mars arrival time.
+
+The v1.0 baseline is preserved in `data/raw/archive/model_output_versions/`. The explicit `python radiation_model.py --update-baseline` command rebuilds both enabled templates and refuses to change existing rows beyond floating-point tolerance. Ordinary chart runs validate against the frozen v1.1 CSV; they do not replace it with only the displayed template.
 
 ## Verified shielding results
 
@@ -79,7 +114,7 @@ SAPPHIRE fluence is event-integrated, not hourly intensity. Its absolute fluence
 - `spe_hourly.csv`: original historical timing observations.
 - `spe_scenarios.csv`: the two separate source spectra and settings.
 - `shielding_dose.csv`: 2,764 rows, including 12 newly verified absorbed-dose results; older results retain their own provenance/status.
-- `mission_radiation_environment.csv`: 28,512 full-event rows: two scenarios × six shielding levels × nine timing variants × 264 hours. Filter `estimate_type == "central"`, then select one scenario and location/shielding level.
+- `mission_radiation_environment.csv`: 64,800 full-event rows: two scenarios × six shielding levels × nine timing variants × (264 + 336) hours. Select one `historical_template` first. Filter `estimate_type == "central"`, then select one scenario and location/shielding level.
 
 In the mission CSV, `cumulative_dose_mGy` is at the **start** of the hour; `cumulative_end_dose_mGy` is at its **end**. Rates are mGy/h. Metadata explicitly identifies `dose_quantity=absorbed_dose`, `target_type=idealized_tissue`, `target_geometry=centre_of_aluminium_spheres`, `unit=mGy` and `nuclear_attenuation=false`. The existing `geometry=center_of_aluminum_sphere` key is retained as a compatible alias. `unit` describes event/cumulative/interval dose; rate columns use `dose_rate_unit=mGy/h`. Metadata also retains source hashes, target/geometry, attenuation settings, gap flags, temporal method and sensitivity bounds. Full-event doses, configured interval doses, temporal weights and the verification audit are in `outputs/model/`.
 
@@ -101,11 +136,11 @@ jupyter lab radiation_model.ipynb
 
 For a fresh environment: `python3.12 -m venv .venv`, activate it, then `python -m pip install -r requirements.txt`. The overview notebook supports local Jupyter and Colab with the whole project in Google Drive; set `CNL_PROJECT_ROOT` if automatic discovery is ambiguous. Earlier source files and changed output versions remain preserved in the raw archive.
 
-## Frozen baseline v1.0
+## Frozen baseline v1.1
 
-Strategies A–D should read the same `mission_radiation_environment.csv`. Its first seven columns are `scenario`, `hour`, `shielding_g_cm2`, `dose_rate_mGy_h`, `cumulative_dose_mGy`, `timing_variant`, and `data_quality`. Choose one scenario, shielding depth and timing variant; never sum alternative variants. The default query selects the central variant.
+Strategies A–D should read the same `mission_radiation_environment.csv`. Its core columns are `scenario`, `hour`, `shielding_g_cm2`, `dose_rate_mGy_h`, `cumulative_dose_mGy`, `timing_variant`, and `data_quality`. Choose one historical template, scenario, shielding depth and timing variant; never sum alternative variants. The default query selects August 1972 and the central variant.
 
-`hour` starts at the synthetic **storm** beginning. Bins cover [0,264); cumulative dose is at bin start, with `cumulative_end_dose_mGy` supplied for the end. Seven-hour starts can be anywhere from 0 through 257, including fractional starts. The example queries storm hours 16–23; emergency hours 16–23 correspond to storm hours 64–71 under the default display. `data_quality` describes the historical template observation or filled gap; every dose value is modeled.
+`hour` starts at the synthetic **storm** beginning. Bins cover [0,264) for August 1972 or [0,336) for GOES-10; cumulative dose is at bin start, with `cumulative_end_dose_mGy` supplied for the end. Seven-hour starts can be anywhere from 0 through 257 for 1972 or 329 for GOES-10, including fractional starts. The example queries storm hours 16–23; emergency hours 16–23 correspond to storm hours 64–71 under the default display. `data_quality` describes the historical template observation or filled gap; every dose value is modeled.
 
 The 72-hour display covers storm hours 48–120 and resets plotted cumulative dose to zero. Changing the display does not change the full-event baseline. The checksum in `outputs/model/baseline_manifest.json` freezes this artifact: loading detects alterations and regeneration refuses different values. Scientific changes require an explicitly reviewed new version.
 
@@ -113,7 +148,7 @@ The 72-hour display covers storm hours 48–120 and resets plotted cumulative do
 
 The large light-shield values are present in the numerical exports: 7,457.1 rad = 74.571 Gy for the main event, and 12,728 rad = 127.28 Gy for the extreme event. At 20 g/cm² the values are 0.134 and 0.23383 Gy. Unit conversion and full-event conservation were checked; values were not rescaled to appear more reasonable.
 
-This is source/numerical consistency, **not independent validation of the radiation transport physics or astronaut risk**. The idealized 4π sphere, absent proton nuclear attenuation, fixed spectrum through time, missing peak observations and assumed 264-hour event closure limit interpretation. Timing envelopes do not bound transport error or unseen peaks. Different OLTARIS events/targets cannot directly validate these absolute doses. See `outputs/model/baseline_validation.md` for the final checks. No anatomical or clinical model is included in the radiation baseline. The separate Strategy A simulator is described below.
+This is source/numerical consistency, **not independent validation of the radiation transport physics or astronaut risk**. The idealized 4π sphere, absent proton nuclear attenuation, fixed spectrum through time, missing peak observations and assumed record-length event closure limit interpretation. Timing envelopes do not bound transport error or unseen peaks. Different OLTARIS events/targets cannot directly validate these absolute doses. See `outputs/model/baseline_validation.md` for the final checks. No anatomical or clinical model is included in the radiation baseline. The separate Strategy A simulator is described below.
 
 ## Repository layout and local archives
 
@@ -199,3 +234,21 @@ config = MissionAssumptions(crew_size=5, turnaround_hours=0)
 result = simulate_mission(strategy_a, config=config)
 ```
 
+
+## Exploratory BFO proxy using 2003 timing
+
+`python bfo_proxy.py` writes `outputs/model/exploratory_bfo_october_2003_goes10.csv` separately from the frozen tissue-target baseline. It uses all 336 GOES-10 hours and retains both SAPPHIRE severities and nine timing identifiers. `--start-hour 16 --duration 7` queries storm hours 16–23; emergency-relative times must first be shifted by the chosen mission origin. `--template august_1972` is available for a separate timing comparison.
+
+At **20 g/cm² only**, this experiment multiplies the existing tissue-target histories by the user-supplied ratios **28.89/185.2 for BFO absorbed dose (mGy)** and **41.92/185.2 for BFO Gray Equivalent (mGy-Eq)**. The main event therefore yields approximately 20.90 mGy and 30.33 mGy-Eq; the extreme event yields 36.48 mGy and 52.93 mGy-Eq. Changing timing does not change these totals. Rate and cumulative columns keep the two quantities separate; inherited tissue-target columns retain their original meaning.
+
+**Source limitation:** the local 20 g/cm² organ export contains BFO dose equivalent **48.20886 mSv**, not either of the two proposed BFO reference values. The 28.89 mGy and 41.92 mGy-Eq inputs are user-supplied and unverified in the repository; 185.2 mGy is the user's rounded point reference. No conversion from mSv to mGy-Eq is performed. Every proxy row carries this verification status. This is a cross-spectrum, cross-transport hypothesis, not a matched SAPPHIRE anatomical result. Timing variants do not quantify uncertainty in the organ-transfer factors.
+
+The proxy does **not** apply to 0.4 g/cm², establish medical-limit compliance, or drive Strategy A aborts. Existing charts, mission decisions, and radiation data remain unchanged. Matched anatomical outputs and a separate permitted observation model are needed before adopting an organ-based abort policy.
+
+## Large local source files
+
+Git excludes the full OLTARIS particle-fluence databases, full-year OMNI2 files in `data/processed/raw_nasa_omni2/`, and the archived `data/raw/archive/previous_processed/shielding_dose.csv`. They stay on the local disk. Processed datasets, small source reports and model code remain tracked.
+
+A fresh clone can use the processed radiation baseline and mission simulator without those files. Rebuilding the original consolidated datasets with `prepare_data.py` requires restoring the archived shielding CSV; the corresponding source-rebuild test is skipped when it is unavailable. Local source-preservation checks still validate excluded files whenever they exist.
+
+These exclusions apply to new snapshots. Files committed previously remain in Git history until a separate history cleanup is performed.

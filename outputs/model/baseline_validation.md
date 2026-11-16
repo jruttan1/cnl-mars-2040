@@ -1,3 +1,17 @@
+# Baseline v1.1 timing-template extension — 16 November 2026
+
+The original v1.0 review below is retained as historical evidence. The current CSV contains 64,800 rows, adding 336-hour GOES-10 timing to the unchanged 264-hour August 1972 calculations. Both retain two SAPPHIRE scenarios, six shielding depths and nine timing-member identifiers. Existing v1.0 values were compared before writing; the old CSV and manifest are archived by checksum.
+
+GOES-10 audit: 336 contiguous UTC bins from 2003-10-26 00:00 through 2003-11-08 23:00; no missing, sentinel, nonfinite or negative channel values; all missing flags zero; integral channels are ordered >10 ≥ >30 ≥ >60 MeV. CSV values are preserved. Instrument identity is user-supplied; original download, unit metadata and hourly aggregation procedure are unavailable. Only dimensionless channel timing is used. Gap methods coincide because no gaps need filling; sensitivity is between channels.
+
+1989 audit: 360 contiguous hours, 96 missing observations in each of three channels (26.7%), across 11 gaps; maximum gap 29 h (October 28 18:00–October 29 22:00 UTC). It remains disabled rather than bridging long gaps with the 1972 policy. The separate 2003 OMNI2 file has 205 missing hours and is excluded.
+
+For each enabled template, unit-sum weights reproduce the same SHIELDOSE-2 event totals. Seven-hour sums and cumulative differences are checked for all integer starts; fractional intervals and mission termination at the 336-hour boundary are tested. No mission strategy receives the underlying profile or future observations. All data remains idealized tissue-target dose, not anatomical exposure.
+
+Verification for v1.1: all 43 tests pass. All eight radiation charts, both historical-reference charts and the Strategy A timeline execute; PNG files decode successfully. GOES-10 Charts 01, 04, 05 and 08 were visually inspected. Saved figures and the final demonstration run use the default August 1972 selection. Notebook structure and code syntax were checked. Raw observations, SAPPHIRE spectra and SHIELDOSE-2 values are unchanged.
+
+## Original v1.0 review (historical)
+
 # Baseline v1.0 review — 16 November 2026
 
 ## Scope

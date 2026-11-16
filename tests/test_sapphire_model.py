@@ -104,8 +104,7 @@ class SapphireModelTests(unittest.TestCase):
             metric='cumulative_end_absorbed_dose_mGy'
             self.assertTrue(g[metric].between(g[metric+'_sensitivity_lower'],g[metric+'_sensitivity_upper']).all())
             self.assertNotIn('OLTARIS',g.source_path.iloc[0])
-        saved=pd.read_csv(model.ROOT/'data/processed/mission_radiation_environment.csv',dtype={'baseline_version':str})
-        saved['template_timestamp_utc']=pd.to_datetime(saved.template_timestamp_utc,utc=True)
+        saved=model.load_baseline()
         pd.testing.assert_frame_equal(saved,model.baseline_dataset(full),check_dtype=False,rtol=1e-12)
         self.assertFalse(saved.duplicated(['scenario','shielding_g_cm2','timing_variant','hour']).any())
 
@@ -171,12 +170,15 @@ class SapphireModelTests(unittest.TestCase):
         # Check them when present; required importer inputs are checked by build().
         for path,expected in before.items():
             file=root/path
-            optional=path.startswith('data/raw/archive/') or file.name=='.DS_Store'
+            optional=(path.startswith('data/raw/archive/') or file.name=='.DS_Store' or
+                      file.name=='particle_fluence_vs_energy_isotope_and_depth.dat')
             if optional and not file.exists():continue
             self.assertEqual(model.sha256(file),expected)
         manifest=json.loads((root/'data/raw/spenvis/verified_sapphire_manifest.json').read_text())
         self.assertEqual(len(manifest['files']),8)
         for record in manifest['files']:self.assertEqual(model.sha256(root/record['path']),record['sha256'])
+        if not (root/'data/raw/archive/previous_processed/shielding_dose.csv').exists():
+            self.skipTest('Full source rebuild needs the local-only archived shielding_dose.csv')
         rebuilt=build()['shielding_dose.csv']
         saved=pd.read_csv(root/'data/processed/shielding_dose.csv')
         self.assertEqual(len(rebuilt),2764)

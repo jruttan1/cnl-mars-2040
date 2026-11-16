@@ -18,7 +18,10 @@ class SimulatorDefaults:
     external_shielding_g_cm2: float = 0.4        # Idealized aluminium-sphere references.
     cabin_shielding_g_cm2: float = 20.0
     time_step_hours: float = 1.0                # Team numerical choice.
-    max_hours: float = 264.0                    # Length of the available storm template.
+    max_hours: float = 264.0                    # Default mission ceiling; selected template supplies the data boundary.
+    historical_template_1972: str = 'august_1972'
+    historical_template_2003: str = 'october_2003_goes10'
+    historical_template: str = historical_template_1972  # Select one template for each run.
     timing_variant: str = 'gt10MeV__log_linear' # Existing central model member.
     storm_start_hour: float = 48.0             # Existing illustrative emergency origin.
     engine_type: str = 'NTP'                    # Team demonstration choice.

@@ -1,10 +1,33 @@
 {
-  "baseline_version": "1.0",
+  "baseline_version": "1.1",
   "status": "frozen",
-  "review_date": "2026-11-16",
   "csv_path": "data/processed/mission_radiation_environment.csv",
-  "csv_sha256": "a37d56ee0d425421eff57ee42264e72b31127eae413017fe2c64032afcd7c6ca",
-  "rows": 28512,
+  "csv_sha256": "a01e54cd56bb9baacddbef7afff47827ede6cb60de6046b2cdd01c4bb931e416",
+  "rows": 64800,
+  "default_historical_template": "august_1972",
+  "templates": {
+    "august_1972": {
+      "label": "August 1972 (IMP-5/OMNIWeb)",
+      "path": "data/processed/spe_hourly.csv",
+      "hours": 264,
+      "enabled": true,
+      "source_sha256": "f7d75639409f86cb272c321a522d793c3e59b0eaf24ff5c90259354a7ce8c4dc"
+    },
+    "october_2003_goes10": {
+      "label": "October\u2013November 2003 (GOES-10)",
+      "path": "data/processed/october_2003_goes10_hourly_proton_flux.csv",
+      "hours": 336,
+      "enabled": true,
+      "source_sha256": "55767a4827bfc3044ff99a06862bdc6861a7792ba16fe0c58f265cd68a18c209"
+    },
+    "october_1989": {
+      "label": "October 1989 (OMNI2)",
+      "path": "data/processed/october_1989_hourly_proton_flux.csv",
+      "hours": 360,
+      "enabled": false,
+      "source_sha256": "ce1a10d66651b1e1b18016abe617eeeab2a579bd217a8b7f74d98b8ae2889761"
+    }
+  },
   "scenarios": [
     "SAPPHIRE-1-in-100",
     "SAPPHIRE-1-in-1000"
@@ -28,49 +51,11 @@
     "gt60MeV__log_linear",
     "gt60MeV__pchip"
   ],
-  "event_duration_hours": 264,
+  "previous_baseline_sha256": "a37d56ee0d425421eff57ee42264e72b31127eae413017fe2c64032afcd7c6ca",
   "hour_convention": "storm-relative bin start; half-open intervals",
   "cumulative_convention": "cumulative_dose_mGy at bin start; cumulative_end_dose_mGy at bin end",
-  "default_display_storm_hours": [
-    48,
-    120
-  ],
-  "validation_scope": "source and numerical consistency; bounded physical plausibility, not astronaut clinical validation",
-  "tests_passed": 19,
-  "reviewed_file_sha256": {
-    "README.md": "262a27968489da141de329c5ef8215b34dc1df2a157bce117ffda879a54c88d3",
-    "charts/01_spe_proton_flux.py": "e249843456bd21abf6328efccefdbf71bb32c4d142799cad97ba9ff1e2e53d1f",
-    "charts/02_shielding_vs_dose.py": "67144e8d00896281adf1801b281d635a74857904c642dd710b722eaf2764910b",
-    "charts/03_sapphire_spectra.py": "21dd0338f0d6c93557f8214d5d7ad35e9070832fd5f0c7a73ca44bf7a282f3dc",
-    "charts/04_radiation_dose_rate.py": "8b7813757d2b7a68e9bff9af8840b79a6dd18a4c0c0f5808ef44fe0423f931f1",
-    "charts/05_cumulative_exposure.py": "43b5d6f4268651f6437755e064bd8f337a99183dd57f37ef21955236e4e767d3",
-    "charts/06_shielding_sensitivity.py": "3cf4ed12b5f068e7b98aeb19a2ae290a89ac5cbbb2e1e6688b5117e5b5bd8cc7",
-    "charts/07_absorbed_dose_health_reference.py": "a6cfe6a7ef01298d301df9a65d1635320c83787fdd5891700c0e9481e4ea0706",
-    "charts/08_synthetic_sapphire_proton_profile.py": "b5c93e04c7ad9f0d725986366d683a42f74c807ad4b622819ca0c12f24285c06",
-    "charts/common.py": "fd77447dc10fc3f2ba9f52f36edbe5c7a4aa6915e2b95ee31885f33649518605",
-    "charts/environment_common.py": "37f8731edb91ae2f4eafcd4d9a2c5ac81d3202bafd0a0a7b4cc78069f1f30560",
-    "charts/historical_04_radiation_dose_rate.py": "709fb6a622a577e03593e151e6d5663e2667c35b997f030fea2adbed9a45ff25",
-    "charts/historical_05_cumulative_exposure.py": "f489f2f18b8d7a17a9be2cd9c65d465171cfde5f0b6e5f63c164a6a34fe670db",
-    "charts/sapphire_common.py": "6095388e1bffee1434cced429543f7339c1e25064df2aacda07cb67527cf0c93",
-    "data/processed/mission_radiation_environment.csv": "a37d56ee0d425421eff57ee42264e72b31127eae413017fe2c64032afcd7c6ca",
-    "data/processed/shielding_dose.csv": "13c77046e001464024102eddcbfc7b3bc7d556164574978234b16948d57ad2d9",
-    "data/processed/spe_hourly.csv": "f7d75639409f86cb272c321a522d793c3e59b0eaf24ff5c90259354a7ce8c4dc",
-    "data/processed/spe_scenarios.csv": "b790b5419a8912c83f70fbc225d6954a1308fa7e7bf8948b380a03c10ee10c9f",
-    "data/raw/spenvis/sapphire_1000yr/sapphire_1000yr_shieldose_data.txt": "59796a4d60b8b1613e6e0e843c8e99c38c6d494cdda70536b871d9d60a1fa249",
-    "data/raw/spenvis/sapphire_1000yr/sapphire_1000yr_shieldose_report.html": "87030f9605ed34483f7e1307a30747e4150734c915ddaa713f5e72d0539e0d51",
-    "data/raw/spenvis/sapphire_1000yr/sapphire_1000yr_source_report.html": "82cd7c1fea309a61082dbd632851453c9bdc459807ecec5f9a97d351d9c0ee03",
-    "data/raw/spenvis/sapphire_100yr/sapphire_100yr_shieldose_data.txt": "7f46eacd333fbbf50adcbfeca02007f123da11eb6f3e5166ba55d2f17357b565",
-    "data/raw/spenvis/sapphire_100yr/sapphire_100yr_shieldose_report.html": "7aca7bd57be4c1aedea3be4f3828a97b080f74291564c218f1cb6beb80208b56",
-    "data/raw/spenvis/sapphire_100yr/sapphire_100yr_source_report.html": "f9bc886220e0907940f7e8eef0cf19765df76d63a53501286372423385b664a3",
-    "data/raw/spenvis/verified_sapphire_manifest.json": "cbf1f1b267c8e782990c54f15f3daeca9ed3997ee58b12a65b3d59cc226dc608",
-    "outputs/model/baseline_validation.md": "9b8432632dff1046b64f9ab90c35a5684fb8a5a2a902f58f1e5074e807dede8a",
-    "prepare_data.py": "4c339b702b6b8f2649a7b0e77b69cccb67aadb7fcdc64c4432834f902c2ce9e9",
-    "radiation_config.json": "b644867c82f0e0359574583d88d53366f587d6286931886357ad85623891bae7",
-    "radiation_model.ipynb": "40c0e6876c4101d5ab94f362b1bffb49c0585295b9813dbf32214125ed022b56",
-    "radiation_model.py": "94dd74221234eae1447a72625d0c4135d44bfe5a85dde027f03e38ef1442b9f4",
-    "requirements.txt": "bbfee107c93e0f7cd6d030e7c567ee7405ddfbd4b19a7ae54fd918f6c20a4c2b",
-    "spenvis_audit.py": "4160e67c082465bf9e776d6e1791d886849ee201c9a1272d6cd733a79a444cd4",
-    "tests/test_radiation_model.py": "131bf284dc904614c4e9f68fa618c412d02bb5d3cb1516842fd62a4c4a7b6650",
-    "tests/test_sapphire_model.py": "955619a938745e013f74ef32a7d290badf85a045c86e389c2a07f722bd98ec64"
-  }
+  "validation_scope": "Existing template values preserved; each template independently normalized. No clinical validation.",
+  "provenance_note": "GOES-10 identity supplied by user; original download, unit metadata and aggregation procedure unavailable. CSV channels used only for dimensionless timing.",
+  "config_sha256": "053329dfcb644e0110e431ad16b156130aab6dc40fcc97c9269e32175ecc1816",
+  "model_source_sha256": "55c0afba1ef29d65ea3c9992fbd5839526039cf340a6af776486cf83700f8c07"
 }
