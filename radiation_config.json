@@ -1,0 +1,60 @@
+{
+  "emergency_start_utc": "1972-08-04T00:00:00Z",
+  "emergency_duration_hours": 72,
+  "eva_start_hour": 0,
+  "eva_duration_hours": 7,
+  "tissue_depth_g_cm2": 0.0,
+  "central_proxy_MeV": 10,
+  "central_gap_method": "log_linear",
+  "sensitivity_proxy_MeV": [
+    10,
+    30,
+    60
+  ],
+  "gap_methods": [
+    "log_linear",
+    "linear",
+    "pchip"
+  ],
+  "historical_reference_environments": {
+    "external_eva_reference": {
+      "label": "External EVA reference",
+      "oltaris_scenario_id": "OLTARIS_Aug1972_King_Al0p4_gcm2",
+      "shielding_g_cm2": 0.4
+    },
+    "spacecraft_cabin_reference": {
+      "label": "Spacecraft cabin reference",
+      "oltaris_scenario_id": "OLTARIS_Aug1972_King_Al20_gcm2",
+      "shielding_g_cm2": 20.0
+    }
+  },
+  "environments": {
+    "external_eva_reference": {
+      "label": "External EVA reference",
+      "shielding_g_cm2": 0.4,
+      "geometry": "center_of_aluminum_sphere",
+      "target": "tissue"
+    },
+    "spacecraft_cabin_reference": {
+      "label": "Spacecraft cabin reference",
+      "shielding_g_cm2": 20.0,
+      "geometry": "center_of_aluminum_sphere",
+      "target": "tissue"
+    }
+  },
+  "synthetic_scenarios": [
+    {
+      "scenario_id": "SAPPHIRE-1-in-100",
+      "role": "main",
+      "return_period_years": 100
+    },
+    {
+      "scenario_id": "SAPPHIRE-1-in-1000",
+      "role": "worst_case",
+      "return_period_years": 1000
+    }
+  ],
+  "user_reported_simulation_distance_AU": 1.25,
+  "applied_radial_scaling_factor": 1.0,
+  "radial_scaling_note": "Use exported SAPPHIRE fluences unchanged; no physically specific radial attenuation is calculated. Reports display 1.2 AU; 1.25 AU is user-reported."
+}

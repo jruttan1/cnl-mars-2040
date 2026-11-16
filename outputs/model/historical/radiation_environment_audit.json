@@ -1,0 +1,290 @@
+{
+  "model_version": "1.0",
+  "config": {
+    "emergency_start_utc": "1972-08-04T00:00:00Z",
+    "emergency_duration_hours": 72,
+    "eva_start_hour": 0,
+    "eva_duration_hours": 7,
+    "tissue_depth_g_cm2": 0.0,
+    "central_proxy_MeV": 10,
+    "central_gap_method": "log_linear",
+    "sensitivity_proxy_MeV": [
+      10,
+      30,
+      60
+    ],
+    "gap_methods": [
+      "log_linear",
+      "linear",
+      "pchip"
+    ],
+    "historical_reference_environments": {
+      "external_eva_reference": {
+        "label": "External EVA reference",
+        "oltaris_scenario_id": "OLTARIS_Aug1972_King_Al0p4_gcm2",
+        "shielding_g_cm2": 0.4
+      },
+      "spacecraft_cabin_reference": {
+        "label": "Spacecraft cabin reference",
+        "oltaris_scenario_id": "OLTARIS_Aug1972_King_Al20_gcm2",
+        "shielding_g_cm2": 20.0
+      }
+    },
+    "environments": {
+      "external_eva_reference": {
+        "label": "External EVA reference",
+        "oltaris_scenario_id": "OLTARIS_Aug1972_King_Al0p4_gcm2",
+        "shielding_g_cm2": 0.4
+      },
+      "spacecraft_cabin_reference": {
+        "label": "Spacecraft cabin reference",
+        "oltaris_scenario_id": "OLTARIS_Aug1972_King_Al20_gcm2",
+        "shielding_g_cm2": 20.0
+      }
+    },
+    "synthetic_scenarios": [
+      {
+        "scenario_id": "SAPPHIRE-1-in-100",
+        "role": "main",
+        "return_period_years": 100
+      },
+      {
+        "scenario_id": "SAPPHIRE-1-in-1000",
+        "role": "worst_case",
+        "return_period_years": 1000
+      }
+    ],
+    "user_reported_simulation_distance_AU": 1.25,
+    "applied_radial_scaling_factor": 1.0,
+    "radial_scaling_note": "Use exported SAPPHIRE fluences unchanged; no physically specific radial attenuation is calculated. Reports display 1.2 AU; 1.25 AU is user-reported."
+  },
+  "config_sha256": "b644867c82f0e0359574583d88d53366f587d6286931886357ad85623891bae7",
+  "runtime": {
+    "python": "3.12.3",
+    "numpy": "2.5.5",
+    "pandas": "3.1.1",
+    "scipy": "1.18.1"
+  },
+  "input_sha256": {
+    "data/processed/spe_hourly.csv": "f7d75639409f86cb272c321a522d793c3e59b0eaf24ff5c90259354a7ce8c4dc",
+    "data/processed/spe_scenarios.csv": "b790b5419a8912c83f70fbc225d6954a1308fa7e7bf8948b380a03c10ee10c9f",
+    "data/processed/shielding_dose.csv": "13c77046e001464024102eddcbfc7b3bc7d556164574978234b16948d57ad2d9"
+  },
+  "references": {
+    "external_eva_reference": {
+      "label": "External EVA reference",
+      "oltaris_scenario_id": "OLTARIS_Aug1972_King_Al0p4_gcm2",
+      "shielding_g_cm2": 0.4,
+      "event_absorbed_dose_mGy": 59997.39,
+      "tissue_depth_g_cm2": 0.0,
+      "geometry": "aluminum_tissue_depth_grid",
+      "source_path": "data/raw/oltaris/OLTARIS_Aug1972_King_Al0p4_gcm2/absorbed_dose_vs_aluminum_and_tissue_depth_mGy.dat",
+      "source_sha256": "4532dee5c6fc6fa3261b50ac67d848be573d58a7bfa345d900225118a21bcdc4",
+      "job_name": "job_1",
+      "configuration_status": "user_reported_not_independently_verified",
+      "evidence": "exact_exported_absorbed_dose_grid_value",
+      "location_interpretation": "illustrative grid-based reference; not verified suit/cabin geometry"
+    },
+    "spacecraft_cabin_reference": {
+      "label": "Spacecraft cabin reference",
+      "oltaris_scenario_id": "OLTARIS_Aug1972_King_Al20_gcm2",
+      "shielding_g_cm2": 20.0,
+      "event_absorbed_dose_mGy": 185.2349,
+      "tissue_depth_g_cm2": 0.0,
+      "geometry": "aluminum_tissue_depth_grid",
+      "source_path": "data/raw/oltaris/OLTARIS_Aug1972_King_Al20_gcm2/absorbed_dose_vs_aluminum_and_tissue_depth_mGy.dat",
+      "source_sha256": "3f0915b71a99801ab9c6e1332f5b36d4e8fcb01f75e4702d90933c18aef621b8",
+      "job_name": "job_3",
+      "configuration_status": "user_reported_not_independently_verified",
+      "evidence": "exact_exported_absorbed_dose_grid_value",
+      "location_interpretation": "illustrative grid-based reference; not verified suit/cabin geometry"
+    }
+  },
+  "full_record_hours": 264.0,
+  "modeled_members": 9,
+  "missing_hours_utc": [
+    "1972-08-04 17:00:00+00:00",
+    "1972-08-04 18:00:00+00:00",
+    "1972-08-04 20:00:00+00:00",
+    "1972-08-07 13:00:00+00:00",
+    "1972-08-08 02:00:00+00:00",
+    "1972-08-08 03:00:00+00:00",
+    "1972-08-11 10:00:00+00:00",
+    "1972-08-11 11:00:00+00:00"
+  ],
+  "identical_target_depth_tables_between_jobs": true,
+  "validation_checks": [
+    {
+      "member_id": "gt10MeV__log_linear",
+      "location": "external_eva_reference",
+      "weight_sum": 1.0000000000000002,
+      "full_record_integrated_mGy": 59997.39,
+      "event_total_mGy": 59997.39,
+      "emergency_total_mGy": 49686.770508717455,
+      "highlighted_interval_mGy": 463.373581083913
+    },
+    {
+      "member_id": "gt10MeV__log_linear",
+      "location": "spacecraft_cabin_reference",
+      "weight_sum": 1.0000000000000002,
+      "full_record_integrated_mGy": 185.23490000000004,
+      "event_total_mGy": 185.2349,
+      "emergency_total_mGy": 153.40207243190474,
+      "highlighted_interval_mGy": 1.4306115475143255
+    },
+    {
+      "member_id": "gt10MeV__linear",
+      "location": "external_eva_reference",
+      "weight_sum": 1.0000000000000002,
+      "full_record_integrated_mGy": 59997.390000000014,
+      "event_total_mGy": 59997.39,
+      "emergency_total_mGy": 49059.218788928025,
+      "highlighted_interval_mGy": 451.00609306451514
+    },
+    {
+      "member_id": "gt10MeV__linear",
+      "location": "spacecraft_cabin_reference",
+      "weight_sum": 1.0000000000000002,
+      "full_record_integrated_mGy": 185.2349,
+      "event_total_mGy": 185.2349,
+      "emergency_total_mGy": 151.46458014998996,
+      "highlighted_interval_mGy": 1.3924283797711228
+    },
+    {
+      "member_id": "gt10MeV__pchip",
+      "location": "external_eva_reference",
+      "weight_sum": 1.0,
+      "full_record_integrated_mGy": 59997.39,
+      "event_total_mGy": 59997.39,
+      "emergency_total_mGy": 49061.0272172027,
+      "highlighted_interval_mGy": 450.9382437614389
+    },
+    {
+      "member_id": "gt10MeV__pchip",
+      "location": "spacecraft_cabin_reference",
+      "weight_sum": 1.0,
+      "full_record_integrated_mGy": 185.2349,
+      "event_total_mGy": 185.2349,
+      "emergency_total_mGy": 151.47016346004077,
+      "highlighted_interval_mGy": 1.3922189030110437
+    },
+    {
+      "member_id": "gt30MeV__log_linear",
+      "location": "external_eva_reference",
+      "weight_sum": 1.0,
+      "full_record_integrated_mGy": 59997.38999999999,
+      "event_total_mGy": 59997.39,
+      "emergency_total_mGy": 57105.99828368686,
+      "highlighted_interval_mGy": 23.86723774186921
+    },
+    {
+      "member_id": "gt30MeV__log_linear",
+      "location": "spacecraft_cabin_reference",
+      "weight_sum": 1.0,
+      "full_record_integrated_mGy": 185.23490000000004,
+      "event_total_mGy": 185.2349,
+      "emergency_total_mGy": 176.30806742558156,
+      "highlighted_interval_mGy": 0.07368729533720333
+    },
+    {
+      "member_id": "gt30MeV__linear",
+      "location": "external_eva_reference",
+      "weight_sum": 0.9999999999999999,
+      "full_record_integrated_mGy": 59997.39,
+      "event_total_mGy": 59997.39,
+      "emergency_total_mGy": 57111.003283592094,
+      "highlighted_interval_mGy": 23.825657879281174
+    },
+    {
+      "member_id": "gt30MeV__linear",
+      "location": "spacecraft_cabin_reference",
+      "weight_sum": 0.9999999999999999,
+      "full_record_integrated_mGy": 185.23489999999998,
+      "event_total_mGy": 185.2349,
+      "emergency_total_mGy": 176.32351977537454,
+      "highlighted_interval_mGy": 0.07355892239150505
+    },
+    {
+      "member_id": "gt30MeV__pchip",
+      "location": "external_eva_reference",
+      "weight_sum": 0.9999999999999999,
+      "full_record_integrated_mGy": 59997.38999999999,
+      "event_total_mGy": 59997.39,
+      "emergency_total_mGy": 57111.10162178563,
+      "highlighted_interval_mGy": 23.825698904162902
+    },
+    {
+      "member_id": "gt30MeV__pchip",
+      "location": "spacecraft_cabin_reference",
+      "weight_sum": 0.9999999999999999,
+      "full_record_integrated_mGy": 185.2349,
+      "event_total_mGy": 185.2349,
+      "emergency_total_mGy": 176.32382338300542,
+      "highlighted_interval_mGy": 0.07355904905101247
+    },
+    {
+      "member_id": "gt60MeV__log_linear",
+      "location": "external_eva_reference",
+      "weight_sum": 1.0000000000000002,
+      "full_record_integrated_mGy": 59997.390000000014,
+      "event_total_mGy": 59997.39,
+      "emergency_total_mGy": 58403.710160986244,
+      "highlighted_interval_mGy": 10.368735773347389
+    },
+    {
+      "member_id": "gt60MeV__log_linear",
+      "location": "spacecraft_cabin_reference",
+      "weight_sum": 1.0000000000000002,
+      "full_record_integrated_mGy": 185.2349,
+      "event_total_mGy": 185.2349,
+      "emergency_total_mGy": 180.31460054011137,
+      "highlighted_interval_mGy": 0.03201225476812285
+    },
+    {
+      "member_id": "gt60MeV__linear",
+      "location": "external_eva_reference",
+      "weight_sum": 1.0,
+      "full_record_integrated_mGy": 59997.389999999985,
+      "event_total_mGy": 59997.39,
+      "emergency_total_mGy": 58408.90122493304,
+      "highlighted_interval_mGy": 10.333798455652143
+    },
+    {
+      "member_id": "gt60MeV__linear",
+      "location": "spacecraft_cabin_reference",
+      "weight_sum": 1.0,
+      "full_record_integrated_mGy": 185.2349,
+      "event_total_mGy": 185.2349,
+      "emergency_total_mGy": 180.33062734079508,
+      "highlighted_interval_mGy": 0.031904389900175315
+    },
+    {
+      "member_id": "gt60MeV__pchip",
+      "location": "external_eva_reference",
+      "weight_sum": 0.9999999999999999,
+      "full_record_integrated_mGy": 59997.39,
+      "event_total_mGy": 59997.39,
+      "emergency_total_mGy": 58412.31517735409,
+      "highlighted_interval_mGy": 10.313826304588257
+    },
+    {
+      "member_id": "gt60MeV__pchip",
+      "location": "spacecraft_cabin_reference",
+      "weight_sum": 0.9999999999999999,
+      "full_record_integrated_mGy": 185.23489999999998,
+      "event_total_mGy": 185.2349,
+      "emergency_total_mGy": 180.34116751821472,
+      "highlighted_interval_mGy": 0.03184272822780751
+    }
+  ],
+  "scientific_limits": [
+    "Entire available record is assumed to receive the King event total; physical event closure is unverified.",
+    "OMNIWeb is a near-Earth profile; no Earth-to-Mars propagation, distance scaling or event-arrival forecast is applied.",
+    "King spectrum and measured OMNI spectrum are not established as identical.",
+    "Each proxy assumes fixed dose response through time; channels are alternative timing proxies, not additive dose components.",
+    "Gap filling cannot recover unobserved peaks; envelope is a scenario sensitivity range, not a confidence interval or physical bound.",
+    "EVA/cabin refer to exact exported grid depths; sphere/organ mSv outputs are not used. Actual location geometries remain unverified.",
+    "SHIELDOSE scenario associations are unresolved and MULASSIS doses are NaN; neither contributes to baseline dose.",
+    "No reactor radiation, strategy optimization, biodosimetry or crew scheduling."
+  ]
+}

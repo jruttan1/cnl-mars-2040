@@ -1,0 +1,61 @@
+{
+  "association_basis": "User confirmed on 2026-11-16 that each supplied source/report/data/plot group belongs to the stated SAPPHIRE run and represents event-integrated absorbed dose. Source frequencies, spectra, transport settings and numeric/report agreement are checked independently. Transport reports do not embed a source-spectrum hash.",
+  "files": [
+    {
+      "original_path": "/Users/jack/Downloads/spenvis_s2o.txt",
+      "path": "data/raw/spenvis/sapphire_100yr/sapphire_100yr_shieldose_data.txt",
+      "sha256": "7f46eacd333fbbf50adcbfeca02007f123da11eb6f3e5166ba55d2f17357b565",
+      "return_period_years": 100,
+      "action": "moved"
+    },
+    {
+      "original_path": "/Users/jack/Downloads/spenvis_s2p.html",
+      "path": "data/raw/spenvis/sapphire_100yr/sapphire_100yr_shieldose_report.html",
+      "sha256": "7aca7bd57be4c1aedea3be4f3828a97b080f74291564c218f1cb6beb80208b56",
+      "return_period_years": 100,
+      "action": "moved"
+    },
+    {
+      "original_path": "/Users/jack/Downloads/spenvis_sep.html",
+      "path": "data/raw/spenvis/sapphire_100yr/sapphire_100yr_source_report.html",
+      "sha256": "f9bc886220e0907940f7e8eef0cf19765df76d63a53501286372423385b664a3",
+      "return_period_years": 100,
+      "action": "moved"
+    },
+    {
+      "original_path": "/Users/jack/Downloads/sd2_dose.png",
+      "path": "data/raw/spenvis/sapphire_100yr/sapphire_100yr_shielding_plot.png",
+      "sha256": "8c35b814fc8c658263e84b16bb2e38a73061438bf80381a5388f33eac77ce842",
+      "return_period_years": 100,
+      "action": "moved"
+    },
+    {
+      "original_path": "/Users/jack/Downloads/spenvis_s2o-2.txt",
+      "path": "data/raw/spenvis/sapphire_1000yr/sapphire_1000yr_shieldose_data.txt",
+      "sha256": "59796a4d60b8b1613e6e0e843c8e99c38c6d494cdda70536b871d9d60a1fa249",
+      "return_period_years": 1000,
+      "action": "moved"
+    },
+    {
+      "original_path": "/Users/jack/Downloads/spenvis_s2p-2.html",
+      "path": "data/raw/spenvis/sapphire_1000yr/sapphire_1000yr_shieldose_report.html",
+      "sha256": "87030f9605ed34483f7e1307a30747e4150734c915ddaa713f5e72d0539e0d51",
+      "return_period_years": 1000,
+      "action": "moved"
+    },
+    {
+      "original_path": "/Users/jack/Downloads/spenvis_sep-2.html",
+      "path": "data/raw/spenvis/sapphire_1000yr/sapphire_1000yr_source_report.html",
+      "sha256": "82cd7c1fea309a61082dbd632851453c9bdc459807ecec5f9a97d351d9c0ee03",
+      "return_period_years": 1000,
+      "action": "moved"
+    },
+    {
+      "original_path": "/Users/jack/Downloads/sd2_dose-2.png",
+      "path": "data/raw/spenvis/sapphire_1000yr/sapphire_1000yr_shielding_plot.png",
+      "sha256": "a8f44122725ee95acc7f66a836519b7295a6cd3b2b3cc016b30c63bf7437e59d",
+      "return_period_years": 1000,
+      "action": "moved"
+    }
+  ]
+}

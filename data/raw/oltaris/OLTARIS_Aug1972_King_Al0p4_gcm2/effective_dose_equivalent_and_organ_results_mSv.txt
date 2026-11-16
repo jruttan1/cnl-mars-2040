@@ -1,0 +1,29 @@
+data;total value ( days) in mSv;mSv/day;mSv/year
+Effective Dose Equivalent;1238.012
+Adrenals;310.9197
+Bfo;1255.8992
+Bladder;705.1438
+Bone;0.0
+Brain;2453.724
+Breast;2498.506
+Colon;1022.255
+Esophagus;805.7803
+Heart;1162.038
+Hippocampus;1717.875
+Kidneys;640.1962000000001
+Lens;29692.66
+Liver;846.8893
+Lungs;1750.077
+Muscle;3772.2127
+Pancreas;317.21229999999997
+Prostate;463.02529999999996
+Retina;5361.254
+Salivary_glands;12874.34
+Skin;88166.23
+Small_intestine;831.1397
+Spleen;1001.511
+Stomach;937.9358000000001
+Testes;8206.083
+Thymus;950.3825999999999
+Thyroid;2250.673
+Trachea;2031.379
