@@ -1,7 +1,8 @@
 # CNL Mars mission simulator
 
 **What this does:** compares mission decisions during repair EVAs while tracking each astronaut's
-estimated radiation exposure. Strategy A works; Strategies B–D and Monte Carlo are not implemented yet.
+estimated radiation exposure. Strategy A works; Strategies B–D have decision skeletons only.
+Their information models and decision criteria, and Monte Carlo, are not implemented yet.
 
 The radiation input is **SAPPHIRE-derived organ-dose estimates distributed using historical solar
 particle event timing profiles**. It is not measured astronaut dose or a prediction of health outcomes.
@@ -29,7 +30,7 @@ For a fresh setup, create a Python 3.12 `.venv` and install `requirements.txt`.
 | --- | --- |
 | `sim/assumptions.py` | Everyday settings: crew size, EVA length and turnaround. |
 | `sim/defaults.py` | Advanced mission and radiation-scenario selections. |
-| `sim/strategies.py` | Decision rules; B–D are placeholders. |
+| `sim/strategies.py` | Strategy A and concise B–D decision skeletons. |
 | `sim/mission_recovery.py` | Shared repair prerequisites, reactor confirmations, crew permissions and continuation checks. |
 | `docs/mission_recovery.md` | Plain-language case constraints and which parts are assumptions. |
 | `sim/run_strategy_a.py` | Runs the mission and exports results. |
@@ -40,6 +41,36 @@ one-hour turnaround. It rotates crew without consecutive assignments. Aborts do 
 credit; returning to the cabin is instantaneous. Crew accumulate dose both inside and outside.
 Mission hour zero defaults to storm hour 48, with a 264-hour ceiling capped by remaining data coverage.
 These are scenario/scheduling assumptions, not validated flight procedures.
+
+## B–D decision skeletons
+
+All three reuse A's existing operational checks: stabilization, access, repair prerequisites,
+deadline feasibility, crew eligibility and operational EVA aborts. These are not new assumptions.
+
+```text
+Operational checks require stabilize / wait / abort / hold?
+  Yes -> take that existing operational action.
+  No  -> evaluate the strategy-specific information:
+
+  B: Imperfect forecast -> projected EVA exposure -> timing / EVA decision [TODO]
+  C: Follow B -> B's estimated-exposure threshold reached?
+       No  -> continue B's policy [TODO]
+       Yes -> blood test -> update dose estimate -> reassess crew / EVA [TODO]
+  D: Multimodal measurements -> same estimator as C -> crew / EVA decision [TODO]
+```
+
+The TODO branches are deliberately not executable: B–D raise `NotImplementedError` before
+approving a start, continuation of an EVA, or mission continuation. They do not silently fall
+back to A, invent measurements, or read true dose/the historical storm as a forecast.
+No B–D performance results should be reported from these skeletons.
+
+Still needed: forecast uncertainty and decision rules for B; measurement calibration, timing,
+shared Bayesian inference and decision rules for C/D. The proposed biomarker names in `AGENTS.md`
+are not implemented measurement models. C's blood-test trigger follows the user's specified
+design: use B's estimated exposure, not hidden true dose. Its threshold value and units, sampling
+logistics, result delay, repeat-test rule and actions while awaiting results remain unspecified.
+Forecast integration with D and unavailable-information handling also remain unspecified. Biological estimates
+would be absorbed dose in mGy, not interchangeable with mGy-Eq exposure references.
 
 ## Four useful charts
 

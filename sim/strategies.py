@@ -52,13 +52,38 @@ def strategy_a(state: State) -> Decision:
                     state.available_astronauts[0], state.outstanding_repairs[0])
 
 
+def _informed_strategy(state: State, missing: str) -> Decision:
+    """Reuse operational gates; never approve exposure using an unimplemented model."""
+    candidate = strategy_a(state)
+    if candidate.action in ('start', 'continue', 'resume_mission'):
+        raise NotImplementedError(missing)
+    return candidate
+
+
 def strategy_b(state: State) -> Decision:
-    raise NotImplementedError('Strategy B is not implemented')
+    """B: operational checks -> imperfect forecast -> exposure decision [TODO].
+
+    Compare feasible EVA windows using forecast uncertainty, not the true storm.
+    Start/wait or continue/abort criteria and missing-forecast handling are TODO.
+    """
+    return _informed_strategy(state, 'Strategy B needs an imperfect forecast observation and forecast-based decision rules')
 
 
 def strategy_c(state: State) -> Decision:
-    raise NotImplementedError('Strategy C is not implemented')
+    """C: follow B -> estimated-exposure threshold reached? -> blood test [TODO].
+
+    Below the trigger, follow B. At the trigger, obtain conventional blood tests;
+    use results to update the shared dose estimator and reassess crew/EVA decisions.
+    Trigger value/units, sampling, result delays and pending-result policy are TODO.
+    Never trigger from the simulator's hidden true dose.
+    """
+    return _informed_strategy(state, 'Strategy C needs B\'s exposure estimate and threshold, triggered blood tests, result timing and dose-update rules')
 
 
 def strategy_d(state: State) -> Decision:
-    raise NotImplementedError('Strategy D is not implemented')
+    """D: operational checks -> multimodal measurements -> dose estimate -> decision [TODO].
+
+    Use the same estimator as C with additional supported measurement models.
+    Calibration, correlations, result delays and crew/EVA decision criteria are TODO.
+    """
+    return _informed_strategy(state, 'Strategy D needs multimodal measurements, their timing, the shared dose estimator and decision rules')
