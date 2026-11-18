@@ -1,7 +1,7 @@
 REPOSITORY FILE GUIDE — 2026-11-17
 Root: /Users/jack/Documents/cnl
-150 project/source/output/archive files, each listed below. Includes tracked, untracked and ignored local artifacts.
-All 22827 local files, including dependencies, Git internals and caches, are listed separately in all_local_files_inventory.txt.
+176 project/source/output/archive files, each listed below. Includes tracked, untracked and ignored local artifacts.
+All 22423 local files, including dependencies, Git internals and caches, are listed separately in all_local_files_inventory.txt.
 Descriptions distinguish active use from historical/reference use. Source physics has not been revalidated for this inventory.
 This inventory is a snapshot, not a promise that all local files are committed or portable.
 Frozen anatomical input: data/processed/oltaris/mission_bfo_environment.csv
@@ -26,10 +26,10 @@ README.md
   Git: tracked
   Purpose: Project overview, source roles, units, assumptions, frozen radiation policy and strategy-development requirements.
 anatomical_environment.py
-  Git: untracked
+  Git: tracked
   Purpose: Loads and validates the frozen common OLTARIS BFO environment; integrates exposure intervals and calculates separate NASA reference comparisons. Export is blocked by the freeze record.
 audit_band_spectra.py
-  Git: untracked
+  Git: tracked
   Purpose: Audits Band spectrum equations, normalization and older boundary exports against SAPPHIRE; diagnostic history, not a transport simulator.
 bfo_proxy.py
   Git: tracked
@@ -62,7 +62,7 @@ charts/08_synthetic_sapphire_proton_profile.py
   Git: tracked
   Purpose: Plot generator: Historically timed synthetic proton fluence; not an anatomical dose calculation.
 charts/09_anatomical_eva_exposure.py
-  Git: untracked
+  Git: tracked
   Purpose: Plot generator: Current common-environment BFO rate, rolling EVA and accumulation plot; hatches interpolated bins and exports fixed-window sensitivity.
 charts/common.py
   Git: tracked
@@ -98,22 +98,22 @@ data/processed/october_2003_hourly_proton_flux.csv
 data/processed/oltaris/
 -----------------------
 data/processed/oltaris/mission_bfo_environment.csv
-  Git: untracked
+  Git: tracked
   Purpose: PRIMARY FROZEN simulator exposure table: 21,600 bins, two severities, two shield depths, nine timing variants and two historical templates; separate absorbed and Gray Equivalent rates.
 data/processed/oltaris/mission_bfo_environment_manifest.json
-  Git: untracked
+  Git: tracked
   Purpose: Anatomical dataset/source hashes, build provenance, units, geometry, distance interpretation and limitations.
 data/processed/oltaris/oltaris_sapphire_anatomical_summary.csv
-  Git: untracked
+  Git: tracked
   Purpose: Processed four-run corrected Band/MAX summary with BFO absorbed mGy and Gray Equivalent mGy-Eq, settings and source provenance.
 data/processed/oltaris/oltaris_sapphire_organ_doses.csv
-  Git: untracked
+  Git: tracked
   Purpose: Processed 112 corrected organ records; preserves distinct absorbed, dose-equivalent and Gray Equivalent quantities where supplied.
 data/processed/oltaris/radiation_environment_freeze.json
-  Git: untracked
+  Git: tracked
   Purpose: Pins the anatomical dataset and manifest checksums as oltaris_bfo_v1; prevents silent replacement during strategy development.
 data/processed/oltaris/superseded_weibull_anatomical_doses.csv
-  Git: untracked
+  Git: tracked
   Purpose: Processed historical Weibull result; mSv export values and separately supplied mGy/mGy-Eq summaries retain their provenance. Not an active input.
 
 data/processed/raw_nasa_omni2/
@@ -146,7 +146,7 @@ data/raw/archive/before_verified_sapphire/preservation_manifest.json
 data/raw/archive/
 -----------------
 data/raw/archive/move_manifest.csv
-  Git: untracked
+  Git: tracked
   Purpose: ARCHIVE — archive bookkeeping: records preserved paths, moves, hashes or source associations.
 
 data/raw/archive/previous_processed/
@@ -158,7 +158,7 @@ data/raw/archive/previous_processed/organ_dose.csv
   Git: tracked
   Purpose: REQUIRED rebuild source table read by prepare_data.build(); retained in place despite historical directory name. organ_dose.csv
 data/raw/archive/previous_processed/shielding_dose.csv
-  Git: untracked
+  Git: tracked
   Purpose: REQUIRED rebuild source table read by prepare_data.build(); retained in place despite historical directory name. shielding_dose.csv
 data/raw/archive/previous_processed/spe_hourly.csv
   Git: tracked
@@ -170,8 +170,32 @@ data/raw/archive/previous_processed/spe_spectra.csv
 data/raw/archive/
 -----------------
 data/raw/archive/reorganization_validation.json
-  Git: untracked
+  Git: tracked
   Purpose: ARCHIVE — archive bookkeeping: saved validation/metadata record (reorganization_validation.json).
+
+data/raw/mission_recovery/
+--------------------------
+data/raw/mission_recovery/cnl_case_overview.pdf
+  Git: tracked
+  Purpose: Original one-page Western–CNL Mars 2040 case overview, preserved from Downloads.
+data/raw/mission_recovery/cnsc_decay_heat.html
+  Git: untracked
+  Purpose: CNSC explanation of shutdown/decay heat; general principle only, not spacecraft-specific design limits.
+data/raw/mission_recovery/nasa_mars_communications.html
+  Git: tracked
+  Purpose: NASA NTRS record on Mars communication delays, disruptions and blackouts.
+data/raw/mission_recovery/nasa_propulsion_materials.html
+  Git: tracked
+  Purpose: NASA NTRS record on NTP/NEP materials and operating distinctions; numerical recovery defaults are not sourced here.
+data/raw/mission_recovery/national_academies_nep.html
+  Git: tracked
+  Purpose: National Academies NEP architecture chapter; supports power-conversion/heat-rejection/distribution distinctions.
+data/raw/mission_recovery/national_academies_ntp.html
+  Git: tracked
+  Purpose: National Academies NTP architecture chapter; supports qualitative propellant/reactor/engine distinctions.
+data/raw/mission_recovery/provenance.json
+  Git: tracked
+  Purpose: Case and published engineering source paths, URLs, hashes, retrieval date and evidence scope.
 
 data/raw/oltaris/OLTARIS_Aug1972_King_Al0p4_gcm2/
 -------------------------------------------------
@@ -224,28 +248,28 @@ data/raw/oltaris/OLTARIS_Aug1972_King_Al20_gcm2/particle_fluence_vs_energy_isoto
 data/raw/oltaris/sapphire_corrected_band_2026-11-16/
 ----------------------------------------------------
 data/raw/oltaris/sapphire_corrected_band_2026-11-16/oltaris_sapphire_anatomical_summary.csv
-  Git: untracked
+  Git: tracked
   Purpose: Preserved user-supplied corrected four-run OLTARIS summary; source for current anatomical totals.
 data/raw/oltaris/sapphire_corrected_band_2026-11-16/oltaris_sapphire_organ_doses.csv
-  Git: untracked
+  Git: tracked
   Purpose: Preserved user-supplied corrected organ export table; source for processed organ records.
 data/raw/oltaris/sapphire_corrected_band_2026-11-16/provenance.json
-  Git: untracked
+  Git: tracked
   Purpose: Original attachment/source paths, checksums and corrected-run provenance.
 
 data/raw/oltaris/sapphire_superseded_weibull_2026-11-16/
 --------------------------------------------------------
 data/raw/oltaris/sapphire_superseded_weibull_2026-11-16/effective_dose_equivalent-3.txt
-  Git: untracked
+  Git: tracked
   Purpose: Superseded Weibull native effective/organ dose-equivalent export in mSv, not absorbed mGy.
 data/raw/oltaris/sapphire_superseded_weibull_2026-11-16/li_dose_database_mGy-3.dat
-  Git: untracked
+  Git: tracked
   Purpose: Superseded Weibull native absorbed-dose lookup database; not current anatomical normalization.
 data/raw/oltaris/sapphire_superseded_weibull_2026-11-16/li_flux_database-3.dat
-  Git: untracked
+  Git: tracked
   Purpose: Superseded Weibull native particle-flux/fluence database.
 data/raw/oltaris/sapphire_superseded_weibull_2026-11-16/provenance.json
-  Git: untracked
+  Git: tracked
   Purpose: Source identities/hashes and separate provenance of user-supplied Weibull absorbed/Gray Equivalent summary values.
 
 data/raw/omniweb/OMNIWeb_Aug1972/
@@ -290,22 +314,22 @@ data/raw/omniweb/omni2_5AkMqBOXbn.lst.txt
 data/raw/reference_documents/
 -----------------------------
 data/raw/reference_documents/goes_channel_definitions.json
-  Git: untracked
+  Git: tracked
   Purpose: Structured >10/>30/>60 MeV integral-channel definitions, units, cadence and unverified local-product attribution.
 data/raw/reference_documents/goes_channel_notes.html
-  Git: untracked
+  Git: tracked
   Purpose: Archived official NOAA GOES data/channel notes.
 data/raw/reference_documents/goes_hourly_product.html
-  Git: untracked
+  Git: tracked
   Purpose: Archived GSFC/SPDF hourly GOES product description.
 data/raw/reference_documents/manifest.json
-  Git: untracked
+  Git: tracked
   Purpose: Downloaded reference URLs, retrieval dates and SHA-256 hashes.
 data/raw/reference_documents/nasa_std_3001_vol1_rev_c.pdf
-  Git: untracked
+  Git: tracked
   Purpose: Pinned NASA human-system standard, Volume 1 Revision C; source of BFO exposure reference limits.
 data/raw/reference_documents/supplied_october_2003_goes10_hourly_proton_flux.csv
-  Git: untracked
+  Git: tracked
   Purpose: Byte-preserved copy of the supplied GOES timing record; official archive equivalence remains unverified.
 
 data/raw/spenvis/SAPPHIRE-1-in-100/
@@ -401,10 +425,16 @@ data/raw/spenvis/verified_sapphire_manifest.json
   Git: tracked
   Purpose: Source paths, hashes and user-confirmed pairings for the November 16 SPENVIS source/SHIELDOSE groups.
 
+docs/
+-----
+docs/mission_recovery.md
+  Git: untracked
+  Purpose: Case facts, engineering references, configurable hypothetical assumptions, interfaces, limitations and future Monte Carlo contract.
+
 ./
 --
 organize_oltaris_anatomical.py
-  Git: untracked
+  Git: tracked
   Purpose: Archives supplied corrected and superseded OLTARIS files, creates unit-separated anatomical tables and checks the corrected spectral approximation.
 
 outputs/
@@ -416,22 +446,22 @@ outputs/README.md
 outputs/analysis/
 -----------------
 outputs/analysis/all_local_files_inventory.txt
-  Git: untracked
+  Git: tracked
   Purpose: Exhaustive local file listing with category, Git status, byte size and purpose, including dependencies, caches and Git internals.
 
 outputs/analysis/anatomical_eva/
 --------------------------------
 outputs/analysis/anatomical_eva/README.md
-  Git: untracked
+  Git: tracked
   Purpose: Method, units, timing interpretation and limitations of the anatomical EVA comparison.
 outputs/analysis/anatomical_eva/provenance.json
-  Git: untracked
+  Git: tracked
   Purpose: Hashes, source paths, timing definitions and units for the anatomical EVA outputs.
 
 outputs/analysis/
 -----------------
 outputs/analysis/repository_file_guide.txt
-  Git: untracked
+  Git: tracked
   Purpose: This annotated project-file inventory, including every historical backup, as of this snapshot.
 
 outputs/
@@ -467,46 +497,103 @@ outputs/model/synthetic_sapphire_interval_exposure.csv
   Git: tracked
   Purpose: SHIELDOSE reference dose integrated over configured example intervals.
 
+outputs/runs/recovery_nep/
+--------------------------
+outputs/runs/recovery_nep/bfo_exposure_history.csv
+  Git: ignored/local
+  Purpose: Strategy A run (illustrative NEP recovery): Per-astronaut interval ledger with EVA/cabin location, shielding, absorbed mGy and Gray Equivalent mGy-Eq.
+outputs/runs/recovery_nep/event_log.csv
+  Git: ignored/local
+  Purpose: Strategy A run (illustrative NEP recovery): Chronological starts, waits, continuations, aborts, repairs and termination reasons.
+outputs/runs/recovery_nep/mission_timeline.png
+  Git: ignored/local
+  Purpose: Strategy A run (illustrative NEP recovery): EVA assignments and cabin-time timeline.
+outputs/runs/recovery_nep/nasa_bfo_reference_comparisons.csv
+  Git: ignored/local
+  Purpose: Strategy A run (illustrative NEP recovery): Mission-contribution rolling-window comparisons with NASA BFO references; compliance is not assessed.
+outputs/runs/recovery_nep/recovery_events.csv
+  Git: ignored/local
+  Purpose: Strategy A run (illustrative NEP recovery): Qualitative recovery permissions, resource actions, repair/checkout outcomes and terminal reasons.
+outputs/runs/recovery_nep/summary.json
+  Git: ignored/local
+  Purpose: Strategy A run (illustrative NEP recovery): Run configuration, environment provenance, crew exposure and repair outcomes.
+
+outputs/runs/recovery_ntp/
+--------------------------
+outputs/runs/recovery_ntp/bfo_exposure_history.csv
+  Git: ignored/local
+  Purpose: Strategy A run (illustrative NTP recovery): Per-astronaut interval ledger with EVA/cabin location, shielding, absorbed mGy and Gray Equivalent mGy-Eq.
+outputs/runs/recovery_ntp/event_log.csv
+  Git: ignored/local
+  Purpose: Strategy A run (illustrative NTP recovery): Chronological starts, waits, continuations, aborts, repairs and termination reasons.
+outputs/runs/recovery_ntp/mission_timeline.png
+  Git: ignored/local
+  Purpose: Strategy A run (illustrative NTP recovery): EVA assignments and cabin-time timeline.
+outputs/runs/recovery_ntp/nasa_bfo_reference_comparisons.csv
+  Git: ignored/local
+  Purpose: Strategy A run (illustrative NTP recovery): Mission-contribution rolling-window comparisons with NASA BFO references; compliance is not assessed.
+outputs/runs/recovery_ntp/recovery_events.csv
+  Git: ignored/local
+  Purpose: Strategy A run (illustrative NTP recovery): Qualitative recovery permissions, resource actions, repair/checkout outcomes and terminal reasons.
+outputs/runs/recovery_ntp/summary.json
+  Git: ignored/local
+  Purpose: Strategy A run (illustrative NTP recovery): Run configuration, environment provenance, crew exposure and repair outcomes.
+
 outputs/validation/
 -------------------
 outputs/validation/integration_preservation_check.json
-  Git: untracked
+  Git: tracked
   Purpose: Recorded checksum comparison confirming 101 checked pre-integration baseline/source artifacts were unchanged.
+
+outputs/validation/mission_recovery/
+------------------------------------
+outputs/validation/mission_recovery/README.md
+  Git: untracked
+  Purpose: Scope of recovery implementation verification and protected-source checks.
+outputs/validation/mission_recovery/integration.json
+  Git: untracked
+  Purpose: 72 unchanged legacy runs, eight real-environment recovery runs, test counts and 90 protected hashes.
+outputs/validation/mission_recovery/tests_after.log
+  Git: untracked
+  Purpose: Post-implementation log: 82 tests passed.
+outputs/validation/mission_recovery/tests_before.log
+  Git: untracked
+  Purpose: Baseline test log: 65 tests passed.
 
 outputs/validation/oltaris_anatomical/
 --------------------------------------
 outputs/validation/oltaris_anatomical/README.md
-  Git: untracked
+  Git: tracked
   Purpose: Corrected/superseded source validation findings and spectrum-fit interpretation.
 outputs/validation/oltaris_anatomical/spectrum_metrics.csv
-  Git: untracked
+  Git: tracked
   Purpose: Aggregate corrected spectrum-fit error metrics.
 outputs/validation/oltaris_anatomical/spectrum_overlay.png
-  Git: untracked
+  Git: tracked
   Purpose: Corrected approximation versus original SAPPHIRE integral-fluence overlay.
 outputs/validation/oltaris_anatomical/spectrum_percentage_errors.csv
-  Git: untracked
+  Git: tracked
   Purpose: Point-by-point percent errors at original spectrum energies.
 outputs/validation/oltaris_anatomical/validation.json
-  Git: untracked
+  Git: tracked
   Purpose: Machine-readable checks of anatomical tables, source hashes and spectrum consistency.
 
 outputs/validation/repository_cleanup/
 --------------------------------------
 outputs/validation/repository_cleanup/manifest.json
-  Git: untracked
+  Git: tracked
   Purpose: Every cleanup move/deletion with original path, checksum, reason, Git status and external archive destination.
 outputs/validation/repository_cleanup/report.txt
-  Git: untracked
+  Git: tracked
   Purpose: Cleanup summary, retained dependencies, manual-review items and restore instructions.
 outputs/validation/repository_cleanup/tests_after.log
-  Git: untracked
+  Git: tracked
   Purpose: Recorded final suite: 65 tests passed after cleanup.
 outputs/validation/repository_cleanup/tests_before.log
-  Git: untracked
+  Git: tracked
   Purpose: Recorded baseline: 65 tests passed before cleanup.
 outputs/validation/repository_cleanup/verification.json
-  Git: untracked
+  Git: tracked
   Purpose: Source/frozen/Git/code checksums and 72 identical mission-state comparisons; before/after test counts.
 
 ./
@@ -538,15 +625,18 @@ sim/assumptions.py
 sim/defaults.py
   Git: tracked
   Purpose: Advanced operational settings, scenario choices, shielding, timing, optional estimate policy and repair priorities.
+sim/mission_recovery.py
+  Git: tracked
+  Purpose: Shared qualitative recovery controller, immutable configs/observations and state/events; engine-specific constraints, resources, crew permissions, checkout and mission outcomes; no radiation/RNG imports.
 sim/mission_simulator.py
   Git: tracked
-  Purpose: Shared mission engine: advances time, runs repairs/EVAs, accounts EVA and cabin BFO exposure and supplies restricted strategy observations.
+  Purpose: Mission engine with optional shared recovery integration, hard interlocks and unchanged frozen BFO exposure accounting.
 sim/models.py
   Git: tracked
   Purpose: Typed records for scenarios, astronauts, EVAs, mission state, restricted observations and decisions; keeps mGy separate from mGy-Eq.
 sim/strategies.py
   Git: tracked
-  Purpose: Strategy A decision rules; B, C and D are explicit NotImplemented placeholders.
+  Purpose: Strategy A operational fallback, including optional recovery decisions; B–D remain unimplemented placeholders.
 
 ./
 --
@@ -557,13 +647,13 @@ spenvis_audit.py
 tests/
 ------
 tests/test_anatomical_environment.py
-  Git: untracked
+  Git: tracked
   Purpose: Tests: Organ exposure conservation, unit separation and NASA comparison boundaries.
 tests/test_anatomical_eva.py
-  Git: untracked
+  Git: tracked
   Purpose: Tests: Conservation and exact interval integration for the standalone EVA chart.
 tests/test_band_audit.py
-  Git: untracked
+  Git: tracked
   Purpose: Tests: Tests of spectrum mathematics and provenance; no mission model changes.
 tests/test_bfo_proxy.py
   Git: tracked
@@ -571,8 +661,11 @@ tests/test_bfo_proxy.py
 tests/test_historical_templates.py
   Git: tracked
   Purpose: Tests: Independent event normalization, selection and mission boundary regressions.
+tests/test_mission_recovery.py
+  Git: tracked
+  Purpose: Tests: Synthetic engineering scenarios, not validated reactor limits or clinical rules.
 tests/test_oltaris_anatomical.py
-  Git: untracked
+  Git: tracked
   Purpose: Tests: Isolated data-integrity checks; no transport or mission simulation.
 tests/test_radiation_model.py
   Git: tracked

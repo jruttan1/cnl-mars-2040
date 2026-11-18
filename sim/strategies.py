@@ -15,20 +15,19 @@ def strategy_a(state: State) -> Decision:
         return Decision('continue', 'No permitted operational abort condition triggered')
     recovery = state.recovery
     if recovery is not None:
-        if 'conserve_support' in recovery.allowed_actions:
-            return Decision('conserve_support', 'Conservative fallback: shed nonessential loads')
-        for action in ('resume_mission', 'begin_checkout'):
-            if action in recovery.allowed_actions:
-                return Decision(action, 'Shared recovery prerequisites satisfied')
-        if not state.outstanding_repairs and 'Mission continuation authority withheld' in recovery.continuation_blockers:
-            return Decision('safe_hold', 'Continuation authority withheld; request reassessment')
+        if not state.outstanding_repairs:
+            if recovery.continuation_blockers:
+                return Decision('safe_hold', '; '.join(recovery.continuation_blockers))
+            return Decision('resume_mission', 'Required repairs complete and continuation approved')
+        if not recovery.ready_repairs:
+            return Decision('safe_hold', '; '.join(reason for _, reason in recovery.blocked_repairs))
         if not state.launch_allowed:
             return Decision('wait', state.restriction_reason)
         eligible = dict(recovery.eligible_crews)
         for repair in recovery.ready_repairs:
             for name in state.available_astronauts:
                 if name in eligible[repair]:
-                    return Decision('start', 'Next feasible engine-specific repair within shared safety/crew constraints', name, repair)
+                    return Decision('start', 'Next configured repair satisfying shared case constraints', name, repair)
         return Decision('wait', 'No feasible repair/crew pairing; retain shared safety constraints')
     if not state.outstanding_repairs:
         return Decision('wait', 'All required repairs completed')

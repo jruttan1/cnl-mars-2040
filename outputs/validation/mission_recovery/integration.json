@@ -1,0 +1,198 @@
+{
+  "legacy_runs_unchanged": 72,
+  "legacy_schema_note": "Comparison ignores newly added null recovery_config/recovery_state fields only",
+  "recovery_smoke_runs": [
+    {
+      "engine": "NTP",
+      "template": "august_1972",
+      "severity": "SAPPHIRE-1-in-100",
+      "status": "mission_continuation_authorized",
+      "hours": 25.0,
+      "repair_order": [
+        "monitoring",
+        "communications",
+        "propulsion"
+      ]
+    },
+    {
+      "engine": "NTP",
+      "template": "august_1972",
+      "severity": "SAPPHIRE-1-in-1000",
+      "status": "mission_continuation_authorized",
+      "hours": 25.0,
+      "repair_order": [
+        "monitoring",
+        "communications",
+        "propulsion"
+      ]
+    },
+    {
+      "engine": "NTP",
+      "template": "october_2003_goes10",
+      "severity": "SAPPHIRE-1-in-100",
+      "status": "mission_continuation_authorized",
+      "hours": 25.0,
+      "repair_order": [
+        "monitoring",
+        "communications",
+        "propulsion"
+      ]
+    },
+    {
+      "engine": "NTP",
+      "template": "october_2003_goes10",
+      "severity": "SAPPHIRE-1-in-1000",
+      "status": "mission_continuation_authorized",
+      "hours": 25.0,
+      "repair_order": [
+        "monitoring",
+        "communications",
+        "propulsion"
+      ]
+    },
+    {
+      "engine": "NEP",
+      "template": "august_1972",
+      "severity": "SAPPHIRE-1-in-100",
+      "status": "mission_continuation_authorized",
+      "hours": 27.0,
+      "repair_order": [
+        "monitoring",
+        "propulsion",
+        "communications"
+      ]
+    },
+    {
+      "engine": "NEP",
+      "template": "august_1972",
+      "severity": "SAPPHIRE-1-in-1000",
+      "status": "mission_continuation_authorized",
+      "hours": 27.0,
+      "repair_order": [
+        "monitoring",
+        "propulsion",
+        "communications"
+      ]
+    },
+    {
+      "engine": "NEP",
+      "template": "october_2003_goes10",
+      "severity": "SAPPHIRE-1-in-100",
+      "status": "mission_continuation_authorized",
+      "hours": 27.0,
+      "repair_order": [
+        "monitoring",
+        "propulsion",
+        "communications"
+      ]
+    },
+    {
+      "engine": "NEP",
+      "template": "october_2003_goes10",
+      "severity": "SAPPHIRE-1-in-1000",
+      "status": "mission_continuation_authorized",
+      "hours": 27.0,
+      "repair_order": [
+        "monitoring",
+        "propulsion",
+        "communications"
+      ]
+    }
+  ],
+  "protected_artifacts_unchanged": 90,
+  "protected_sha256": {
+    "radiation_config.json": "053329dfcb644e0110e431ad16b156130aab6dc40fcc97c9269e32175ecc1816",
+    "radiation_model.py": "55c0afba1ef29d65ea3c9992fbd5839526039cf340a6af776486cf83700f8c07",
+    "anatomical_environment.py": "2c84a70df0a366557be2a3b79158097f5ad88e45a77a74dbd5990f8f873e889f",
+    "outputs/mission_radiation_environment.csv": "a01e54cd56bb9baacddbef7afff47827ede6cb60de6046b2cdd01c4bb931e416",
+    "outputs/model/baseline_manifest.json": "d7b3bcba91d390b43411141ad84996f7283600923a6fc7a107f1a06f08eb4592",
+    "data/processed/mission_radiation_environment.csv": "a01e54cd56bb9baacddbef7afff47827ede6cb60de6046b2cdd01c4bb931e416",
+    "data/processed/spe_hourly.csv": "f7d75639409f86cb272c321a522d793c3e59b0eaf24ff5c90259354a7ce8c4dc",
+    "data/processed/october_1989_hourly_proton_flux.csv": "ce1a10d66651b1e1b18016abe617eeeab2a579bd217a8b7f74d98b8ae2889761",
+    "data/processed/october_2003_goes10_hourly_proton_flux.csv": "55767a4827bfc3044ff99a06862bdc6861a7792ba16fe0c58f265cd68a18c209",
+    "data/processed/spe_scenarios.csv": "b790b5419a8912c83f70fbc225d6954a1308fa7e7bf8948b380a03c10ee10c9f",
+    "data/processed/october_2003_hourly_proton_flux.csv": "73d55efe23c0c362275d48a32ad41427c0fe4f5f3770b1c7acdc1e8c20ef3cdf",
+    "data/processed/shielding_dose.csv": "13c77046e001464024102eddcbfc7b3bc7d556164574978234b16948d57ad2d9",
+    "data/raw/spenvis/verified_sapphire_manifest.json": "cbf1f1b267c8e782990c54f15f3daeca9ed3997ee58b12a65b3d59cc226dc608",
+    "data/raw/omniweb/omni2_5AkMqBOXbn.fmt.txt": "e8019dc0e6a4213dae30f9559775b6d7e736ffb6e92a53f06299065ed9c3d99e",
+    "data/raw/omniweb/OMNIWeb_Aug1972_measured_proton_flux_hours.png": "8aa29210fc1672f01fa5f42457192138648f7a029d151f5a5782127733ae07fb",
+    "data/raw/omniweb/omni2_5AkMqBOXbn.lst.txt": "1074e389798a75bf8dd9129fdb5b3f01fb64ed3c04dee5fe3f30dc69ab633199",
+    "data/raw/archive/move_manifest.csv": "47963758d998825edc72cf0f940e51e6057d4835f7a7fbfac665fbbebef82bfd",
+    "data/raw/archive/reorganization_validation.json": "ade87ba537444476ef5586ca50e3ef2a0adf6d1c25757cb1402e9c8cb502c7b6",
+    "data/raw/reference_documents/goes_channel_definitions.json": "0f3e3fb81fd1cd5096590291d06a8849100e57eb51a77a1d719ddf29319beb92",
+    "data/raw/reference_documents/goes_hourly_product.html": "dae49405040768c8697ad2271e42bc4955ee749e2832eeeaa654e6c1ba856131",
+    "data/raw/reference_documents/nasa_std_3001_vol1_rev_c.pdf": "e65882af9c9a9861b520268f739baadba08f6225feb14489ff7c46442de26ce9",
+    "data/raw/reference_documents/goes_channel_notes.html": "a3fcc259c0518d57ff311536ba509d7f219451fc8c80a963ae30d07989a1d828",
+    "data/raw/reference_documents/manifest.json": "54ea798c11f0db5a7b6320c892aa4df5a30925d104e4af0954d20199e00bfb13",
+    "data/raw/reference_documents/supplied_october_2003_goes10_hourly_proton_flux.csv": "55767a4827bfc3044ff99a06862bdc6861a7792ba16fe0c58f265cd68a18c209",
+    "data/raw/oltaris/sapphire_superseded_weibull_2026-11-16/provenance.json": "3e4020c5d75bf6cb9e4f0bd700c34396095313c932375566f5bc91516d89ea11",
+    "data/raw/oltaris/sapphire_superseded_weibull_2026-11-16/li_dose_database_mGy-3.dat": "3f50e7ec56650e0d61b9748e241ac5676d5cebff14c1cca885667cf3343321b4",
+    "data/raw/oltaris/sapphire_superseded_weibull_2026-11-16/li_flux_database-3.dat": "6b8e3509813d6cf46b62389e463887087eca43adc06241b61171217c5592cdce",
+    "data/raw/oltaris/sapphire_superseded_weibull_2026-11-16/effective_dose_equivalent-3.txt": "ab8b968cabd3422d9d3f0de9b5dd5c044bb877d6485d7bcdea3862b4c1031e76",
+    "data/raw/oltaris/OLTARIS_Aug1972_King_Al0p4_gcm2/effective_dose_equivalent_and_organ_results_mSv.txt": "a90fa96b2058c46f5f69d6cc16a890da4b4eebb8f12a90cb9b7fb3ccfdf36d77",
+    "data/raw/oltaris/OLTARIS_Aug1972_King_Al0p4_gcm2/absorbed_dose_vs_aluminum_and_tissue_depth_mGy.dat": "4532dee5c6fc6fa3261b50ac67d848be573d58a7bfa345d900225118a21bcdc4",
+    "data/raw/oltaris/OLTARIS_Aug1972_King_Al0p4_gcm2/NASA_Q_leukemia_dose_equivalent_vs_depth_mSv.dat": "f6cd5e71ed8c0ae3c3a951ee4721cc57db9cb4d7309f74e8e98120168a1d1cbf",
+    "data/raw/oltaris/OLTARIS_Aug1972_King_Al0p4_gcm2/particle_fluence_vs_energy_and_isotope_point_1.dat": "b443ed4e5820319dcedb7d4561d2aabd95bf9957aa4c49044b804c8ee41874c1",
+    "data/raw/oltaris/OLTARIS_Aug1972_King_Al0p4_gcm2/particle_fluence_vs_energy_isotope_and_depth.dat": "44f3b684feecbb5ea3218c7def237e9fda7b01b1133c5e3f47ffbf92a8785046",
+    "data/raw/oltaris/OLTARIS_Aug1972_King_Al0p4_gcm2/README.md": "dba9cb43efef597102d6aa5179eeb21b2db11f7356fe92a6bb8fb291ac07fc77",
+    "data/raw/oltaris/OLTARIS_Aug1972_King_Al0p4_gcm2/NASA_Q_solid_cancer_dose_equivalent_vs_depth_mSv.dat": "9b5ba5988e245ea15eaee89e0e3d92bdd2847d406107e6049a452f4ad0a51209",
+    "data/raw/oltaris/sapphire_corrected_band_2026-11-16/provenance.json": "38e95a0853d755ae8c77b702f761d256bf99da19d4ae4765bf73f5837a163f51",
+    "data/raw/oltaris/sapphire_corrected_band_2026-11-16/oltaris_sapphire_anatomical_summary.csv": "32a3fa70f242a1ddded588ec330a122da75929855a99bada0290a5601e1119d4",
+    "data/raw/oltaris/sapphire_corrected_band_2026-11-16/oltaris_sapphire_organ_doses.csv": "d7ce28042b553f1107749a6e85c0846fd1bcd5a98c861d66a033e6f4b96dadb3",
+    "data/raw/oltaris/OLTARIS_Aug1972_King_Al20_gcm2/effective_dose_equivalent_and_organ_results_mSv.txt": "f42aab388b5aa5c964f9c111e0625b352a969b42375a2b3952387a1743b7fac5",
+    "data/raw/oltaris/OLTARIS_Aug1972_King_Al20_gcm2/absorbed_dose_vs_aluminum_and_tissue_depth_mGy.dat": "3f0915b71a99801ab9c6e1332f5b36d4e8fcb01f75e4702d90933c18aef621b8",
+    "data/raw/oltaris/OLTARIS_Aug1972_King_Al20_gcm2/NASA_Q_leukemia_dose_equivalent_vs_depth_mSv.dat": "969c8a4de027856c870669ba6853e0467561536800690b0480edaebcd3049a0a",
+    "data/raw/oltaris/OLTARIS_Aug1972_King_Al20_gcm2/particle_fluence_vs_energy_isotope_and_depth.dat": "2e9d739bdea8fd3e24662cd4f66836de0e73b065a51935a9ccd6956a9cd186c5",
+    "data/raw/oltaris/OLTARIS_Aug1972_King_Al20_gcm2/README.md": "be9f4de99d382cb9537131cdd70fde80c23cc08b80d17cbf9c7ba98569f1faf4",
+    "data/raw/oltaris/OLTARIS_Aug1972_King_Al20_gcm2/NASA_Q_solid_cancer_dose_equivalent_vs_depth_mSv.dat": "4d96c1ab161f26ea4db5c9b7ed1a9b15c5037673d1cadd47160e778147b09366",
+    "data/raw/oltaris/OLTARIS_Aug1972_King_Al20_gcm2/NASA_Q_solid_cancer_dose_equivalent_by_particle_vs_depth_mSv.dat": "180dfc8dae0ee4584250f61e6f941aebbe778044be8ab8b674226c540ad4ff25",
+    "data/raw/archive/previous_processed/spe_hourly.csv": "6aa09e9975acc36a55cebe9401fe419be5bb7aa13ad891a773ebc976dc0b325b",
+    "data/raw/archive/previous_processed/spe_spectra.csv": "9956d3cfba94c203d72a131637c1d15a0b57babbd897f4fad5353852597c3ed8",
+    "data/raw/archive/previous_processed/organ_dose.csv": "3e15fdadd3749aaeda60df5b9f16cde04ae36a2943462ff0f46d56b0e537399b",
+    "data/raw/archive/previous_processed/exposure_settings.csv": "55044a89a24738e0b5e43675a685a5af57ba343b7926e3ada7bcea747dd71b39",
+    "data/raw/archive/previous_processed/shielding_dose.csv": "dbebc21f096e2f835e90a55f6a9f12b0d67486aa8cefc054e6e8f5a1ce6cb0ac",
+    "data/raw/archive/before_verified_sapphire/preservation_manifest.json": "5d731396c885231c9861985bab54addff8061b02ee83df036972083a81658985",
+    "data/raw/omniweb/OMNIWeb_Aug1972/README.md": "116363b7884a17261541b952da621ed02e9b7a20645147c3e76ea1dd5b95cd4d",
+    "data/raw/omniweb/OMNIWeb_Aug1972/measured_proton_flux_hours.png": "8aa29210fc1672f01fa5f42457192138648f7a029d151f5a5782127733ae07fb",
+    "data/raw/omniweb/OMNIWeb_Aug1972/hourly_measured_proton_flux.csv": "5e73849f7b43dbae4636a27a45cd2675cc4ba1dc8f0337fbffd76771140bdd06",
+    "data/raw/omniweb/OMNIWeb_Aug1972/validation.json": "d792334cfc7f18c7256712df5558684bcd607c5b11dc8f5163b7941a231e45b2",
+    "data/raw/omniweb/OMNIWeb_Aug1972/originals/omni2_5AkMqBOXbn.fmt.txt": "e8019dc0e6a4213dae30f9559775b6d7e736ffb6e92a53f06299065ed9c3d99e",
+    "data/raw/omniweb/OMNIWeb_Aug1972/originals/omni2_5AkMqBOXbn.lst.txt": "1074e389798a75bf8dd9129fdb5b3f01fb64ed3c04dee5fe3f30dc69ab633199",
+    "data/raw/spenvis/SAPPHIRE-1-in-1000/shieldose2-tissue-dose-vs-aluminium.pdf": "90847a1120ddb7fba752165905ddc83155ab18f2a8fc7b96fee56d745f9052e9",
+    "data/raw/spenvis/SAPPHIRE-1-in-1000/solar-proton-fluence-report.pdf": "6b30e922642a0a8de723f614fce8df8cd97ec889d6dd9c79a4a6a4e4a7dfbb45",
+    "data/raw/spenvis/SAPPHIRE-1-in-1000/shieldose2-tissue-dose-report.pdf": "776b8ed6eee9522852bb74a098e1f3df9b7aafb7a704076ace6daf94db5c4430",
+    "data/raw/spenvis/SAPPHIRE-1-in-1000/solar-proton-fluence-log-energy.png": "74a73f1b97568fc270cd85c17d997a43964fb1413046e04de8ed6a5b0586b1c1",
+    "data/raw/spenvis/SAPPHIRE-1-in-1000/README.md": "ace151553861f542eaecc6ebf0fc69c2b3b594240c03c13a556df70206c07856",
+    "data/raw/spenvis/SAPPHIRE-1-in-1000/solar-proton-fluence-linear-energy.png": "8195973eb302372f634b2ebade8eeeefa55df52f78c61dd0e91558d09c75cf2e",
+    "data/raw/spenvis/SAPPHIRE-1-in-1000/mulassis-effective-dose-report.html": "1eb43f5b712227a6bee2372827ac1dd59d7fbbcfd49f2f86a64cbd24ff68c4bb",
+    "data/raw/spenvis/SAPPHIRE-1-in-1000/mulassis-effective-dose-output.txt": "4df8b5e6dcfad28494bd41a5b0e5869d515806254135e6dc42596f7d006e8ad9",
+    "data/raw/spenvis/sapphire_100yr/sapphire_100yr_shielding_plot.png": "8c35b814fc8c658263e84b16bb2e38a73061438bf80381a5388f33eac77ce842",
+    "data/raw/spenvis/sapphire_100yr/sapphire_100yr_shieldose_data.txt": "7f46eacd333fbbf50adcbfeca02007f123da11eb6f3e5166ba55d2f17357b565",
+    "data/raw/spenvis/sapphire_100yr/sapphire_100yr_source_report.html": "f9bc886220e0907940f7e8eef0cf19765df76d63a53501286372423385b664a3",
+    "data/raw/spenvis/sapphire_100yr/sapphire_100yr_shieldose_report.html": "7aca7bd57be4c1aedea3be4f3828a97b080f74291564c218f1cb6beb80208b56",
+    "data/raw/spenvis/SAPPHIRE-1-in-100/shieldose2-tissue-dose-vs-aluminium.png": "4f8d9873e9edabbb831eccca63cef4bd20915c68433ec47a6470d3cfb5bd96af",
+    "data/raw/spenvis/SAPPHIRE-1-in-100/shieldose2-tissue-dose-output.txt": "1abf0025daaf8a809460daa656572214d024a4578318920b73a4caf9751c6d6d",
+    "data/raw/spenvis/SAPPHIRE-1-in-100/solar-proton-fluence-report.pdf": "2dcb23e6f02932c5a2fc340be99c6bb0a94d432181f3ed0a94ef22c24cfe2ec7",
+    "data/raw/spenvis/SAPPHIRE-1-in-100/solar-proton-fluence-log-energy.png": "074285fab4346b3f586615b624e8ddc393163d1a82673873e788058aae425a5d",
+    "data/raw/spenvis/SAPPHIRE-1-in-100/README.md": "0d2a00c3d6b0476934cf19e9a67bdd9056ae5fff06732f0752b1e2790be6c0ef",
+    "data/raw/spenvis/SAPPHIRE-1-in-100/solar-proton-fluence-linear-energy.png": "433095a7593f76cd0cdeb63e08cb5da33ae56cde896b7cd0cdc63f505f5886a8",
+    "data/raw/spenvis/SAPPHIRE-1-in-100/mulassis-effective-dose-report.html": "c09661b2f3aa9460a0aa37e0b2212f12ffd00570cd635fab559dec0d1d8f7f35",
+    "data/raw/spenvis/SAPPHIRE-1-in-100/mulassis-effective-dose-output.txt": "c01838111d7364cf4d2b98a0c6ea2a0c073c7b7673aa301e5bbb1fa0fce9d0f7",
+    "data/raw/spenvis/SAPPHIRE-1-in-100/shieldose2-tissue-dose-report.html": "1c56b52f8f4de38fbd8458224a7e28eb67dab37a7d8a613bccfbc981c1929686",
+    "data/raw/spenvis/sapphire_1000yr/sapphire_1000yr_shieldose_report.html": "87030f9605ed34483f7e1307a30747e4150734c915ddaa713f5e72d0539e0d51",
+    "data/raw/spenvis/sapphire_1000yr/sapphire_1000yr_shielding_plot.png": "a8f44122725ee95acc7f66a836519b7295a6cd3b2b3cc016b30c63bf7437e59d",
+    "data/raw/spenvis/sapphire_1000yr/sapphire_1000yr_source_report.html": "82cd7c1fea309a61082dbd632851453c9bdc459807ecec5f9a97d351d9c0ee03",
+    "data/raw/spenvis/sapphire_1000yr/sapphire_1000yr_shieldose_data.txt": "59796a4d60b8b1613e6e0e843c8e99c38c6d494cdda70536b871d9d60a1fa249",
+    "data/processed/raw_nasa_omni2/omni2_1989.dat": "a39ed8143bd29cb38cfeef9a2f659a022bae3372ef5cdb7c06766a305f3f8563",
+    "data/processed/raw_nasa_omni2/omni2_2003.dat": "cb1fcee0f95af4c318b239617bbb46f6e41c811bdca8464cf397eb7fd2fb7fc9",
+    "data/processed/oltaris/superseded_weibull_anatomical_doses.csv": "2b6516831620756323aecd7c8d3617bc86cd65896033798f0e8fbee3f05f1a06",
+    "data/processed/oltaris/mission_bfo_environment.csv": "270871c7ea81422f0ad7adf3a7e4b0a01dac0eaae3447efb3dab24a5f3256108",
+    "data/processed/oltaris/radiation_environment_freeze.json": "f7f47ac4760d005832505fe0b779ff11b495b5241bdec815ef9e95c706a06a37",
+    "data/processed/oltaris/mission_bfo_environment_manifest.json": "1e7f3e171dc22f969035acec154de95845ad3e69b8b1a34b0b9378de5faf31db",
+    "data/processed/oltaris/oltaris_sapphire_anatomical_summary.csv": "839f5eb457eb925e9f7d4de6cf50c6163e6076993071e5f5a1d14cec142a83f2",
+    "data/processed/oltaris/oltaris_sapphire_organ_doses.csv": "70a7f9d12fe53c8e8e821d2367a16bcd8d938031ad7d59165fa630cc6772ec3d"
+  },
+  "tests_before": 65,
+  "tests_after": 82,
+  "new_recovery_tests": 17
+}

@@ -2,7 +2,7 @@
 from dataclasses import dataclass, field
 from typing import Literal
 from sim.assumptions import MissionAssumptions, DEFAULT_ASSUMPTIONS
-from sim.mission_recovery import RecoveryConfig, RecoveryObservation, RecoveryState
+from sim.mission_recovery import RecoveryConfig, RecoveryObservation
 
 RepairType = Literal['communications', 'monitoring', 'propulsion']
 EngineType = Literal['NTP', 'NEP']
@@ -113,7 +113,7 @@ class State:
 
 @dataclass(frozen=True)
 class Decision:
-    action: Literal['start', 'wait', 'abort', 'continue', 'conserve_support', 'begin_checkout', 'resume_mission', 'safe_hold', 'abort_mission']
+    action: Literal['start', 'wait', 'abort', 'continue', 'resume_mission', 'safe_hold', 'abort_mission']
     reason: str
     astronaut: str | None = None
     repair_type: str | None = None
@@ -134,4 +134,3 @@ class MissionState:
     status: str = 'running'
     exposure_history: list[dict] = field(default_factory=list)
     recovery_config: RecoveryConfig | None = None
-    recovery_state: RecoveryState | None = None
