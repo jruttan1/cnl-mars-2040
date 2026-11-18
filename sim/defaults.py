@@ -27,8 +27,8 @@ class SimulatorDefaults:
     engine_type: str = 'NTP'                    # Team demonstration choice.
     # None follows planned duration; a shorter independent operational cap is optional.
     max_continuous_eva_hours: float | None = None
-    # Hypothetical tissue-target dose budget, NOT a NASA/medical exposure limit.
-    radiation_abort_threshold_mGy: float = 1000.0
+    # Optional explicitly configured experimental BFO absorbed-dose budget, NOT a NASA/medical exposure limit.
+    radiation_abort_threshold_mGy: float | None = None
     estimated_external_rate_mGy_h: float | None = None  # No reliable estimate by default.
     estimated_cabin_rate_mGy_h: float = 0.0      # Optional estimate only, not true cabin dose.
     operational_restrictions: tuple[tuple[float, float], ...] = ()

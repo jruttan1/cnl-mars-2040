@@ -1,0 +1,47 @@
+{
+  "tests_before": 65,
+  "tests_after": 65,
+  "failures": 0,
+  "skipped": 0,
+  "deterministic_mission_states_compared": 72,
+  "seeds": [
+    0,
+    42
+  ],
+  "comparison": "byte-identical canonical JSON of complete mission states and NASA reference comparisons; current simulator deterministic",
+  "mission_states_sha256": "9f778bbc514bf66eb44f054d57c9221e1b50c642980e34c431e9c980e53e8ede",
+  "frozen_anatomical_unchanged": true,
+  "frozen_shieldose_both_copies_unchanged": true,
+  "git_files_byte_identical": 485,
+  "python_source_and_test_files_byte_identical": 36,
+  "retained_data_files_byte_identical": 85,
+  "archived_file_hashes_verified": 239,
+  "other_retained_original_files_unchanged": 624,
+  "notebook_code_cells_unchanged": true,
+  "unexpected_missing_files": [],
+  "changed_files": [
+    ".gitignore",
+    "README.md",
+    "outputs/README.md",
+    "radiation_model.ipynb"
+  ],
+  "verified_source_checksums": {
+    "data/processed/oltaris/oltaris_sapphire_anatomical_summary.csv": "839f5eb457eb925e9f7d4de6cf50c6163e6076993071e5f5a1d14cec142a83f2",
+    "data/processed/oltaris/oltaris_sapphire_organ_doses.csv": "70a7f9d12fe53c8e8e821d2367a16bcd8d938031ad7d59165fa630cc6772ec3d",
+    "data/raw/oltaris/sapphire_corrected_band_2026-11-16/oltaris_sapphire_anatomical_summary.csv": "32a3fa70f242a1ddded588ec330a122da75929855a99bada0290a5601e1119d4",
+    "data/raw/oltaris/sapphire_corrected_band_2026-11-16/oltaris_sapphire_organ_doses.csv": "d7ce28042b553f1107749a6e85c0846fd1bcd5a98c861d66a033e6f4b96dadb3",
+    "data/processed/spe_hourly.csv": "f7d75639409f86cb272c321a522d793c3e59b0eaf24ff5c90259354a7ce8c4dc",
+    "data/processed/october_2003_goes10_hourly_proton_flux.csv": "55767a4827bfc3044ff99a06862bdc6861a7792ba16fe0c58f265cd68a18c209",
+    "data/raw/oltaris/sapphire_superseded_weibull_2026-11-16/effective_dose_equivalent-3.txt": "ab8b968cabd3422d9d3f0de9b5dd5c044bb877d6485d7bcdea3862b4c1031e76",
+    "data/raw/oltaris/sapphire_superseded_weibull_2026-11-16/li_dose_database_mGy-3.dat": "3f50e7ec56650e0d61b9748e241ac5676d5cebff14c1cca885667cf3343321b4",
+    "data/raw/oltaris/sapphire_superseded_weibull_2026-11-16/li_flux_database-3.dat": "6b8e3509813d6cf46b62389e463887087eca43adc06241b61171217c5592cdce",
+    "data/raw/spenvis/sapphire_100yr/sapphire_100yr_shieldose_data.txt": "7f46eacd333fbbf50adcbfeca02007f123da11eb6f3e5166ba55d2f17357b565",
+    "data/raw/spenvis/sapphire_100yr/sapphire_100yr_shieldose_report.html": "7aca7bd57be4c1aedea3be4f3828a97b080f74291564c218f1cb6beb80208b56",
+    "data/raw/spenvis/sapphire_100yr/sapphire_100yr_source_report.html": "f9bc886220e0907940f7e8eef0cf19765df76d63a53501286372423385b664a3",
+    "data/raw/spenvis/sapphire_100yr/sapphire_100yr_shielding_plot.png": "8c35b814fc8c658263e84b16bb2e38a73061438bf80381a5388f33eac77ce842",
+    "data/raw/spenvis/sapphire_1000yr/sapphire_1000yr_shieldose_data.txt": "59796a4d60b8b1613e6e0e843c8e99c38c6d494cdda70536b871d9d60a1fa249",
+    "data/raw/spenvis/sapphire_1000yr/sapphire_1000yr_shieldose_report.html": "87030f9605ed34483f7e1307a30747e4150734c915ddaa713f5e72d0539e0d51",
+    "data/raw/spenvis/sapphire_1000yr/sapphire_1000yr_source_report.html": "82cd7c1fea309a61082dbd632851453c9bdc459807ecec5f9a97d351d9c0ee03",
+    "data/raw/spenvis/sapphire_1000yr/sapphire_1000yr_shielding_plot.png": "a8f44122725ee95acc7f66a836519b7295a6cd3b2b3cc016b30c63bf7437e59d"
+  }
+}

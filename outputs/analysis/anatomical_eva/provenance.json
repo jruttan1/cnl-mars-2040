@@ -1,0 +1,36 @@
+{
+  "quantity": "BFO absorbed dose",
+  "unit": "mGy",
+  "rate_unit": "mGy/h",
+  "eva_duration_h": 7.0,
+  "shielding_g_cm2": 0.4,
+  "central_timing_variant": "gt10MeV__log_linear",
+  "timing_sources": [
+    {
+      "historical_template": "august_1972",
+      "template_start_utc": "1972-08-02 00:00:00+00:00",
+      "record_hours": 264,
+      "gap_filled_hours": 8,
+      "source_path": "data/processed/spe_hourly.csv",
+      "source_sha256": "f7d75639409f86cb272c321a522d793c3e59b0eaf24ff5c90259354a7ce8c4dc"
+    },
+    {
+      "historical_template": "october_2003_goes10",
+      "template_start_utc": "2003-10-26 00:00:00+00:00",
+      "record_hours": 336,
+      "gap_filled_hours": 0,
+      "source_path": "data/processed/october_2003_goes10_hourly_proton_flux.csv",
+      "source_sha256": "55767a4827bfc3044ff99a06862bdc6861a7792ba16fe0c58f265cd68a18c209"
+    }
+  ],
+  "dose_source_path": "data/processed/oltaris/oltaris_sapphire_anatomical_summary.csv",
+  "dose_source_sha256": "839f5eb457eb925e9f7d4de6cf50c6163e6076993071e5f5a1d14cec142a83f2",
+  "baseline_read_only_sha256": "a01e54cd56bb9baacddbef7afff47827ede6cb60de6046b2cdd01c4bb931e416",
+  "config_read_only_sha256": "053329dfcb644e0110e431ad16b156130aab6dc40fcc97c9269e32175ecc1816",
+  "equation": "dose_increment_mGy = event_BFO_absorbed_dose_mGy * normalized_bin_weight",
+  "event_totals_mGy": {
+    "100": 415.1,
+    "1000": 723.7
+  },
+  "for_operational_decisions": false
+}

@@ -1,0 +1,14 @@
+{
+  "original_files_preserved": 107,
+  "original_hashes_match": true,
+  "processed_rows": {
+    "spe_hourly.csv": 264,
+    "spe_scenarios.csv": 162,
+    "shielding_dose.csv": 2752
+  },
+  "implemented_charts": 3,
+  "chart_selection_guards_passed": true,
+  "notebook_execution_passed": true,
+  "optional_notebook_chart_passed": true,
+  "raw_hidden_but_readable": true
+}

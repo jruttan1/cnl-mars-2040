@@ -7,6 +7,7 @@ from sim.models import Astronaut, Scenario, MissionConfig, State
 from sim import mission_simulator as sim
 from sim.strategies import strategy_a, strategy_b, strategy_c, strategy_d
 from radiation_model import baseline_interval_dose, load_baseline
+from anatomical_environment import load_environment, interval_exposure
 
 
 class ConstantEnvironment:
@@ -18,6 +19,9 @@ class ConstantEnvironment:
     def dose(self, start, end, shielding):
         assert 0 <= start <= end <= 264-self.scenario.storm_start_hour
         return (end-start)*(self.outside_rate if shielding==self.scenario.shielding else self.inside_rate)
+
+    def gray_equivalent(self, start, end, shielding):
+        return self.dose(start, end, shielding) * 1.5
 
 
 class StrategyATests(unittest.TestCase):
@@ -197,12 +201,13 @@ class StrategyATests(unittest.TestCase):
                 self.run_case(cfg)
 
     def test_actual_csv_selection_and_exposure(self):
-        baseline=load_baseline()
+        baseline=load_environment('august_1972')
         for severity in ('SAPPHIRE-1-in-100','SAPPHIRE-1-in-1000'):
             s=Scenario(severity=severity)
             r=sim.simulate_mission(strategy_a,s,[Astronaut('A',available_from=2)],['communications'])
-            expected=baseline_interval_dose(severity,20,48,50,s.timing_variant,baseline=baseline)
-            expected+=baseline_interval_dose(severity,.4,50,57,s.timing_variant,baseline=baseline)
+            selected = baseline[baseline.scenario.eq(severity) & baseline.timing_variant.eq(s.timing_variant)]
+            expected=interval_exposure(selected[selected.shielding_g_cm2.eq(20)],48,50)
+            expected+=interval_exposure(selected[selected.shielding_g_cm2.eq(.4)],50,57)
             self.assertAlmostEqual(r.astronauts[0].accumulated_radiation,expected,places=8)
         for scenario in [Scenario(severity='sapphire_100yr'),Scenario(timing_variant='bad'),Scenario(shielding=3)]:
             with self.assertRaises(ValueError):sim.RadiationEnvironment(scenario)

@@ -15,8 +15,8 @@ htmlcov/
 .env.*
 !.env.example
 
-# Historical backups stay on disk; retain small importer inputs.
-# Full source rebuilding also needs the local-only archived shielding_dose.csv.
+# Historical snapshots moved outside the repository; retain required importer/provenance inputs.
+# These five source tables are all required for the full source rebuild.
 /data/raw/archive/*
 !/data/raw/archive/previous_processed/
 /data/raw/archive/previous_processed/*
@@ -24,6 +24,9 @@ htmlcov/
 !/data/raw/archive/previous_processed/spe_spectra.csv
 !/data/raw/archive/previous_processed/exposure_settings.csv
 !/data/raw/archive/previous_processed/organ_dose.csv
+!/data/raw/archive/previous_processed/shielding_dose.csv
+!/data/raw/archive/move_manifest.csv
+!/data/raw/archive/reorganization_validation.json
 !/data/raw/archive/before_verified_sapphire/
 /data/raw/archive/before_verified_sapphire/*
 !/data/raw/archive/before_verified_sapphire/preservation_manifest.json
@@ -40,3 +43,25 @@ htmlcov/
 # Large raw databases remain local; processed timing/dose CSVs stay tracked.
 /data/raw/oltaris/**/particle_fluence_vs_energy_isotope_and_depth.dat
 /data/processed/raw_nasa_omni2/
+
+# Reproducible presentation files (tracked frozen records are not matched)
+/outputs/charts/
+/outputs/strategy_a/
+/outputs/strategy_a_goes10/
+/outputs/runs/
+/outputs/monte_carlo/
+/outputs/analysis/anatomical_eva/*.csv
+/outputs/analysis/anatomical_eva/*.png
+/outputs/model/band_validation/
+/outputs/model/exploratory_bfo_*.csv
+/outputs/model/synthetic_sapphire_temporal_weights.csv
+/outputs/model/historical/full_event_profiles.csv
+
+# Temporary/editor/OS artifacts
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+/tmp/
+/temp/

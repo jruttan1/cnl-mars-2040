@@ -1,0 +1,26 @@
+[
+  {
+    "file": "goes_hourly_product.html",
+    "url": "https://omniweb.gsfc.nasa.gov/ftpbrowser/flux_ogg.html",
+    "sha256": "dae49405040768c8697ad2271e42bc4955ee749e2832eeeaa654e6c1ba856131",
+    "retrieved_date": "2026-11-17"
+  },
+  {
+    "file": "goes_channel_notes.html",
+    "url": "https://www.ngdc.noaa.gov/stp/satellite/goes/datanotes.html",
+    "sha256": "a3fcc259c0518d57ff311536ba509d7f219451fc8c80a963ae30d07989a1d828",
+    "retrieved_date": "2026-11-17"
+  },
+  {
+    "file": "nasa_std_3001_vol1_rev_c.pdf",
+    "url": "https://www.nasa.gov/wp-content/uploads/2023/11/nasa-std-3001-vol-1-rev-c-with-signature.pdf",
+    "sha256": "e65882af9c9a9861b520268f739baadba08f6225feb14489ff7c46442de26ce9",
+    "retrieved_date": "2026-11-17"
+  },
+  {
+    "file": "supplied_october_2003_goes10_hourly_proton_flux.csv",
+    "source": "data/processed/october_2003_goes10_hourly_proton_flux.csv",
+    "sha256": "55767a4827bfc3044ff99a06862bdc6861a7792ba16fe0c58f265cd68a18c209",
+    "status": "Supplied record preserved; numeric equivalence to official archive not independently verified"
+  }
+]

@@ -1,0 +1,49 @@
+{
+  "status": "superseded_weibull_run",
+  "archive_date": "2026-11-16",
+  "files": [
+    {
+      "original_path": "/Users/jack/Downloads/effective_dose_equivalent-3.txt",
+      "path": "data/raw/oltaris/sapphire_superseded_weibull_2026-11-16/effective_dose_equivalent-3.txt",
+      "sha256": "ab8b968cabd3422d9d3f0de9b5dd5c044bb877d6485d7bcdea3862b4c1031e76",
+      "size_bytes": 590,
+      "action": "copied_byte_for_byte_original_retained"
+    },
+    {
+      "original_path": "/Users/jack/Downloads/li_dose_database_mGy-3.dat",
+      "path": "data/raw/oltaris/sapphire_superseded_weibull_2026-11-16/li_dose_database_mGy-3.dat",
+      "sha256": "3f50e7ec56650e0d61b9748e241ac5676d5cebff14c1cca885667cf3343321b4",
+      "size_bytes": 7658,
+      "action": "copied_byte_for_byte_original_retained"
+    },
+    {
+      "original_path": "/Users/jack/Downloads/li_flux_database-3.dat",
+      "path": "data/raw/oltaris/sapphire_superseded_weibull_2026-11-16/li_flux_database-3.dat",
+      "sha256": "6b8e3509813d6cf46b62389e463887087eca43adc06241b61171217c5592cdce",
+      "size_bytes": 43663021,
+      "action": "copied_byte_for_byte_original_retained"
+    }
+  ],
+  "user_supplied_settings": {
+    "J0": 1110000000000.0,
+    "alpha": 0.27765,
+    "k": 2.25498,
+    "aluminium_sphere_g_cm2": 0.4,
+    "anatomical_model": "MAX",
+    "environment": "SPE, Free Space 1 AU"
+  },
+  "user_supplied_project_summary": {
+    "bfo_absorbed_dose_mGy": 474.4,
+    "bfo_gray_equivalent_mGy_eq": 713.1,
+    "effective_dose_equivalent_mSv": 603.2
+  },
+  "summary_provenance": "User message in this thread on 2026-11-16; not derived from effective-dose file",
+  "database_header": {
+    "job_name": "job_5",
+    "created_local_time": "Mon Nov 16 16:49:19 2026",
+    "timezone": "unspecified in file",
+    "taris_version": "5.01"
+  },
+  "database_interpretation": "Dose mGy vs Al/tissue depth; differential particle fluence per EU* per cm2 vs energy/isotope/depth, not anatomical dose",
+  "fluence_energy_unit": "MeV for photon/electron/positron; MeV/amu otherwise"
+}

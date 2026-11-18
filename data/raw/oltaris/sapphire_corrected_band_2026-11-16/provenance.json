@@ -1,0 +1,29 @@
+{
+  "archive_date": "2026-11-16",
+  "source_kind": "user_supplied_corrected_run_summaries",
+  "supersedes": "earlier Weibull anatomical results; not a baseline replacement",
+  "files": [
+    {
+      "original_path": "/Users/jack/.t3/userdata/attachments/839f168d-cf90-42bc-958e-11fa6d6f20b6-1dfe7830-46ee-4ed5-a664-679e2d4095d8-csv.csv",
+      "path": "data/raw/oltaris/sapphire_corrected_band_2026-11-16/oltaris_sapphire_anatomical_summary.csv",
+      "sha256": "32a3fa70f242a1ddded588ec330a122da75929855a99bada0290a5601e1119d4",
+      "size_bytes": 2122,
+      "action": "copied_byte_for_byte_original_retained"
+    },
+    {
+      "original_path": "/Users/jack/.t3/userdata/attachments/839f168d-cf90-42bc-958e-11fa6d6f20b6-7fac0ed8-333b-4227-a805-893d78449aff-csv.csv",
+      "path": "data/raw/oltaris/sapphire_corrected_band_2026-11-16/oltaris_sapphire_organ_doses.csv",
+      "sha256": "d7ce28042b553f1107749a6e85c0846fd1bcd5a98c861d66a033e6f4b96dadb3",
+      "size_bytes": 12399,
+      "action": "copied_byte_for_byte_original_retained"
+    }
+  ],
+  "setting_provenance": "Attached CSV rows; input decks and corrected raw solver exports not supplied",
+  "quantity_units": {
+    "absorbed_dose": "mGy",
+    "dose_equivalent": "mSv",
+    "gray_equivalent": "mGy-Eq"
+  },
+  "missing_values": "Unreported; not zero",
+  "temporal_basis": "event_total"
+}

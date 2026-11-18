@@ -1,0 +1,585 @@
+REPOSITORY FILE GUIDE — 2026-11-17
+Root: /Users/jack/Documents/cnl
+150 project/source/output/archive files, each listed below. Includes tracked, untracked and ignored local artifacts.
+All 22827 local files, including dependencies, Git internals and caches, are listed separately in all_local_files_inventory.txt.
+Descriptions distinguish active use from historical/reference use. Source physics has not been revalidated for this inventory.
+This inventory is a snapshot, not a promise that all local files are committed or portable.
+Frozen anatomical input: data/processed/oltaris/mission_bfo_environment.csv
+Primary strategy development: sim/strategies.py, sim/models.py, sim/mission_simulator.py, sim/assumptions.py, sim/defaults.py.
+
+
+./
+--
+.gitignore
+  Git: tracked
+  Purpose: Controls which local environments, caches, large raw files, generated tables and archives Git excludes.
+
+.vscode/
+--------
+.vscode/settings.json
+  Git: tracked
+  Purpose: VS Code settings: selects .venv Python and hides raw-data/environment/cache folders in Explorer; hiding does not delete them.
+
+./
+--
+README.md
+  Git: tracked
+  Purpose: Project overview, source roles, units, assumptions, frozen radiation policy and strategy-development requirements.
+anatomical_environment.py
+  Git: untracked
+  Purpose: Loads and validates the frozen common OLTARIS BFO environment; integrates exposure intervals and calculates separate NASA reference comparisons. Export is blocked by the freeze record.
+audit_band_spectra.py
+  Git: untracked
+  Purpose: Audits Band spectrum equations, normalization and older boundary exports against SAPPHIRE; diagnostic history, not a transport simulator.
+bfo_proxy.py
+  Git: tracked
+  Purpose: Legacy unverified King-to-SAPPHIRE BFO transfer-ratio experiment at 20 g/cm²; not used by the current simulator.
+
+charts/
+-------
+charts/01_spe_proton_flux.py
+  Git: tracked
+  Purpose: Plot generator: Historical measured proton-flux time profile.
+charts/02_shielding_vs_dose.py
+  Git: tracked
+  Purpose: Plot generator: Shielding-response plot for one selected event, target, geometry and quantity.
+charts/03_sapphire_spectra.py
+  Git: tracked
+  Purpose: Plot generator: Comparison of SAPPHIRE event-integrated proton spectra.
+charts/04_radiation_dose_rate.py
+  Git: tracked
+  Purpose: Plot generator: Independent SHIELDOSE tissue-target hourly dose-rate comparison.
+charts/05_cumulative_exposure.py
+  Git: tracked
+  Purpose: Plot generator: Independent SHIELDOSE cumulative tissue-target dose and example EVA exposure.
+charts/06_shielding_sensitivity.py
+  Git: tracked
+  Purpose: Plot generator: SHIELDOSE full-event tissue doses at six exported aluminium depths.
+charts/07_absorbed_dose_health_reference.py
+  Git: tracked
+  Purpose: Plot generator: Clinical context graphic, separate from modeled astronaut exposure; not a symptom predictor.
+charts/08_synthetic_sapphire_proton_profile.py
+  Git: tracked
+  Purpose: Plot generator: Historically timed synthetic proton fluence; not an anatomical dose calculation.
+charts/09_anatomical_eva_exposure.py
+  Git: untracked
+  Purpose: Plot generator: Current common-environment BFO rate, rolling EVA and accumulation plot; hatches interpolated bins and exports fixed-window sensitivity.
+charts/common.py
+  Git: tracked
+  Purpose: Shared consolidated-data loading and plot-save helpers.
+charts/environment_common.py
+  Git: tracked
+  Purpose: Shared historical/reference display helpers, envelopes, gap shading and figure finishing.
+charts/historical_04_radiation_dose_rate.py
+  Git: tracked
+  Purpose: Plot generator: Older King-based historical dose-rate reference plot.
+charts/historical_05_cumulative_exposure.py
+  Git: tracked
+  Purpose: Plot generator: Older King-based cumulative grid-target reference dose and EVA example.
+charts/sapphire_common.py
+  Git: tracked
+  Purpose: Shared SHIELDOSE/SAPPHIRE reference plot construction.
+
+data/processed/
+---------------
+data/processed/mission_radiation_environment.csv
+  Git: tracked
+  Purpose: Frozen SHIELDOSE tissue-target reference: 64,800 bins over two severities, six shielding depths, nine variants and two timing templates. NOT the current astronaut-dose input.
+data/processed/october_1989_hourly_proton_flux.csv
+  Git: tracked
+  Purpose: 1989 timing candidate; 96/360 hours missing, disabled in the active model.
+data/processed/october_2003_goes10_hourly_proton_flux.csv
+  Git: tracked
+  Purpose: Active alternative timing source: 336 complete supplied GOES-10 hours; exact official archive match remains unverified.
+data/processed/october_2003_hourly_proton_flux.csv
+  Git: tracked
+  Purpose: Incomplete 2003 OMNI2 record (205/336 hours missing); excluded, distinct from GOES-10.
+
+data/processed/oltaris/
+-----------------------
+data/processed/oltaris/mission_bfo_environment.csv
+  Git: untracked
+  Purpose: PRIMARY FROZEN simulator exposure table: 21,600 bins, two severities, two shield depths, nine timing variants and two historical templates; separate absorbed and Gray Equivalent rates.
+data/processed/oltaris/mission_bfo_environment_manifest.json
+  Git: untracked
+  Purpose: Anatomical dataset/source hashes, build provenance, units, geometry, distance interpretation and limitations.
+data/processed/oltaris/oltaris_sapphire_anatomical_summary.csv
+  Git: untracked
+  Purpose: Processed four-run corrected Band/MAX summary with BFO absorbed mGy and Gray Equivalent mGy-Eq, settings and source provenance.
+data/processed/oltaris/oltaris_sapphire_organ_doses.csv
+  Git: untracked
+  Purpose: Processed 112 corrected organ records; preserves distinct absorbed, dose-equivalent and Gray Equivalent quantities where supplied.
+data/processed/oltaris/radiation_environment_freeze.json
+  Git: untracked
+  Purpose: Pins the anatomical dataset and manifest checksums as oltaris_bfo_v1; prevents silent replacement during strategy development.
+data/processed/oltaris/superseded_weibull_anatomical_doses.csv
+  Git: untracked
+  Purpose: Processed historical Weibull result; mSv export values and separately supplied mGy/mGy-Eq summaries retain their provenance. Not an active input.
+
+data/processed/raw_nasa_omni2/
+------------------------------
+data/processed/raw_nasa_omni2/omni2_1989.dat
+  Git: ignored/local
+  Purpose: Full-year raw OMNI2 download for 1989; used to construct historical candidate series, not directly read by strategy decisions.
+data/processed/raw_nasa_omni2/omni2_2003.dat
+  Git: ignored/local
+  Purpose: Full-year raw OMNI2 download for 2003; used to construct historical candidate series, not directly read by strategy decisions.
+
+data/processed/
+---------------
+data/processed/shielding_dose.csv
+  Git: tracked
+  Purpose: Consolidated shielding-response records with quantities/provenance; includes verified reference rows and separately identified older records.
+data/processed/spe_hourly.csv
+  Git: tracked
+  Purpose: Consolidated August 1972 hourly observations and missing-data flags; supplies relative timing, not dose magnitude.
+data/processed/spe_scenarios.csv
+  Git: tracked
+  Purpose: Consolidated SAPPHIRE spectra and scenario/source settings.
+
+data/raw/archive/before_verified_sapphire/
+------------------------------------------
+data/raw/archive/before_verified_sapphire/preservation_manifest.json
+  Git: tracked
+  Purpose: ARCHIVE — snapshot before verified SPENVIS source adoption: records preserved paths, moves, hashes or source associations.
+
+data/raw/archive/
+-----------------
+data/raw/archive/move_manifest.csv
+  Git: untracked
+  Purpose: ARCHIVE — archive bookkeeping: records preserved paths, moves, hashes or source associations.
+
+data/raw/archive/previous_processed/
+------------------------------------
+data/raw/archive/previous_processed/exposure_settings.csv
+  Git: tracked
+  Purpose: REQUIRED rebuild source table read by prepare_data.build(); retained in place despite historical directory name. exposure_settings.csv
+data/raw/archive/previous_processed/organ_dose.csv
+  Git: tracked
+  Purpose: REQUIRED rebuild source table read by prepare_data.build(); retained in place despite historical directory name. organ_dose.csv
+data/raw/archive/previous_processed/shielding_dose.csv
+  Git: untracked
+  Purpose: REQUIRED rebuild source table read by prepare_data.build(); retained in place despite historical directory name. shielding_dose.csv
+data/raw/archive/previous_processed/spe_hourly.csv
+  Git: tracked
+  Purpose: REQUIRED rebuild source table read by prepare_data.build(); retained in place despite historical directory name. spe_hourly.csv
+data/raw/archive/previous_processed/spe_spectra.csv
+  Git: tracked
+  Purpose: REQUIRED rebuild source table read by prepare_data.build(); retained in place despite historical directory name. spe_spectra.csv
+
+data/raw/archive/
+-----------------
+data/raw/archive/reorganization_validation.json
+  Git: untracked
+  Purpose: ARCHIVE — archive bookkeeping: saved validation/metadata record (reorganization_validation.json).
+
+data/raw/oltaris/OLTARIS_Aug1972_King_Al0p4_gcm2/
+-------------------------------------------------
+data/raw/oltaris/OLTARIS_Aug1972_King_Al0p4_gcm2/NASA_Q_leukemia_dose_equivalent_vs_depth_mSv.dat
+  Git: tracked
+  Purpose: Historical August 1972 King OLTARIS reference (0.4 g/cm² association): NASA-Q leukemia dose-equivalent response versus shielding/tissue depth in mSv. Not current SAPPHIRE anatomical normalization.
+data/raw/oltaris/OLTARIS_Aug1972_King_Al0p4_gcm2/NASA_Q_solid_cancer_dose_equivalent_vs_depth_mSv.dat
+  Git: tracked
+  Purpose: Historical August 1972 King OLTARIS reference (0.4 g/cm² association): NASA-Q solid-cancer dose-equivalent response versus depth in mSv. Not current SAPPHIRE anatomical normalization.
+data/raw/oltaris/OLTARIS_Aug1972_King_Al0p4_gcm2/README.md
+  Git: tracked
+  Purpose: Historical August 1972 King OLTARIS reference (0.4 g/cm² association): Documentation of the associated source group or earlier workflow. Not current SAPPHIRE anatomical normalization.
+data/raw/oltaris/OLTARIS_Aug1972_King_Al0p4_gcm2/absorbed_dose_vs_aluminum_and_tissue_depth_mGy.dat
+  Git: tracked
+  Purpose: Historical August 1972 King OLTARIS reference (0.4 g/cm² association): Absorbed-dose response over aluminium/tissue-depth coordinates in mGy; not automatically an anatomical sphere result. Not current SAPPHIRE anatomical normalization.
+data/raw/oltaris/OLTARIS_Aug1972_King_Al0p4_gcm2/effective_dose_equivalent_and_organ_results_mSv.txt
+  Git: tracked
+  Purpose: Historical August 1972 King OLTARIS reference (0.4 g/cm² association): Effective dose equivalent and/or organ dose-equivalent records; preserve mSv, not absorbed mGy. Not current SAPPHIRE anatomical normalization.
+data/raw/oltaris/OLTARIS_Aug1972_King_Al0p4_gcm2/particle_fluence_vs_energy_and_isotope_point_1.dat
+  Git: tracked
+  Purpose: Historical August 1972 King OLTARIS reference (0.4 g/cm² association): Particle fluence resolved by energy, isotope at the selected point. Not current SAPPHIRE anatomical normalization.
+data/raw/oltaris/OLTARIS_Aug1972_King_Al0p4_gcm2/particle_fluence_vs_energy_isotope_and_depth.dat
+  Git: ignored/local
+  Purpose: Historical August 1972 King OLTARIS reference (0.4 g/cm² association): Particle fluence resolved by energy, isotope and depth. Not current SAPPHIRE anatomical normalization.
+
+data/raw/oltaris/OLTARIS_Aug1972_King_Al20_gcm2/
+------------------------------------------------
+data/raw/oltaris/OLTARIS_Aug1972_King_Al20_gcm2/NASA_Q_leukemia_dose_equivalent_vs_depth_mSv.dat
+  Git: tracked
+  Purpose: Historical August 1972 King OLTARIS reference (20 g/cm² association): NASA-Q leukemia dose-equivalent response versus shielding/tissue depth in mSv. Not current SAPPHIRE anatomical normalization.
+data/raw/oltaris/OLTARIS_Aug1972_King_Al20_gcm2/NASA_Q_solid_cancer_dose_equivalent_by_particle_vs_depth_mSv.dat
+  Git: tracked
+  Purpose: Historical August 1972 King OLTARIS reference (20 g/cm² association): NASA-Q solid-cancer dose-equivalent response versus depth resolved by particle type. Not current SAPPHIRE anatomical normalization.
+data/raw/oltaris/OLTARIS_Aug1972_King_Al20_gcm2/NASA_Q_solid_cancer_dose_equivalent_vs_depth_mSv.dat
+  Git: tracked
+  Purpose: Historical August 1972 King OLTARIS reference (20 g/cm² association): NASA-Q solid-cancer dose-equivalent response versus depth in mSv. Not current SAPPHIRE anatomical normalization.
+data/raw/oltaris/OLTARIS_Aug1972_King_Al20_gcm2/README.md
+  Git: tracked
+  Purpose: Historical August 1972 King OLTARIS reference (20 g/cm² association): Documentation of the associated source group or earlier workflow. Not current SAPPHIRE anatomical normalization.
+data/raw/oltaris/OLTARIS_Aug1972_King_Al20_gcm2/absorbed_dose_vs_aluminum_and_tissue_depth_mGy.dat
+  Git: tracked
+  Purpose: Historical August 1972 King OLTARIS reference (20 g/cm² association): Absorbed-dose response over aluminium/tissue-depth coordinates in mGy; not automatically an anatomical sphere result. Not current SAPPHIRE anatomical normalization.
+data/raw/oltaris/OLTARIS_Aug1972_King_Al20_gcm2/effective_dose_equivalent_and_organ_results_mSv.txt
+  Git: tracked
+  Purpose: Historical August 1972 King OLTARIS reference (20 g/cm² association): Effective dose equivalent and/or organ dose-equivalent records; preserve mSv, not absorbed mGy. Not current SAPPHIRE anatomical normalization.
+data/raw/oltaris/OLTARIS_Aug1972_King_Al20_gcm2/particle_fluence_vs_energy_isotope_and_depth.dat
+  Git: ignored/local
+  Purpose: Historical August 1972 King OLTARIS reference (20 g/cm² association): Particle fluence resolved by energy, isotope and depth. Not current SAPPHIRE anatomical normalization.
+
+data/raw/oltaris/sapphire_corrected_band_2026-11-16/
+----------------------------------------------------
+data/raw/oltaris/sapphire_corrected_band_2026-11-16/oltaris_sapphire_anatomical_summary.csv
+  Git: untracked
+  Purpose: Preserved user-supplied corrected four-run OLTARIS summary; source for current anatomical totals.
+data/raw/oltaris/sapphire_corrected_band_2026-11-16/oltaris_sapphire_organ_doses.csv
+  Git: untracked
+  Purpose: Preserved user-supplied corrected organ export table; source for processed organ records.
+data/raw/oltaris/sapphire_corrected_band_2026-11-16/provenance.json
+  Git: untracked
+  Purpose: Original attachment/source paths, checksums and corrected-run provenance.
+
+data/raw/oltaris/sapphire_superseded_weibull_2026-11-16/
+--------------------------------------------------------
+data/raw/oltaris/sapphire_superseded_weibull_2026-11-16/effective_dose_equivalent-3.txt
+  Git: untracked
+  Purpose: Superseded Weibull native effective/organ dose-equivalent export in mSv, not absorbed mGy.
+data/raw/oltaris/sapphire_superseded_weibull_2026-11-16/li_dose_database_mGy-3.dat
+  Git: untracked
+  Purpose: Superseded Weibull native absorbed-dose lookup database; not current anatomical normalization.
+data/raw/oltaris/sapphire_superseded_weibull_2026-11-16/li_flux_database-3.dat
+  Git: untracked
+  Purpose: Superseded Weibull native particle-flux/fluence database.
+data/raw/oltaris/sapphire_superseded_weibull_2026-11-16/provenance.json
+  Git: untracked
+  Purpose: Source identities/hashes and separate provenance of user-supplied Weibull absorbed/Gray Equivalent summary values.
+
+data/raw/omniweb/OMNIWeb_Aug1972/
+---------------------------------
+data/raw/omniweb/OMNIWeb_Aug1972/README.md
+  Git: tracked
+  Purpose: Documents the preserved August 1972 OMNIWeb observations and provenance.
+data/raw/omniweb/OMNIWeb_Aug1972/hourly_measured_proton_flux.csv
+  Git: tracked
+  Purpose: Preserved August 1972 measured hourly proton-flux table with timing-channel information.
+data/raw/omniweb/OMNIWeb_Aug1972/measured_proton_flux_hours.png
+  Git: tracked
+  Purpose: Historical measured proton-flux preview, not modeled organ dose.
+
+data/raw/omniweb/OMNIWeb_Aug1972/originals/
+-------------------------------------------
+data/raw/omniweb/OMNIWeb_Aug1972/originals/omni2_5AkMqBOXbn.fmt.txt
+  Git: tracked
+  Purpose: Original OMNIWeb column/format definition for the historical observation export; retained duplicate in originals where applicable.
+data/raw/omniweb/OMNIWeb_Aug1972/originals/omni2_5AkMqBOXbn.lst.txt
+  Git: tracked
+  Purpose: Original OMNIWeb numeric hourly observation export; retained duplicate in originals where applicable.
+
+data/raw/omniweb/OMNIWeb_Aug1972/
+---------------------------------
+data/raw/omniweb/OMNIWeb_Aug1972/validation.json
+  Git: tracked
+  Purpose: Historical-source checks including missing bins and threshold-order anomalies.
+
+data/raw/omniweb/
+-----------------
+data/raw/omniweb/OMNIWeb_Aug1972_measured_proton_flux_hours.png
+  Git: tracked
+  Purpose: Historical measured proton-flux preview, not modeled organ dose.
+data/raw/omniweb/omni2_5AkMqBOXbn.fmt.txt
+  Git: tracked
+  Purpose: Original OMNIWeb column/format definition for the historical observation export; retained duplicate in originals where applicable.
+data/raw/omniweb/omni2_5AkMqBOXbn.lst.txt
+  Git: tracked
+  Purpose: Original OMNIWeb numeric hourly observation export; retained duplicate in originals where applicable.
+
+data/raw/reference_documents/
+-----------------------------
+data/raw/reference_documents/goes_channel_definitions.json
+  Git: untracked
+  Purpose: Structured >10/>30/>60 MeV integral-channel definitions, units, cadence and unverified local-product attribution.
+data/raw/reference_documents/goes_channel_notes.html
+  Git: untracked
+  Purpose: Archived official NOAA GOES data/channel notes.
+data/raw/reference_documents/goes_hourly_product.html
+  Git: untracked
+  Purpose: Archived GSFC/SPDF hourly GOES product description.
+data/raw/reference_documents/manifest.json
+  Git: untracked
+  Purpose: Downloaded reference URLs, retrieval dates and SHA-256 hashes.
+data/raw/reference_documents/nasa_std_3001_vol1_rev_c.pdf
+  Git: untracked
+  Purpose: Pinned NASA human-system standard, Volume 1 Revision C; source of BFO exposure reference limits.
+data/raw/reference_documents/supplied_october_2003_goes10_hourly_proton_flux.csv
+  Git: untracked
+  Purpose: Byte-preserved copy of the supplied GOES timing record; official archive equivalence remains unverified.
+
+data/raw/spenvis/SAPPHIRE-1-in-100/
+-----------------------------------
+data/raw/spenvis/SAPPHIRE-1-in-100/README.md
+  Git: tracked
+  Purpose: Earlier SPENVIS source group (original spectra retained; older transport associations quarantined): Documentation of the associated source group or earlier workflow.
+data/raw/spenvis/SAPPHIRE-1-in-100/mulassis-effective-dose-output.txt
+  Git: tracked
+  Purpose: Earlier SPENVIS source group (original spectra retained; older transport associations quarantined): MULASSIS effective-dose result/report; failed NaN values are unusable and excluded from active normalization.
+data/raw/spenvis/SAPPHIRE-1-in-100/mulassis-effective-dose-report.html
+  Git: tracked
+  Purpose: Earlier SPENVIS source group (original spectra retained; older transport associations quarantined): MULASSIS effective-dose result/report; failed NaN values are unusable and excluded from active normalization.
+data/raw/spenvis/SAPPHIRE-1-in-100/shieldose2-tissue-dose-output.txt
+  Git: tracked
+  Purpose: Earlier SPENVIS source group (original spectra retained; older transport associations quarantined): SHIELDOSE-2 idealized tissue-target absorbed-dose export/report or shielding-response plot; independent of anatomical BFO dose.
+data/raw/spenvis/SAPPHIRE-1-in-100/shieldose2-tissue-dose-report.html
+  Git: tracked
+  Purpose: Earlier SPENVIS source group (original spectra retained; older transport associations quarantined): SHIELDOSE-2 idealized tissue-target absorbed-dose export/report or shielding-response plot; independent of anatomical BFO dose.
+data/raw/spenvis/SAPPHIRE-1-in-100/shieldose2-tissue-dose-vs-aluminium.png
+  Git: tracked
+  Purpose: Earlier SPENVIS source group (original spectra retained; older transport associations quarantined): SHIELDOSE-2 idealized tissue-target absorbed-dose export/report or shielding-response plot; independent of anatomical BFO dose.
+data/raw/spenvis/SAPPHIRE-1-in-100/solar-proton-fluence-linear-energy.png
+  Git: tracked
+  Purpose: Earlier SPENVIS source group (original spectra retained; older transport associations quarantined): Solar-proton energy/fluence spectrum table or spectrum figure, as indicated by the file extension.
+data/raw/spenvis/SAPPHIRE-1-in-100/solar-proton-fluence-log-energy.png
+  Git: tracked
+  Purpose: Earlier SPENVIS source group (original spectra retained; older transport associations quarantined): Solar-proton energy/fluence spectrum table or spectrum figure, as indicated by the file extension.
+data/raw/spenvis/SAPPHIRE-1-in-100/solar-proton-fluence-report.pdf
+  Git: tracked
+  Purpose: Earlier SPENVIS source group (original spectra retained; older transport associations quarantined): Original SAPPHIRE proton fluence spectrum and run-setting report.
+
+data/raw/spenvis/SAPPHIRE-1-in-1000/
+------------------------------------
+data/raw/spenvis/SAPPHIRE-1-in-1000/README.md
+  Git: tracked
+  Purpose: Earlier SPENVIS source group (original spectra retained; older transport associations quarantined): Documentation of the associated source group or earlier workflow.
+data/raw/spenvis/SAPPHIRE-1-in-1000/mulassis-effective-dose-output.txt
+  Git: tracked
+  Purpose: Earlier SPENVIS source group (original spectra retained; older transport associations quarantined): MULASSIS effective-dose result/report; failed NaN values are unusable and excluded from active normalization.
+data/raw/spenvis/SAPPHIRE-1-in-1000/mulassis-effective-dose-report.html
+  Git: tracked
+  Purpose: Earlier SPENVIS source group (original spectra retained; older transport associations quarantined): MULASSIS effective-dose result/report; failed NaN values are unusable and excluded from active normalization.
+data/raw/spenvis/SAPPHIRE-1-in-1000/shieldose2-tissue-dose-report.pdf
+  Git: tracked
+  Purpose: Earlier SPENVIS source group (original spectra retained; older transport associations quarantined): SHIELDOSE-2 idealized tissue-target absorbed-dose export/report or shielding-response plot; independent of anatomical BFO dose.
+data/raw/spenvis/SAPPHIRE-1-in-1000/shieldose2-tissue-dose-vs-aluminium.pdf
+  Git: tracked
+  Purpose: Earlier SPENVIS source group (original spectra retained; older transport associations quarantined): SHIELDOSE-2 idealized tissue-target absorbed-dose export/report or shielding-response plot; independent of anatomical BFO dose.
+data/raw/spenvis/SAPPHIRE-1-in-1000/solar-proton-fluence-linear-energy.png
+  Git: tracked
+  Purpose: Earlier SPENVIS source group (original spectra retained; older transport associations quarantined): Solar-proton energy/fluence spectrum table or spectrum figure, as indicated by the file extension.
+data/raw/spenvis/SAPPHIRE-1-in-1000/solar-proton-fluence-log-energy.png
+  Git: tracked
+  Purpose: Earlier SPENVIS source group (original spectra retained; older transport associations quarantined): Solar-proton energy/fluence spectrum table or spectrum figure, as indicated by the file extension.
+data/raw/spenvis/SAPPHIRE-1-in-1000/solar-proton-fluence-report.pdf
+  Git: tracked
+  Purpose: Earlier SPENVIS source group (original spectra retained; older transport associations quarantined): Original SAPPHIRE proton fluence spectrum and run-setting report.
+
+data/raw/spenvis/sapphire_1000yr/
+---------------------------------
+data/raw/spenvis/sapphire_1000yr/sapphire_1000yr_shielding_plot.png
+  Git: tracked
+  Purpose: November 16 source group used by the frozen SHIELDOSE reference: Source shielding-versus-tissue-dose plot.
+data/raw/spenvis/sapphire_1000yr/sapphire_1000yr_shieldose_data.txt
+  Git: tracked
+  Purpose: November 16 source group used by the frozen SHIELDOSE reference: SHIELDOSE-2 idealized tissue-target absorbed-dose export/report or shielding-response plot; independent of anatomical BFO dose.
+data/raw/spenvis/sapphire_1000yr/sapphire_1000yr_shieldose_report.html
+  Git: tracked
+  Purpose: November 16 source group used by the frozen SHIELDOSE reference: SHIELDOSE-2 idealized tissue-target absorbed-dose export/report or shielding-response plot; independent of anatomical BFO dose.
+data/raw/spenvis/sapphire_1000yr/sapphire_1000yr_source_report.html
+  Git: tracked
+  Purpose: November 16 source group used by the frozen SHIELDOSE reference: Original SAPPHIRE proton fluence spectrum and run-setting report.
+
+data/raw/spenvis/sapphire_100yr/
+--------------------------------
+data/raw/spenvis/sapphire_100yr/sapphire_100yr_shielding_plot.png
+  Git: tracked
+  Purpose: November 16 source group used by the frozen SHIELDOSE reference: Source shielding-versus-tissue-dose plot.
+data/raw/spenvis/sapphire_100yr/sapphire_100yr_shieldose_data.txt
+  Git: tracked
+  Purpose: November 16 source group used by the frozen SHIELDOSE reference: SHIELDOSE-2 idealized tissue-target absorbed-dose export/report or shielding-response plot; independent of anatomical BFO dose.
+data/raw/spenvis/sapphire_100yr/sapphire_100yr_shieldose_report.html
+  Git: tracked
+  Purpose: November 16 source group used by the frozen SHIELDOSE reference: SHIELDOSE-2 idealized tissue-target absorbed-dose export/report or shielding-response plot; independent of anatomical BFO dose.
+data/raw/spenvis/sapphire_100yr/sapphire_100yr_source_report.html
+  Git: tracked
+  Purpose: November 16 source group used by the frozen SHIELDOSE reference: Original SAPPHIRE proton fluence spectrum and run-setting report.
+
+data/raw/spenvis/
+-----------------
+data/raw/spenvis/verified_sapphire_manifest.json
+  Git: tracked
+  Purpose: Source paths, hashes and user-confirmed pairings for the November 16 SPENVIS source/SHIELDOSE groups.
+
+./
+--
+organize_oltaris_anatomical.py
+  Git: untracked
+  Purpose: Archives supplied corrected and superseded OLTARIS files, creates unit-separated anatomical tables and checks the corrected spectral approximation.
+
+outputs/
+--------
+outputs/README.md
+  Git: tracked
+  Purpose: Map of current outputs and distinction between anatomical simulator results and frozen SHIELDOSE references.
+
+outputs/analysis/
+-----------------
+outputs/analysis/all_local_files_inventory.txt
+  Git: untracked
+  Purpose: Exhaustive local file listing with category, Git status, byte size and purpose, including dependencies, caches and Git internals.
+
+outputs/analysis/anatomical_eva/
+--------------------------------
+outputs/analysis/anatomical_eva/README.md
+  Git: untracked
+  Purpose: Method, units, timing interpretation and limitations of the anatomical EVA comparison.
+outputs/analysis/anatomical_eva/provenance.json
+  Git: untracked
+  Purpose: Hashes, source paths, timing definitions and units for the anatomical EVA outputs.
+
+outputs/analysis/
+-----------------
+outputs/analysis/repository_file_guide.txt
+  Git: untracked
+  Purpose: This annotated project-file inventory, including every historical backup, as of this snapshot.
+
+outputs/
+--------
+outputs/mission_radiation_environment.csv
+  Git: tracked
+  Purpose: Presentation copy of the frozen SHIELDOSE reference CSV, not the anatomical simulator table.
+
+outputs/model/
+--------------
+outputs/model/baseline_manifest.json
+  Git: tracked
+  Purpose: Checksum and source provenance for the independent frozen SHIELDOSE baseline.
+outputs/model/baseline_validation.md
+  Git: tracked
+  Purpose: Numerical conservation and interpretation checks for the SHIELDOSE reference, not a clinical validation.
+
+outputs/model/historical/
+-------------------------
+outputs/model/historical/mission_radiation_environment.csv
+  Git: tracked
+  Purpose: Historical King-based dose timeline; distinct from SAPPHIRE anatomical exposure.
+outputs/model/historical/radiation_environment_audit.json
+  Git: tracked
+  Purpose: Numerical/source audit for the historical King-based time allocation.
+
+outputs/model/
+--------------
+outputs/model/sapphire_transport_audit.json
+  Git: tracked
+  Purpose: Machine-readable source/transport association audit for the independent SAPPHIRE/SHIELDOSE workflow.
+outputs/model/synthetic_sapphire_interval_exposure.csv
+  Git: tracked
+  Purpose: SHIELDOSE reference dose integrated over configured example intervals.
+
+outputs/validation/
+-------------------
+outputs/validation/integration_preservation_check.json
+  Git: untracked
+  Purpose: Recorded checksum comparison confirming 101 checked pre-integration baseline/source artifacts were unchanged.
+
+outputs/validation/oltaris_anatomical/
+--------------------------------------
+outputs/validation/oltaris_anatomical/README.md
+  Git: untracked
+  Purpose: Corrected/superseded source validation findings and spectrum-fit interpretation.
+outputs/validation/oltaris_anatomical/spectrum_metrics.csv
+  Git: untracked
+  Purpose: Aggregate corrected spectrum-fit error metrics.
+outputs/validation/oltaris_anatomical/spectrum_overlay.png
+  Git: untracked
+  Purpose: Corrected approximation versus original SAPPHIRE integral-fluence overlay.
+outputs/validation/oltaris_anatomical/spectrum_percentage_errors.csv
+  Git: untracked
+  Purpose: Point-by-point percent errors at original spectrum energies.
+outputs/validation/oltaris_anatomical/validation.json
+  Git: untracked
+  Purpose: Machine-readable checks of anatomical tables, source hashes and spectrum consistency.
+
+outputs/validation/repository_cleanup/
+--------------------------------------
+outputs/validation/repository_cleanup/manifest.json
+  Git: untracked
+  Purpose: Every cleanup move/deletion with original path, checksum, reason, Git status and external archive destination.
+outputs/validation/repository_cleanup/report.txt
+  Git: untracked
+  Purpose: Cleanup summary, retained dependencies, manual-review items and restore instructions.
+outputs/validation/repository_cleanup/tests_after.log
+  Git: untracked
+  Purpose: Recorded final suite: 65 tests passed after cleanup.
+outputs/validation/repository_cleanup/tests_before.log
+  Git: untracked
+  Purpose: Recorded baseline: 65 tests passed before cleanup.
+outputs/validation/repository_cleanup/verification.json
+  Git: untracked
+  Purpose: Source/frozen/Git/code checksums and 72 identical mission-state comparisons; before/after test counts.
+
+./
+--
+prepare_data.py
+  Git: tracked
+  Purpose: Reconstructs consolidated historical timing, spectra and shielding tables from preserved inputs; ordinary strategy runs do not need it.
+radiation_config.json
+  Git: tracked
+  Purpose: Radiation/reference plotting configuration: timing template, window, source settings and scenario parameters; retained frozen.
+radiation_model.ipynb
+  Git: tracked
+  Purpose: Independent SHIELDOSE/reference notebook; introductory scope clarified and saved outputs cleared during cleanup. All executable cells preserved.
+radiation_model.py
+  Git: tracked
+  Purpose: Historical timing interpolation/normalization plus independent SHIELDOSE synthetic environment, baseline loading and historical-reference calculations. Timing helpers also underpin anatomical allocation.
+requirements.txt
+  Git: tracked
+  Purpose: Python package dependencies needed to run the project.
+run_strategy_a.py
+  Git: tracked
+  Purpose: CLI for Strategy A; writes event logs, separate BFO exposure ledger, NASA reference comparisons, summary and timeline. Supports separate output directories.
+
+sim/
+----
+sim/assumptions.py
+  Git: tracked
+  Purpose: MissionAssumptions: everyday crew/EVA/turnaround settings, inheriting advanced defaults.
+sim/defaults.py
+  Git: tracked
+  Purpose: Advanced operational settings, scenario choices, shielding, timing, optional estimate policy and repair priorities.
+sim/mission_simulator.py
+  Git: tracked
+  Purpose: Shared mission engine: advances time, runs repairs/EVAs, accounts EVA and cabin BFO exposure and supplies restricted strategy observations.
+sim/models.py
+  Git: tracked
+  Purpose: Typed records for scenarios, astronauts, EVAs, mission state, restricted observations and decisions; keeps mGy separate from mGy-Eq.
+sim/strategies.py
+  Git: tracked
+  Purpose: Strategy A decision rules; B, C and D are explicit NotImplemented placeholders.
+
+./
+--
+spenvis_audit.py
+  Git: tracked
+  Purpose: Parses SPENVIS source/transport reports and checks spectrum associations, shielding values, units and legacy exclusions.
+
+tests/
+------
+tests/test_anatomical_environment.py
+  Git: untracked
+  Purpose: Tests: Organ exposure conservation, unit separation and NASA comparison boundaries.
+tests/test_anatomical_eva.py
+  Git: untracked
+  Purpose: Tests: Conservation and exact interval integration for the standalone EVA chart.
+tests/test_band_audit.py
+  Git: untracked
+  Purpose: Tests: Tests of spectrum mathematics and provenance; no mission model changes.
+tests/test_bfo_proxy.py
+  Git: tracked
+  Purpose: Tests: Arithmetic checks for an explicitly unverified organ-dose proxy, not physics validation.
+tests/test_historical_templates.py
+  Git: tracked
+  Purpose: Tests: Independent event normalization, selection and mission boundary regressions.
+tests/test_oltaris_anatomical.py
+  Git: untracked
+  Purpose: Tests: Isolated data-integrity checks; no transport or mission simulation.
+tests/test_radiation_model.py
+  Git: tracked
+  Purpose: Tests: Scientific invariants and boundary cases; run with unittest discovery.
+tests/test_sapphire_model.py
+  Git: tracked
+  Purpose: Tests: Synthetic scenario conservation and fail-closed transport tests.  Small invented numbers below are isolated test fixtures, never scientific outputs.
+tests/test_strategy_a.py
+  Git: tracked
+  Purpose: Tests: Operational fixtures below are synthetic test inputs, not physical thresholds.

@@ -1,0 +1,11 @@
+{
+  "version": "oltaris_bfo_v1",
+  "status": "frozen_for_strategy_development",
+  "frozen_date": "2026-11-17",
+  "artifact_sha256": {
+    "mission_bfo_environment.csv": "270871c7ea81422f0ad7adf3a7e4b0a01dac0eaae3447efb3dab24a5f3256108",
+    "mission_bfo_environment_manifest.json": "1e7f3e171dc22f969035acec154de95845ad3e69b8b1a34b0b9378de5faf31db"
+  },
+  "policy": "Use unchanged for all strategy comparisons. No refitting, transport reruns, timing changes or distance rescaling. Future scientific revisions require explicit authorization and a separate version.",
+  "remaining_provenance": "Corrected native OLTARIS exports pending; supplied corrected CSVs remain the frozen input. Additional documentation must not silently change numerical inputs."
+}

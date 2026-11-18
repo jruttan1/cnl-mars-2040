@@ -1,0 +1,31 @@
+{
+  "schema_version": "oltaris_bfo_v1",
+  "description": "SAPPHIRE-derived organ-dose estimates distributed using historical solar particle event timing profiles.",
+  "source_sha256": {
+    "data/processed/oltaris/oltaris_sapphire_anatomical_summary.csv": "839f5eb457eb925e9f7d4de6cf50c6163e6076993071e5f5a1d14cec142a83f2",
+    "data/processed/oltaris/oltaris_sapphire_organ_doses.csv": "70a7f9d12fe53c8e8e821d2367a16bcd8d938031ad7d59165fa630cc6772ec3d",
+    "data/raw/oltaris/sapphire_corrected_band_2026-11-16/oltaris_sapphire_anatomical_summary.csv": "32a3fa70f242a1ddded588ec330a122da75929855a99bada0290a5601e1119d4",
+    "data/raw/oltaris/sapphire_corrected_band_2026-11-16/oltaris_sapphire_organ_doses.csv": "d7ce28042b553f1107749a6e85c0846fd1bcd5a98c861d66a033e6f4b96dadb3",
+    "data/processed/spe_hourly.csv": "f7d75639409f86cb272c321a522d793c3e59b0eaf24ff5c90259354a7ce8c4dc",
+    "data/processed/october_2003_goes10_hourly_proton_flux.csv": "55767a4827bfc3044ff99a06862bdc6861a7792ba16fe0c58f265cd68a18c209"
+  },
+  "builder_sha256": "650e9fd6036c24e97fe8c95296e06de04097c19adc9196f1914f5c3c973d93eb",
+  "timing_implementation_sha256": "55c0afba1ef29d65ea3c9992fbd5839526039cf340a6af776486cf83700f8c07",
+  "anatomy": "MAX adult male 2005; no personalization by crew gender or weight",
+  "shielding": "0.4 and 20 g/cm\u00b2 aluminium spheres only; no depth interpolation",
+  "mission_reference_distance_AU": 1.25,
+  "source_report_distance_AU": 1.2,
+  "oltaris_environment_label": "SPE free space 1 AU",
+  "radial_scaling_factor": 1.0,
+  "distance_interpretation": "Reference solar proton spectra applied to a hypothetical mission near 1.25 AU; magnitudes are not distance-adjusted.",
+  "provenance_status": "user_supplied_corrected_summaries; native corrected exports pending",
+  "temporal_model": "Fixed spectral shape; separately unit-normalized complete historical records",
+  "health_response_model": null,
+  "nasa_rbe_definition_independently_verified": false,
+  "quantity_roles": {
+    "bfo_absorbed_dose_mGy": "Exposure input for future biological response models; no response inferred",
+    "bfo_gray_equivalent_mGy_eq": "Separate NASA organ-limit reference comparison, not absorbed mGy or mSv"
+  },
+  "csv_sha256": "270871c7ea81422f0ad7adf3a7e4b0a01dac0eaae3447efb3dab24a5f3256108",
+  "rows": 21600
+}

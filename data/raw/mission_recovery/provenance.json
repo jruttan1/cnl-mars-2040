@@ -1,0 +1,37 @@
+{
+  "accessed": "2026-11-17",
+  "records": [
+    {
+      "path": "data/raw/mission_recovery/cnl_case_overview.pdf",
+      "source": "/Users/jack/Downloads/Fall 2026 Western-CNL Case Overview.pdf",
+      "kind": "case_provided",
+      "page": 1,
+      "sha256": "abc040bcd502848db566f27bbe1ba606732f0476c0aa617449d4de3733c4c32b"
+    },
+    {
+      "path": "data/raw/mission_recovery/nasa_propulsion_materials.html",
+      "url": "https://ntrs.nasa.gov/citations/20210026680",
+      "kind": "published_engineering_principle",
+      "sha256": "a00909aee3780c432a8bb57d0d75cbce03ed35c52ea2391d32f55c244225ab3b"
+    },
+    {
+      "path": "data/raw/mission_recovery/nasa_mars_communications.html",
+      "url": "https://ntrs.nasa.gov/citations/20220013418",
+      "kind": "published_engineering_principle",
+      "sha256": "c645c19c541f5c31001d1ff7f00ad71f15dca2f76e613277b478e2a16b5d7e78"
+    },
+    {
+      "path": "data/raw/mission_recovery/national_academies_ntp.html",
+      "url": "https://www.nationalacademies.org/read/25977/chapter/4",
+      "kind": "published_engineering_principle",
+      "sha256": "339cfef67833e0dc60637a6fb5418d644b86ff1867f22e3c82a4932f2fa0480e"
+    },
+    {
+      "path": "data/raw/mission_recovery/national_academies_nep.html",
+      "url": "https://www.nationalacademies.org/read/25977/chapter/5",
+      "kind": "published_engineering_principle",
+      "sha256": "9f83a80921b7b57f7eeb0069197c1087cae4357365bba9405aeee7efac1aa5f1"
+    }
+  ],
+  "note": "Sources support qualitative distinctions only; no numerical recovery defaults are derived from these documents."
+}

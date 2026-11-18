@@ -1,0 +1,173 @@
+
+<HTML>
+<HEAD>
+<TITLE>IMP8, Goes10, and Goes11 ACE_SIS Fluxes </TITLE>
+<meta name="Author" content="Natalia Papitashvili">
+<SCRIPT LANGUAGE="JavaScript">
+<!-- hide from non JavaScript browsers
+
+function chkEvent(chk,wd,wd1,wd2)
+{
+   if (chk.checked) 
+     { wd.checked=true;
+       wd1.checked=true;
+       wd2.checked=true;  }
+   else 
+      { wd.checked=false; 
+        wd1.checked=false;
+       wd2.checked=false; }  
+}
+
+function chkEvent1(wd)
+{
+  if (wd.checked) 
+     { document.frm.activity[1].checked =frue; 
+       document.frm.activity[0].checked =false;
+       document.frm.activity[2].checked =false;      
+}
+}    
+// finish hiding from non JavaScript browsers -->
+</SCRIPT>
+ 
+<script id="_fed_an_ua_tag" type="text/javascript" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=NASA&subagency=GSFC"></script>
+</HEAD>
+<BODY>
+<center>
+<hr widtd=75% size=6><br>
+<font size=6 color=red>OMNIWeb Plus Browser</font><br>
+<font size=3 color=red>to select different options to produce three plots on one panel.</font>
+<hr widtd=75% size=6>
+<font color=blue size=4>Plot IMP8, Goes10, Goes11 Flux (&gt;10, &gt;30, &gt;60 Mev)
+and ACE/SIS Flux (&gt;10, &gt;30 Mev)</font>
+</center>
+<hr width=70%>
+This data set was created at GSFC/SPDF by making hourly averages from 5-min fluxes
+of GOES 10 and GOES 11 taken from https://goes.ngdc.noaa.gov/data/avg/, hourly ACE/SIS fluxes
+from ACE data center, and  merging that data with IMP8/CPME hourly fluxes from OMNI2    
+
+<pre>
+<b>Time span: 
+IMP8    1999-01-01 - 2005-12-31 
+GOES10  1999-01-01 - 2009-12-31 (No >60 MeV data after June, 2004)
+GOES11  2000-07-01 - 2009-12-31 (Except October 2001 through May 2003)
+ACE SIS 1999-01-01 - 2009-12-31 (  For &gt;10, &gt;30  Mev only)
+</pre>
+<FORM name= "frm" METHOD=POST ACTION="/cgi/nx1.cgi">
+<font size=4 color=magneta>Please enter your selections and then click on the <i>Submit</i> button.</font>
+<p>
+<B>Select an activity</B>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<INPUT TYPE="radio" value="plot" name="activity" CHECKED>Plot data   
+<INPUT TYPE="radio" value="retrieve" name="activity">List data
+<INPUT TYPE="radio" value="ftp" name="activity">Create file <a href="help_file.html">(file?)</a>
+<p>
+<INPUT TYPE="hidden" value="omni_goes_sis" name="spacecraft">
+<INPUT TYPE="hidden" value="hourly" name="res">
+<B>Enter start and stop dates: year,month,day(YYYYMMDD)</b>
+<br>
+&nbsp;&nbsp; Start time <INPUT VALUE="20050101" SIZE=8  MAXLENGTH=8  NAME="start_date">
+&nbsp;&nbsp; Stop time <INPUT VALUE="20051231" SIZE=8  MAXLENGTH=8  NAME="end_date">
+<p align=justify>
+<IMG ALT="*" ALIGN=BOTTOM SRC="/bullet/omniweb_bullet_half.gif"> 
+To show a few variables on one panel,
+please specify the number of variables( 1-3) in the select box: 
+<select name="num_plot" size=1>
+<OPTION  VALUE="1" >One plot
+<OPTION VALUE="2" >Two plots
+<OPTION  VALUE="3" >Three plots
+<OPTION  VALUE="4" SELECTED >Four plots
+</select> 
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; and then  check  
+the same number of parameters across the row in the table below:
+
+<p>
+<B>Select variables/parameters</B>
+<p>
+<table border=1 >
+<tr>
+<th align=center> Variable Name
+<th align=center>IMP8
+<th align=center>Goes10
+<th align=center>Goes11
+<th align=center>ACE SIS
+</tr>
+<tr>
+<td> Proton flux (>10 Mev)
+<td align=center> <INPUT TYPE="checkbox" VALUE="03" NAME="vars" CHECKED >
+<td align=center> <INPUT TYPE="checkbox" VALUE="06" NAME="vars"  CHECKED >
+<td align=center> <INPUT TYPE="checkbox" VALUE="09" NAME="vars"  CHECKED >
+<td align=center> <INPUT TYPE="checkbox" VALUE="12" NAME="vars"  CHECKED>
+
+</tr>
+<tr>
+<td>Proton flux (>30 Mev)
+<td align=center> <INPUT TYPE="checkbox" VALUE="04" NAME="vars" >
+<td align=center> <INPUT TYPE="checkbox" VALUE="07" NAME="vars" >
+<td align=center> <INPUT TYPE="checkbox" VALUE="10" NAME="vars" >
+<td align=center> <INPUT TYPE="checkbox" VALUE="13" NAME="vars" >
+
+</tr>
+<tr>
+<td>Proton flux (>60 Mev)
+<td align=center> <INPUT TYPE="checkbox" VALUE="05" NAME="vars" >
+<td align=center> <INPUT TYPE="checkbox" VALUE="08" NAME="vars" >
+<td align=center> <INPUT TYPE="checkbox" VALUE="11" NAME="vars" >
+<td align=center> <INPUT TYPE="checkbox" VALUE="14" NAME="vars" >
+
+</tr>
+</table>
+<p>
+<br>
+<INPUT TYPE="submit" VALUE="Submit">
+<INPUT TYPE="reset" VALUE="Reset">
+<HR widtd=80%>
+<IMG ALT="*" SRC="/bullet/omniweb_bullet_half.gif"><b>Advanced plot selections (optional)</b>
+<br>
+<table border=0>
+<tr>
+<td> <b>Y-axis Scale:</b></A> <select name="scale">
+<option >Linear
+<option selected >Log10 </select>
+ </td>
+<td >Character size(0.5-2.0):<INPUT name="charsize" SIZE=3 MAXLENGTH=3> 
+</tr>
+
+<tr>
+<td nowrap><b>Plot Symbol:</b> <select name="symbol">
+<option selected value="0">None
+<option value="1">Plus
+<option  value="2">Asterisk
+<option value="3">Period
+<option value="4">Diamond
+<option value="5">Triangle
+<option value="6">Square
+<option value="7">X
+</select>
+</td>
+ <td ><b/>Symbol Size(0.1-4.0):</b> <INPUT NAME="symsize" value= "0.5" SIZE=3 MAXLENGTH=3> </td>
+<td ><b>Image size (pixels)</b> X: <INPUT NAME="imagex" size=3 VALUE=640 MAXLENGTH=4> Y: <INPUT NAME="imagey" size=3 MAXLENGTH=4 VALUE=480>
+
+</tr>
+</table>
+<P>
+<INPUT TYPE="submit" VALUE="Submit">
+<INPUT TYPE="reset" VALUE="Reset">
+</FORM>
+
+<HR>
+<ADDRESS>
+<table>
+<td>
+If you have any questions/comments about  the OMNWeb Plus, contact
+<A HREF="mailto:Natalia.E.Papitashvili@nasa.gov?subject=OMNIWEB Plus">
+Dr. Natalia Papitashvili</A>,Mail Code 672,
+NASA/Goddard Space Flight Center, Greenbelt, MD 20771<br>
+</table>
+</ADDRESS>
+<HR>
+<font size="1">
+NASA Official: <b> Robert Candey (Robert.M.Candey@nasa.gov), Head of the Space Physics Data Facility</b></font>
+</font>
+</H6>
+</BODY>
+</HTML>

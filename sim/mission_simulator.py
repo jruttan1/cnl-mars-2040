@@ -1,36 +1,42 @@
-"""Mission progression and hidden modeled tissue-target exposure accounting."""
+"""Mission progression with shared, hidden OLTARIS BFO exposure accounting."""
 from copy import deepcopy
+from .mission_recovery import MissionRecovery
 import math
 from sim.assumptions import DEFAULT_ASSUMPTIONS
-from radiation_model import load_baseline, baseline_interval_dose
+from anatomical_environment import load_environment, interval_exposure
 from .models import (Astronaut, EVA, Scenario, MissionState, State,
                      ActiveEVAObservation)
 
 
 class RadiationEnvironment:
-    """Read the frozen CSV once. Never supplied to a strategy."""
+    """One anatomical environment for all strategies; never supplied as an observation."""
     def __init__(self, scenario: Scenario):
         self.scenario = scenario
-        data = load_baseline(historical_template=scenario.historical_template)
+        data = load_environment(scenario.historical_template)
         self.data = data[data.scenario.eq(scenario.severity) &
                          data.timing_variant.eq(scenario.timing_variant)].copy()
         if self.data.empty:
             raise ValueError('Unknown scenario or timing variant')
         for depth in (scenario.shielding, scenario.cabin_shielding):
-            baseline_interval_dose(scenario.severity, depth, float(self.data.hour.min()), float(self.data.hour_end.max()),
-                                   scenario.timing_variant, baseline=self.data, historical_template=scenario.historical_template)
+            if self.data[self.data.shielding_g_cm2.eq(depth)].empty:
+                raise ValueError('Anatomical data support only exact 0.4 and 20 g/cm² shielding')
         self.start_hour = float(self.data.hour.min())
         self.end_hour = float(self.data.hour_end.max())
 
     def dose(self, mission_start, mission_end, shielding):
-        return baseline_interval_dose(self.scenario.severity, shielding,
+        return self.exposure(mission_start, mission_end, shielding, 'absorbed_dose_mGy')
+
+    def gray_equivalent(self, mission_start, mission_end, shielding):
+        return self.exposure(mission_start, mission_end, shielding, 'gray_equivalent_mGy_eq')
+
+    def exposure(self, mission_start, mission_end, shielding, quantity):
+        return interval_exposure(self.data[self.data.shielding_g_cm2.eq(shielding)],
             mission_start + self.scenario.storm_start_hour,
-            mission_end + self.scenario.storm_start_hour,
-            self.scenario.timing_variant, baseline=self.data, historical_template=self.scenario.historical_template)
+            mission_end + self.scenario.storm_start_hour, quantity)
 
 
 def get_hourly_exposure(hour: float, scenario: Scenario, environment=None) -> float:
-    """One mission-relative hour of external idealized tissue-target dose, in mGy."""
+    """One mission-relative hour of external modeled BFO absorbed dose, in mGy."""
     return (environment or RadiationEnvironment(scenario)).dose(hour, hour+1, scenario.shielding)
 
 
@@ -62,15 +68,19 @@ def update_eva(eva: EVA, current_time: float, scenario: Scenario, environment=No
         raise ValueError('Cannot run an EVA backwards')
     if end == start:
         return
-    dose = (environment or RadiationEnvironment(scenario)).dose(start, end, scenario.shielding)
+    environment = environment or RadiationEnvironment(scenario)
+    dose = environment.dose(start, end, scenario.shielding)
+    gray_equivalent = environment.gray_equivalent(start, end, scenario.shielding)
     eva.astronaut.accumulated_radiation += dose
     eva.astronaut.outside_hours += end-start
     eva.modeled_dose_mGy += dose
+    eva.astronaut.bfo_gray_equivalent_mGy_eq += gray_equivalent
+    eva.bfo_gray_equivalent_mGy_eq += gray_equivalent
     eva.last_update_time = end
     # Mission loop resolves operational aborts before marking success at the boundary.
 
 
-def observe(state: MissionState) -> State:
+def observe(state: MissionState, recovery=None) -> State:
     t, cfg = state.current_mission_time, state.config
     restricted = any(a <= t < b for a, b in cfg.operational_restrictions)
     reason = 'Preset operational restriction is active' if restricted else ''
@@ -91,14 +101,22 @@ def observe(state: MissionState) -> State:
     eva = state.active_eva
     active = None if eva is None else ActiveEVAObservation(
         eva.astronaut.name, eva.repair_type, t-eva.start_time, eva.astronaut.estimated_dose_mGy)
+    recovery_obs = None if recovery is None else recovery.observe(t, state.completed_repairs, eva is not None)
+    if recovery_obs is not None and not recovery_obs.ready_repairs:
+        launch = False
+        if not reason:
+            reason = '; '.join(reason for _, reason in recovery_obs.blocked_repairs) or 'Recovery checkout or mission decision pending'
     return State(t, available, tuple(r for r in state.required_repairs if r not in state.completed_repairs),
                  tuple(state.completed_repairs), active, launch, reason, restricted,
-                 cfg.eva_time_limit_hours, cfg.radiation_abort_threshold_mGy)
+                 cfg.eva_time_limit_hours, cfg.radiation_abort_threshold_mGy, recovery_obs)
 
 
 def _validate(scenario, crew, repairs, cfg):
-    values = [cfg.max_hours, cfg.time_step_hours, cfg.eva_duration_hours, cfg.eva_time_limit_hours,
-              cfg.radiation_abort_threshold_mGy]
+    values = [cfg.max_hours, cfg.time_step_hours, cfg.eva_duration_hours, cfg.eva_time_limit_hours]
+    if cfg.radiation_abort_threshold_mGy is not None:
+        values.append(cfg.radiation_abort_threshold_mGy)
+    if cfg.estimated_external_rate_mGy_h is not None and cfg.radiation_abort_threshold_mGy is None:
+        raise ValueError('An optional BFO dose estimate requires an explicit experimental BFO threshold')
     if any(not math.isfinite(v) or v <= 0 for v in values):
         raise ValueError('Duration, time step, time cap and threshold must be finite and positive')
     if not math.isfinite(cfg.turnaround_hours) or cfg.turnaround_hours < 0:
@@ -113,7 +131,8 @@ def _validate(scenario, crew, repairs, cfg):
         raise ValueError('Repairs must be unique supported categories')
     for a in crew:
         if not a.name or any(not math.isfinite(v) or v < 0 for v in
-                           (a.radiation_baseline, a.accumulated_radiation, a.available_from)):
+                           (a.radiation_baseline, a.accumulated_radiation, a.available_from,
+                            a.bfo_initial_gray_equivalent_mGy_eq, a.bfo_gray_equivalent_mGy_eq)):
             raise ValueError('Invalid crew initialization')
     for rate in (cfg.estimated_external_rate_mGy_h, cfg.estimated_cabin_rate_mGy_h):
         if rate is not None and (not math.isfinite(rate) or rate < 0):
@@ -122,7 +141,7 @@ def _validate(scenario, crew, repairs, cfg):
         raise ValueError('Restrictions must be finite ordered nonnegative intervals')
 
 
-def simulate_mission(strategy, scenario=None, astronauts=None, repairs=None, config=None):
+def simulate_mission(strategy, scenario=None, astronauts=None, repairs=None, config=None, recovery_config=None):
     """Fresh, deterministic run. Strategy receives observations, never this state."""
     cfg = config if config is not None else DEFAULT_ASSUMPTIONS
     scenario = scenario if scenario is not None else Scenario.from_assumptions(cfg)
@@ -135,24 +154,51 @@ def simulate_mission(strategy, scenario=None, astronauts=None, repairs=None, con
     _validate(scenario, astronauts, repairs, cfg)
     environment = RadiationEnvironment(scenario)
     if not math.isfinite(scenario.storm_start_hour) or not environment.start_hour <= scenario.storm_start_hour < environment.end_hour:
-        raise ValueError('Mission origin is outside the frozen radiation record')
+        raise ValueError('Mission origin is outside the anatomical radiation record')
     end = min(cfg.max_hours, environment.end_hour-scenario.storm_start_hour)
     state = MissionState(scenario, cfg, deepcopy(astronauts), repairs)
+    recovery = None if recovery_config is None else MissionRecovery(
+        scenario.engine_type, recovery_config, [a.name for a in state.astronauts], repairs, cfg.eva_duration_hours)
+    if recovery is not None:
+        state.recovery_config, state.recovery_state = recovery_config, recovery.state
     for a in state.astronauts:
         a.accumulated_radiation += a.radiation_baseline
+        a.bfo_gray_equivalent_mGy_eq += a.bfo_initial_gray_equivalent_mGy_eq
         a.inside_hours = a.outside_hours = 0.0
         a.estimated_dose_mGy = 0.0 if cfg.estimated_external_rate_mGy_h is not None else None
     def log(action, reason, eva=None):
         state.event_log.append(dict(hour=state.current_mission_time, action=action, reason=reason,
             astronaut=eva.astronaut.name if eva else None, repair=eva.repair_type if eva else None))
+    def credit_completed_eva(eva):
+        success = recovery is None or recovery.finish_eva(
+            eva.repair_type, eva.astronaut.name, state.current_mission_time, True)
+        eva.completed = success
+        eva.reported_end_time = state.current_mission_time
+        eva.end_reason = 'Planned EVA repair completed' if success else 'EVA work finished; repair verification unsuccessful'
+        if success:
+            state.completed_repairs.append(eva.repair_type)
+        log('completed' if success else 'repair_failed', eva.end_reason, eva)
+
     def finish(eva):
+        if recovery is not None and eva.aborted:
+            recovery.finish_eva(eva.repair_type, eva.astronaut.name, state.current_mission_time, False)
         state.next_eva_time = state.current_mission_time+cfg.turnaround_hours
         state.progress.append(eva)
         state.active_eva = None
     # A finite horizon and a strictly increasing clock bound every run.
     while state.current_mission_time < end:
         t = state.current_mission_time
-        obs = observe(state)
+        if recovery is not None:
+            stop_reason = recovery.eva_stop_reason(t)
+            if state.active_eva and stop_reason:
+                eva = state.active_eva
+                abort_eva(eva, t, stop_reason)
+                log('aborted', stop_reason, eva)
+                finish(eva)
+            if recovery.state.outcome:
+                state.status = recovery.state.outcome
+                break
+        obs = observe(state, recovery)
         eva = state.active_eva
         # Resolve a seven-hour completion before a new launch, with abort precedence
         # for restrictions or the optional estimate; reaching the normal duration is success.
@@ -162,16 +208,17 @@ def simulate_mission(strategy, scenario=None, astronauts=None, repairs=None, con
                 reason = obs.restriction_reason or 'Imperfect operational dose estimate reached configured threshold'
                 abort_eva(eva, t, reason);log('aborted', reason, eva)
             else:
-                eva.completed = True;eva.reported_end_time = t;eva.end_reason = 'Planned EVA repair completed'
-                state.completed_repairs.append(eva.repair_type);log('completed', eva.end_reason, eva)
-            finish(eva);obs = observe(state)
-        if len(state.completed_repairs) == len(repairs):
+                credit_completed_eva(eva)
+            finish(eva);obs = observe(state, recovery)
+        if recovery is None and len(state.completed_repairs) == len(repairs):
             state.status = 'all_repairs_completed';break
         decision = strategy(obs)
         log(decision.action, decision.reason, state.active_eva)
         if decision.action == 'start':
             if state.active_eva or not obs.launch_allowed or decision.astronaut not in obs.available_astronauts or decision.repair_type not in obs.outstanding_repairs:
                 raise ValueError('Strategy requested an invalid EVA launch')
+            if recovery is not None:
+                recovery.start_eva(decision.repair_type, decision.astronaut, t, state.completed_repairs)
             a = next(a for a in state.astronauts if a.name == decision.astronaut)
             state.active_eva = start_eva(t, a, decision.repair_type, scenario.engine_type, cfg)
             state.event_log[-1].update(astronaut=a.name, repair=decision.repair_type)
@@ -179,10 +226,25 @@ def simulate_mission(strategy, scenario=None, astronauts=None, repairs=None, con
             if not state.active_eva:raise ValueError('No EVA to abort')
             abort_eva(state.active_eva,t,decision.reason);finish(state.active_eva)
             continue
+        elif decision.action in ('conserve_support', 'begin_checkout', 'resume_mission', 'safe_hold', 'abort_mission'):
+            if recovery is None:
+                raise ValueError('Recovery model must be enabled for mission-recovery commands')
+            recovery.command(decision.action, t, state.completed_repairs, state.active_eva is not None)
+            if recovery.state.outcome:
+                if state.active_eva:
+                    eva = state.active_eva
+                    abort_eva(eva, t, recovery.state.outcome_reason)
+                    log('aborted', eva.end_reason, eva)
+                    finish(eva)
+                state.status = recovery.state.outcome
+                break
+            continue  # State changed; reassess at the same boundary before integrating time.
         elif decision.action not in ('wait','continue'):
             raise ValueError('Unknown decision')
         # Split at known operational boundaries, never at predicted radiation peaks.
         boundaries = [end, t+cfg.time_step_hours, state.next_eva_time]
+        if recovery is not None:
+            boundaries += recovery.next_boundaries(t)
         boundaries += [a.available_from for a in state.astronauts]
         boundaries += [x for interval in cfg.operational_restrictions for x in interval]
         if state.active_eva:
@@ -193,27 +255,37 @@ def simulate_mission(strategy, scenario=None, astronauts=None, repairs=None, con
         if active:update_eva(active,until,scenario,environment)
         for a in state.astronauts:
             outside = active is not None and active.astronaut is a
+            shielding = scenario.shielding if outside else scenario.cabin_shielding
+            absorbed = environment.dose(t, until, shielding)
+            gray_equivalent = environment.gray_equivalent(t, until, shielding)
             if not outside:
-                a.accumulated_radiation += environment.dose(t,until,scenario.cabin_shielding)
+                a.accumulated_radiation += absorbed
+                a.bfo_gray_equivalent_mGy_eq += gray_equivalent
                 a.inside_hours += until-t
+            state.exposure_history.append(dict(astronaut=a.name, start_hour=t, end_hour=until,
+                location='eva' if outside else 'cabin', shielding_g_cm2=shielding,
+                bfo_absorbed_dose_mGy=absorbed, bfo_gray_equivalent_mGy_eq=gray_equivalent))
             if a.estimated_dose_mGy is not None:
                 rate = cfg.estimated_external_rate_mGy_h if outside else cfg.estimated_cabin_rate_mGy_h
                 a.estimated_dose_mGy += rate*(until-t)
         state.current_mission_time = until
+        if recovery is not None:
+            recovery.advance(until, active.astronaut.name if active is not None else None)
     if state.status == 'running':
         # Resolve an EVA ending exactly at the terminal boundary.
         eva = state.active_eva
         if eva:
-            obs = observe(state)
+            obs = observe(state, recovery)
             exceeded = (eva.astronaut.estimated_dose_mGy is not None and
                         eva.astronaut.estimated_dose_mGy >= cfg.radiation_abort_threshold_mGy)
-            if eva.scheduled_end_time == end and not obs.operational_abort and not exceeded:
-                eva.completed=True;eva.reported_end_time=end;eva.end_reason='Planned EVA repair completed'
-                state.completed_repairs.append(eva.repair_type);log('completed',eva.end_reason,eva)
+            recovery_stop = recovery.eva_stop_reason(end) if recovery is not None else ''
+            if eva.scheduled_end_time == end and not obs.operational_abort and not exceeded and not recovery_stop:
+                credit_completed_eva(eva)
             else:
                 abort_eva(eva,end,'Emergency/data boundary or operational abort condition');log('aborted',eva.end_reason,eva)
             finish(eva)
-        state.status = ('all_repairs_completed' if len(state.completed_repairs)==len(repairs) else
+        state.status = (recovery.state.outcome if recovery is not None and recovery.state.outcome else
+                        'all_repairs_completed' if recovery is None and len(state.completed_repairs)==len(repairs) else
                         'radiation_data_exhausted' if end < cfg.max_hours else 'emergency_duration_reached')
     log('mission_ended',state.status)
     return state

@@ -1,0 +1,15 @@
+{
+  "instrument": "GOES-10 proton flux",
+  "thresholds_MeV": [
+    10,
+    30,
+    60
+  ],
+  "channel_type": "integral above threshold",
+  "units": "protons cm^-2 s^-1 sr^-1",
+  "cadence": "hourly",
+  "official_product_description": "GSFC/SPDF hourly averages of NOAA 5-minute GOES fluxes",
+  "source_url": "https://omniweb.gsfc.nasa.gov/ftpbrowser/flux_ogg.html",
+  "local_record_origin": "user-supplied; exact official-product match unverified",
+  "usage": "Unit-normalized relative timing only, not dose or event spectral normalization"
+}

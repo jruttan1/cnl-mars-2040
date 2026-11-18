@@ -1,0 +1,48 @@
+REPOSITORY CLEANUP — 2026-11-17
+
+Archive: /Users/jack/Documents/cnl_archive/cleanup_2026-11-17_183446
+
+COUNTS
+Active project/source/output/archive files: 382 before, 150 after (excluding .git, .venv and bytecode caches).
+261 original files removed from the active tree: 239 moved intact to the external archive and 22 reproducible Python bytecode caches deleted.
+These are action counts, not net directory-size changes. The two inventory paths are recreated with updated contents, and five cleanup evidence files are added.
+17 moved files were Git-tracked GENERATED outputs. No tracked source code was removed, no index changes were made, and no commits were created.
+Four original documents/notebook/config files were additionally copied before editing (not counted among the moved files).
+
+BASELINE AND AFTER
+65 tests passed before and after; zero failures and zero skips. Existing legacy-PDF parsing and pandas deprecation warnings remain nonfatal.
+72 complete deterministic mission states and NASA comparison records are byte-identical: seeds 0/42 × two historical templates × two SAPPHIRE severities × nine timing variants.
+Seeds were explicitly set; no stochastic/Monte Carlo model exists yet. No radiation exporter was run.
+Both frozen SHIELDOSE copies, the anatomical table/manifest/freeze, source checksums, radiation configuration, all 36 Python source/test files, and all 485 Git-internal files remain unchanged.
+Notebook executable cells remain exact; only saved output/execution metadata and its introductory scope label changed.
+
+RETAINED, WITH REASONS
+- All sim/, tests/, charts/ and root Python scripts: active runtime, generators, or existing test dependencies.
+- All data/processed and scientific data/raw source groups outside historical backup snapshots: scientific evidence and reconstruction inputs.
+- Corrected OLTARIS raw/processed tables, source manifests, frozen anatomical environment and checksums: primary simulator input.
+- SPENVIS/SHIELDOSE sources and both frozen reference copies: independent scientific reference and existing checksum/test contracts.
+- Five data/raw/archive/previous_processed CSVs: prepare_data.build() reads them directly; retained at original paths so full rebuild test still runs.
+- Preservation manifest plus original move/validation records: source provenance and preservation-test dependencies.
+- outputs/model/historical/mission_radiation_environment.csv and synthetic_sapphire_interval_exposure.csv: generated but currently required regression fixtures; not discarded as generic output.
+- Corrected anatomical validation evidence and source audit JSON: provenance, rather than disposable simulator output.
+- bfo_proxy.py and audit_band_spectra.py: legacy experiments still imported by tests. Their disposable generated output was archived.
+- Superseded Weibull records: required by organizer and unit-separation checks, and preserved source evidence.
+- .venv/: installed dependencies retained to avoid unnecessary environment rebuilding; ignored by Git. Its internal caches were not removed.
+
+DOCUMENTATION / IGNORE RULES
+README is the consolidated source/units/assumptions/workflow reference. outputs/README is now only an output map.
+Outdated pre-integration audit, old inventories, plots, Band diagnostic output and prior mission runs are archived.
+Ignore rules cover plots, disposable mission outputs, intermediate tables, temporary files, environments and caches, with no blanket exclusion of frozen/reference outputs.
+All five importer source tables are explicitly allowed through .gitignore, including the previously ignored shielding_dose.csv.
+
+MANUAL REVIEW / DELIBERATELY DEFERRED
+1. bfo_proxy.py, audit_band_spectra.py and their tests: retirement would change the existing tested surface; retained intact.
+2. Raw duplicate OMNI/SPENVIS/OLTARIS records: manifests and source-path chains refer to them, so no deduplication that rewrites scientific provenance was attempted.
+3. Two generated regression fixtures remain in outputs/model. Moving them into a fixtures directory would require a separate test/path migration; no need to block strategy work.
+4. Large local source databases and full-year OMNI2 records remain local/ignored; preserve them in backups for full source reproducibility. The archive is also local, not a remote backup.
+5. The reference notebook retains old export code, clearly labeled independent SHIELDOSE workflow. Do not execute it as a strategy-development prerequisite.
+No uncertain item was permanently deleted.
+
+RESTORE
+For any moved entry in manifest.json/moves.json, copy archive_path back to its original path after checking the recorded SHA-256. Preserve any newer destination before restoring. No shell restore was automatically run.
+The archive also contains pre-cleanup Git status/diff, original edited files, full checksums, test logs and before/after mission states.

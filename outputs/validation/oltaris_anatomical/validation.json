@@ -1,0 +1,115 @@
+{
+  "checked_summary_organ_pairs": 36,
+  "source_spectra": [
+    {
+      "path": "data/raw/spenvis/sapphire_100yr/sapphire_100yr_source_report.html",
+      "sha256": "f9bc886220e0907940f7e8eef0cf19765df76d63a53501286372423385b664a3",
+      "return_period_years": 100,
+      "reported_distance_AU": 1.2
+    },
+    {
+      "path": "data/raw/spenvis/sapphire_1000yr/sapphire_1000yr_source_report.html",
+      "sha256": "82cd7c1fea309a61082dbd632851453c9bdc459807ecec5f9a97d351d9c0ee03",
+      "return_period_years": 1000,
+      "reported_distance_AU": 1.2
+    }
+  ],
+  "spectrum_metrics": [
+    {
+      "return_period_years": 100,
+      "min_energy_MeV": 0.1,
+      "max_energy_MeV": 1000,
+      "count": 81,
+      "mean_absolute_error_percent": 1.3955742192252119,
+      "max_absolute_error_percent": 3.181376028392102,
+      "worst_energy_MeV": 22.0
+    },
+    {
+      "return_period_years": 100,
+      "min_energy_MeV": 1,
+      "max_energy_MeV": 1000,
+      "count": 61,
+      "mean_absolute_error_percent": 1.4218609500082318,
+      "max_absolute_error_percent": 3.181376028392102,
+      "worst_energy_MeV": 22.0
+    },
+    {
+      "return_period_years": 100,
+      "min_energy_MeV": 10,
+      "max_energy_MeV": 100,
+      "count": 21,
+      "mean_absolute_error_percent": 2.2709767005759964,
+      "max_absolute_error_percent": 3.181376028392102,
+      "worst_energy_MeV": 22.0
+    },
+    {
+      "return_period_years": 100,
+      "min_energy_MeV": 10,
+      "max_energy_MeV": 1000,
+      "count": 41,
+      "mean_absolute_error_percent": 1.5965239955784636,
+      "max_absolute_error_percent": 3.181376028392102,
+      "worst_energy_MeV": 22.0
+    },
+    {
+      "return_period_years": 100,
+      "min_energy_MeV": 100,
+      "max_energy_MeV": 1000,
+      "count": 21,
+      "mean_absolute_error_percent": 0.9396250886948556,
+      "max_absolute_error_percent": 1.9651537559708943,
+      "worst_energy_MeV": 100.0
+    },
+    {
+      "return_period_years": 1000,
+      "min_energy_MeV": 0.1,
+      "max_energy_MeV": 1000,
+      "count": 81,
+      "mean_absolute_error_percent": 1.2590274406282929,
+      "max_absolute_error_percent": 3.006605952398389,
+      "worst_energy_MeV": 25.0
+    },
+    {
+      "return_period_years": 1000,
+      "min_energy_MeV": 1,
+      "max_energy_MeV": 1000,
+      "count": 61,
+      "mean_absolute_error_percent": 1.307821068955365,
+      "max_absolute_error_percent": 3.006605952398389,
+      "worst_energy_MeV": 25.0
+    },
+    {
+      "return_period_years": 1000,
+      "min_energy_MeV": 10,
+      "max_energy_MeV": 100,
+      "count": 21,
+      "mean_absolute_error_percent": 2.104557820924037,
+      "max_absolute_error_percent": 3.006605952398389,
+      "worst_energy_MeV": 25.0
+    },
+    {
+      "return_period_years": 1000,
+      "min_energy_MeV": 10,
+      "max_energy_MeV": 1000,
+      "count": 41,
+      "mean_absolute_error_percent": 1.4850402423828657,
+      "max_absolute_error_percent": 3.006605952398389,
+      "worst_energy_MeV": 25.0
+    },
+    {
+      "return_period_years": 1000,
+      "min_energy_MeV": 100,
+      "max_energy_MeV": 1000,
+      "count": 21,
+      "mean_absolute_error_percent": 0.8833028652280989,
+      "max_absolute_error_percent": 1.8584244714973441,
+      "worst_energy_MeV": 100.0
+    }
+  ],
+  "distance_rescaling_applied": false,
+  "original_grid_nodes_per_event": 81,
+  "corrected_solver_exports_verified": false,
+  "simulations_run": false,
+  "script_sha256": "b6a6fa459f0934bbb5e7490ded1221d4e4fb4dab4f9d55bd595bea88a875d453",
+  "current_source_manifest": "data/raw/oltaris/sapphire_corrected_band_2026-11-16/provenance.json"
+}

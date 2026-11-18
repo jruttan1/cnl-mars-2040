@@ -12,6 +12,9 @@ from sim.assumptions import DEFAULT_ASSUMPTIONS
 from radiation_model import load_config, HISTORICAL_TEMPLATES
 from sim.mission_simulator import simulate_mission
 from sim.strategies import strategy_a
+from sim.mission_recovery import RecoveryConfig
+from anatomical_environment import DESCRIPTION, MANIFEST, nasa_bfo_comparisons
+from radiation_model import write_preserving
 
 ROOT = Path(__file__).resolve().parent
 
@@ -43,6 +46,8 @@ def plot_timeline(result, path):
 def main():
     defaults = DEFAULT_ASSUMPTIONS
     parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--output-dir', type=Path, default=ROOT/'outputs/strategy_a')
+    parser.add_argument('--recovery', action='store_true', help='Enable qualitative mission recovery (hypothetical engineering assumptions)')
     parser.add_argument('--scenario',choices=[defaults.default_spe_severity,defaults.worst_case_spe_severity],default=defaults.default_spe_severity)
     parser.add_argument('--template', choices=[name for name, info in HISTORICAL_TEMPLATES.items() if info['enabled']],
                         default=load_config()['historical_template'])
@@ -54,10 +59,10 @@ def main():
     parser.add_argument('--turnaround',type=float,default=defaults.turnaround_hours)
     parser.add_argument('--eva-time-cap',type=float,default=defaults.max_continuous_eva_hours)
     parser.add_argument('--estimated-external-rate',type=float,default=defaults.estimated_external_rate_mGy_h,
-                        help='Optional fixed imperfect estimate, mGy/h; independent of the CSV')
+                        help='Optional fixed imperfect BFO absorbed-dose estimate, mGy/h; independent of the CSV')
     parser.add_argument('--estimated-cabin-rate',type=float,default=defaults.estimated_cabin_rate_mGy_h)
     parser.add_argument('--abort-threshold',type=float,default=defaults.radiation_abort_threshold_mGy,
-                        help='Experimental estimated-dose policy parameter; NOT a medical limit')
+                        help='Experimental BFO absorbed-dose policy parameter; NOT a medical limit')
     parser.add_argument('--restriction',type=float,nargs=2,action='append',default=None,metavar=('START','END'))
     args=parser.parse_args()
     cfg=replace(defaults, default_spe_severity=args.scenario, historical_template=args.template,
@@ -69,19 +74,28 @@ def main():
         estimated_cabin_rate_mGy_h=args.estimated_cabin_rate,
         operational_restrictions=(defaults.operational_restrictions if args.restriction is None
                                   else tuple(tuple(x) for x in args.restriction)))
-    result=simulate_mission(strategy_a,config=cfg)
+    result=simulate_mission(strategy_a,config=cfg,recovery_config=RecoveryConfig() if args.recovery else None)
     scenario=result.scenario
-    out=ROOT/'outputs/strategy_a';out.mkdir(parents=True,exist_ok=True)
-    pd.DataFrame(result.event_log).to_csv(out/'event_log.csv',index=False)
-    summary=dict(scenario=asdict(scenario),assumptions=asdict(cfg),
-        quantity='idealized tissue-target absorbed dose (mGy)',status=result.status,
+    out=args.output_dir;out.mkdir(parents=True,exist_ok=True)
+    write_preserving(out/'event_log.csv', pd.DataFrame(result.event_log).to_csv(index=False))
+    write_preserving(out/'bfo_exposure_history.csv', pd.DataFrame(result.exposure_history).to_csv(index=False))
+    if result.recovery_state is not None:
+        write_preserving(out/'recovery_events.csv', pd.DataFrame(result.recovery_state.events).to_csv(index=False))
+    comparisons = nasa_bfo_comparisons(result.exposure_history)
+    write_preserving(out/'nasa_bfo_reference_comparisons.csv', pd.DataFrame(comparisons).to_csv(index=False))
+    summary=dict(schema_version='oltaris_bfo_v1', description=DESCRIPTION,
+        radiation_environment=json.loads(MANIFEST.read_text()), scenario=asdict(scenario),assumptions=asdict(cfg),
+        quantities={'absorbed':'BFO absorbed dose (mGy)', 'gray_equivalent':'BFO Gray Equivalent (mGy-Eq)'},
+        recovery_config=asdict(result.recovery_config) if result.recovery_config is not None else None,
+        recovery_state=asdict(result.recovery_state) if result.recovery_state is not None else None,
+        health_response_model=None, nasa_compliance_status='not_assessed', status=result.status,
         mission_duration_hours=result.current_mission_time,required_repairs=result.required_repairs,
         completed_repairs=result.completed_repairs,
         outstanding_repairs=[r for r in result.required_repairs if r not in result.completed_repairs],
         crew=[asdict(a) for a in result.astronauts],
         evas=[{**{k:v for k,v in asdict(e).items() if k!='astronaut'},'astronaut':e.astronaut.name} for e in result.progress])
-    (out/'summary.json').write_text(json.dumps(summary,indent=2)+'\n')
-    plot_timeline(result,ROOT/'outputs/charts/09_strategy_a_mission_timeline.png')
+    write_preserving(out/'summary.json', json.dumps(summary,indent=2)+'\n')
+    plot_timeline(result,out/'mission_timeline.png')
     print(f'Strategy A | {scenario.severity} | {scenario.historical_template} | {scenario.timing_variant} | {scenario.engine_type}')
     print(f'Mission hour 0 = storm hour {scenario.storm_start_hour:g}; outside {scenario.shielding:g}, inside {scenario.cabin_shielding:g} g/cm²')
     print('Required repairs:',', '.join(result.required_repairs))
@@ -93,9 +107,12 @@ def main():
         if event['action']=='wait':print(f'  Delay at {event["hour"]:g} h: {event["reason"]}')
     print(f'Status: {result.status}; {len(result.completed_repairs)}/{len(result.required_repairs)} repairs; duration {result.current_mission_time:g} h')
     for a in result.astronauts:
-        print(f'  {a.name}: {a.accumulated_radiation:.6f} mGy modeled tissue-target dose; inside {a.inside_hours:g} h, outside {a.outside_hours:g} h')
-    print('These are modeled target doses and assumed repair outcomes, not clinical or spacecraft survival predictions.')
-    print('Saved: outputs/strategy_a/{summary.json,event_log.csv}; outputs/charts/09_strategy_a_mission_timeline.png')
+        print(f'  {a.name}: BFO {a.bfo_absorbed_dose_mGy:.6f} mGy absorbed; {a.bfo_gray_equivalent_mGy_eq:.6f} mGy-Eq; inside {a.inside_hours:g} h, outside {a.outside_hours:g} h')
+    if result.recovery_state is not None:
+        print('Recovery:', result.recovery_state.outcome_reason or 'Incomplete at simulation horizon')
+    print(DESCRIPTION)
+    print('Reference spectra applied near 1.25 AU without distance adjustment; no symptoms or individual health outcomes predicted.')
+    print(f'Saved summaries, exposure ledger, NASA reference comparisons and timeline in {out}')
 
 
 if __name__=='__main__':main()

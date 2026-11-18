@@ -1,0 +1,406 @@
+[
+  {
+    "path": "data/processed/oltaris/oltaris_sapphire_anatomical_summary.csv",
+    "unchanged": true
+  },
+  {
+    "path": "data/processed/oltaris/oltaris_sapphire_organ_doses.csv",
+    "unchanged": true
+  },
+  {
+    "path": "data/processed/oltaris/superseded_weibull_anatomical_doses.csv",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/oltaris/sapphire_corrected_band_2026-11-16/oltaris_sapphire_anatomical_summary.csv",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/oltaris/sapphire_corrected_band_2026-11-16/oltaris_sapphire_organ_doses.csv",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/oltaris/sapphire_corrected_band_2026-11-16/provenance.json",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/oltaris/sapphire_superseded_weibull_2026-11-16/effective_dose_equivalent-3.txt",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/oltaris/sapphire_superseded_weibull_2026-11-16/li_dose_database_mGy-3.dat",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/oltaris/sapphire_superseded_weibull_2026-11-16/li_flux_database-3.dat",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/oltaris/sapphire_superseded_weibull_2026-11-16/provenance.json",
+    "unchanged": true
+  },
+  {
+    "path": "outputs/model/band_validation/README.md",
+    "unchanged": true
+  },
+  {
+    "path": "outputs/model/band_validation/audit.json",
+    "unchanged": true
+  },
+  {
+    "path": "outputs/model/band_validation/band_vs_sapphire.png",
+    "unchanged": true
+  },
+  {
+    "path": "outputs/model/band_validation/export_comparison.csv",
+    "unchanged": true
+  },
+  {
+    "path": "outputs/model/band_validation/export_diagnostics.png",
+    "unchanged": true
+  },
+  {
+    "path": "outputs/model/band_validation/proposed_parameters.csv",
+    "unchanged": true
+  },
+  {
+    "path": "outputs/model/band_validation/spectrum_comparison.csv",
+    "unchanged": true
+  },
+  {
+    "path": "data/processed/mission_radiation_environment.csv",
+    "unchanged": true
+  },
+  {
+    "path": "data/processed/october_1989_hourly_proton_flux.csv",
+    "unchanged": true
+  },
+  {
+    "path": "data/processed/october_2003_goes10_hourly_proton_flux.csv",
+    "unchanged": true
+  },
+  {
+    "path": "data/processed/october_2003_hourly_proton_flux.csv",
+    "unchanged": true
+  },
+  {
+    "path": "data/processed/shielding_dose.csv",
+    "unchanged": true
+  },
+  {
+    "path": "data/processed/spe_hourly.csv",
+    "unchanged": true
+  },
+  {
+    "path": "data/processed/spe_scenarios.csv",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/archive/before_verified_sapphire/preservation_manifest.json",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/archive/previous_processed/exposure_settings.csv",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/archive/previous_processed/organ_dose.csv",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/archive/previous_processed/spe_hourly.csv",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/archive/previous_processed/spe_spectra.csv",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/oltaris/OLTARIS_Aug1972_King_Al0p4_gcm2/NASA_Q_leukemia_dose_equivalent_vs_depth_mSv.dat",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/oltaris/OLTARIS_Aug1972_King_Al0p4_gcm2/NASA_Q_solid_cancer_dose_equivalent_vs_depth_mSv.dat",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/oltaris/OLTARIS_Aug1972_King_Al0p4_gcm2/README.md",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/oltaris/OLTARIS_Aug1972_King_Al0p4_gcm2/absorbed_dose_vs_aluminum_and_tissue_depth_mGy.dat",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/oltaris/OLTARIS_Aug1972_King_Al0p4_gcm2/effective_dose_equivalent_and_organ_results_mSv.txt",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/oltaris/OLTARIS_Aug1972_King_Al0p4_gcm2/particle_fluence_vs_energy_and_isotope_point_1.dat",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/oltaris/OLTARIS_Aug1972_King_Al20_gcm2/NASA_Q_leukemia_dose_equivalent_vs_depth_mSv.dat",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/oltaris/OLTARIS_Aug1972_King_Al20_gcm2/NASA_Q_solid_cancer_dose_equivalent_by_particle_vs_depth_mSv.dat",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/oltaris/OLTARIS_Aug1972_King_Al20_gcm2/NASA_Q_solid_cancer_dose_equivalent_vs_depth_mSv.dat",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/oltaris/OLTARIS_Aug1972_King_Al20_gcm2/README.md",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/oltaris/OLTARIS_Aug1972_King_Al20_gcm2/absorbed_dose_vs_aluminum_and_tissue_depth_mGy.dat",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/oltaris/OLTARIS_Aug1972_King_Al20_gcm2/effective_dose_equivalent_and_organ_results_mSv.txt",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/omniweb/OMNIWeb_Aug1972/README.md",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/omniweb/OMNIWeb_Aug1972/hourly_measured_proton_flux.csv",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/omniweb/OMNIWeb_Aug1972/measured_proton_flux_hours.png",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/omniweb/OMNIWeb_Aug1972/originals/omni2_5AkMqBOXbn.fmt.txt",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/omniweb/OMNIWeb_Aug1972/originals/omni2_5AkMqBOXbn.lst.txt",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/omniweb/OMNIWeb_Aug1972/validation.json",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/omniweb/OMNIWeb_Aug1972_measured_proton_flux_hours.png",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/omniweb/omni2_5AkMqBOXbn.fmt.txt",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/omniweb/omni2_5AkMqBOXbn.lst.txt",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/spenvis/SAPPHIRE-1-in-100/README.md",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/spenvis/SAPPHIRE-1-in-100/mulassis-effective-dose-output.txt",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/spenvis/SAPPHIRE-1-in-100/mulassis-effective-dose-report.html",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/spenvis/SAPPHIRE-1-in-100/shieldose2-tissue-dose-output.txt",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/spenvis/SAPPHIRE-1-in-100/shieldose2-tissue-dose-report.html",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/spenvis/SAPPHIRE-1-in-100/shieldose2-tissue-dose-vs-aluminium.png",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/spenvis/SAPPHIRE-1-in-100/solar-proton-fluence-linear-energy.png",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/spenvis/SAPPHIRE-1-in-100/solar-proton-fluence-log-energy.png",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/spenvis/SAPPHIRE-1-in-100/solar-proton-fluence-report.pdf",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/spenvis/SAPPHIRE-1-in-1000/README.md",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/spenvis/SAPPHIRE-1-in-1000/mulassis-effective-dose-output.txt",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/spenvis/SAPPHIRE-1-in-1000/mulassis-effective-dose-report.html",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/spenvis/SAPPHIRE-1-in-1000/shieldose2-tissue-dose-report.pdf",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/spenvis/SAPPHIRE-1-in-1000/shieldose2-tissue-dose-vs-aluminium.pdf",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/spenvis/SAPPHIRE-1-in-1000/solar-proton-fluence-linear-energy.png",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/spenvis/SAPPHIRE-1-in-1000/solar-proton-fluence-log-energy.png",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/spenvis/SAPPHIRE-1-in-1000/solar-proton-fluence-report.pdf",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/spenvis/sapphire_1000yr/sapphire_1000yr_shielding_plot.png",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/spenvis/sapphire_1000yr/sapphire_1000yr_shieldose_data.txt",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/spenvis/sapphire_1000yr/sapphire_1000yr_shieldose_report.html",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/spenvis/sapphire_1000yr/sapphire_1000yr_source_report.html",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/spenvis/sapphire_100yr/sapphire_100yr_shielding_plot.png",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/spenvis/sapphire_100yr/sapphire_100yr_shieldose_data.txt",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/spenvis/sapphire_100yr/sapphire_100yr_shieldose_report.html",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/spenvis/sapphire_100yr/sapphire_100yr_source_report.html",
+    "unchanged": true
+  },
+  {
+    "path": "data/raw/spenvis/verified_sapphire_manifest.json",
+    "unchanged": true
+  },
+  {
+    "path": "outputs/charts/01_spe_proton_flux.png",
+    "unchanged": true
+  },
+  {
+    "path": "outputs/charts/02_shielding_vs_dose.png",
+    "unchanged": true
+  },
+  {
+    "path": "outputs/charts/03_sapphire_spectra.png",
+    "unchanged": true
+  },
+  {
+    "path": "outputs/charts/04_radiation_dose_rate.png",
+    "unchanged": true
+  },
+  {
+    "path": "outputs/charts/05_cumulative_exposure.png",
+    "unchanged": true
+  },
+  {
+    "path": "outputs/charts/06_shielding_sensitivity.png",
+    "unchanged": true
+  },
+  {
+    "path": "outputs/charts/07_absorbed_dose_health_reference.png",
+    "unchanged": true
+  },
+  {
+    "path": "outputs/charts/08_synthetic_sapphire_proton_profile.png",
+    "unchanged": true
+  },
+  {
+    "path": "outputs/charts/09_strategy_a_mission_timeline.png",
+    "unchanged": true
+  },
+  {
+    "path": "outputs/charts/historical/04_radiation_dose_rate.png",
+    "unchanged": true
+  },
+  {
+    "path": "outputs/charts/historical/05_cumulative_exposure.png",
+    "unchanged": true
+  },
+  {
+    "path": "outputs/charts/historical/06_shielding_sensitivity.png",
+    "unchanged": true
+  },
+  {
+    "path": "outputs/mission_radiation_environment.csv",
+    "unchanged": true
+  },
+  {
+    "path": "outputs/model/baseline_manifest.json",
+    "unchanged": true
+  },
+  {
+    "path": "outputs/model/baseline_validation.md",
+    "unchanged": true
+  },
+  {
+    "path": "outputs/model/exploratory_bfo_october_2003_goes10.csv",
+    "unchanged": true
+  },
+  {
+    "path": "outputs/model/historical/full_event_profiles.csv",
+    "unchanged": true
+  },
+  {
+    "path": "outputs/model/historical/mission_radiation_environment.csv",
+    "unchanged": true
+  },
+  {
+    "path": "outputs/model/historical/radiation_environment_audit.json",
+    "unchanged": true
+  },
+  {
+    "path": "outputs/model/sapphire_transport_audit.json",
+    "unchanged": true
+  },
+  {
+    "path": "outputs/model/synthetic_sapphire_interval_exposure.csv",
+    "unchanged": true
+  },
+  {
+    "path": "outputs/model/synthetic_sapphire_temporal_weights.csv",
+    "unchanged": true
+  },
+  {
+    "path": "radiation_config.json",
+    "unchanged": true
+  },
+  {
+    "path": "radiation_model.py",
+    "unchanged": true
+  },
+  {
+    "path": "sim/strategies.py",
+    "unchanged": true
+  }
+]
