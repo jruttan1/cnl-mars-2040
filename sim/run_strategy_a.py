@@ -1,4 +1,4 @@
-"""Run from the project root: python run_strategy_a.py --help."""
+"""Run from the project root: python -m sim.run_strategy_a --help."""
 import argparse
 from dataclasses import asdict, replace
 from pathlib import Path
@@ -16,7 +16,7 @@ from sim.mission_recovery import MODEL_VERSION, RecoveryConfig
 from anatomical_environment import DESCRIPTION, MANIFEST, nasa_bfo_comparisons
 from radiation_model import write_preserving
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
 
 
 def plot_timeline(result, path):
