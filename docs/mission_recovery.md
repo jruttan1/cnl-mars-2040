@@ -52,6 +52,16 @@ An explicitly omitted repair is assumed already functional; its deadline does no
 NEP's default priority is advisory to strategies, while launch prerequisites and deadlines are enforced
 by the simulator regardless of strategy. `communications_before_propulsion` can require ground involvement.
 
+Strategy A now checks a simple lower bound before launching: remaining propulsion prerequisites plus
+propulsion itself, using the configured EVA duration, turnaround and next launch time. If even that
+cannot fit before the assumed deadline, A requests a hold instead of launching a futile attempt.
+If doing another repair first would use the remaining time, A prioritizes the critical chain.
+Completion exactly at the deadline is allowed. No deadline check applies once propulsion is repaired
+or when its deadline is disabled. This is a necessary-time check, not a scheduling guarantee: future
+restrictions and crew availability can still delay work, and A checks again at each decision.
+It uses neither actual accumulated dose nor future storm intensity. No deadline values or physical
+assumptions were changed by this policy update; hold still ends the modeled decision window.
+
 ```python
 from sim.mission_recovery import RecoveryConfig
 
