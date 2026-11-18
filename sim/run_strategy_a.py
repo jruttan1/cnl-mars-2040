@@ -86,6 +86,7 @@ def main():
         quantities={'absorbed':'BFO absorbed dose (mGy)', 'gray_equivalent':'BFO Gray Equivalent (mGy-Eq)'},
         recovery_config=asdict(result.recovery_config) if result.recovery_config is not None else None,
         recovery_model_version=MODEL_VERSION if result.recovery_config is not None else None,
+        engineering_stabilized=result.engineering_stabilized,
         health_response_model=None, nasa_compliance_status='not_assessed', status=result.status,
         mission_duration_hours=result.current_mission_time,required_repairs=result.required_repairs,
         completed_repairs=result.completed_repairs,

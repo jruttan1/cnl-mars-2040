@@ -15,6 +15,8 @@ def strategy_a(state: State) -> Decision:
         return Decision('continue', 'No permitted operational abort condition triggered')
     recovery = state.recovery
     if recovery is not None:
+        if recovery.stabilization_required and not recovery.safety_blockers:
+            return Decision('stabilize', recovery.stabilization_action)
         if not state.outstanding_repairs:
             if recovery.continuation_blockers:
                 return Decision('safe_hold', '; '.join(recovery.continuation_blockers))
