@@ -1,0 +1,127 @@
+{
+  "quantity": "Organ Gray Equivalent: mGy-Eq; BFO rate: mGy-Eq/h; normalized timing: %/h",
+  "background_slide": [
+    "04_normalized_storm_timing",
+    "05_seven_hour_eva_timing"
+  ],
+  "backup_organ_chart": "01_sources_to_dose",
+  "eva_window_validation": [
+    {
+      "return_period_years": 100,
+      "windows": 258,
+      "peak_start_h": 64.0,
+      "peak_end_h": 71.0,
+      "peak_seven_hour_bfo_mGy_eq": 321.53784546709556
+    },
+    {
+      "return_period_years": 1000,
+      "windows": 258,
+      "peak_start_h": 64.0,
+      "peak_end_h": 71.0,
+      "peak_seven_hour_bfo_mGy_eq": 560.7438440923037
+    }
+  ],
+  "method": "Read existing simulator radiation environment; no new OLTARIS or mission run",
+  "timing_variant": "gt10MeV__log_linear",
+  "source_sha256": {
+    "data/processed/oltaris/oltaris_sapphire_anatomical_summary.csv": "839f5eb457eb925e9f7d4de6cf50c6163e6076993071e5f5a1d14cec142a83f2",
+    "data/processed/oltaris/oltaris_sapphire_organ_doses.csv": "70a7f9d12fe53c8e8e821d2367a16bcd8d938031ad7d59165fa630cc6772ec3d",
+    "data/raw/oltaris/sapphire_corrected_band_2026-11-16/oltaris_sapphire_anatomical_summary.csv": "32a3fa70f242a1ddded588ec330a122da75929855a99bada0290a5601e1119d4",
+    "data/raw/oltaris/sapphire_corrected_band_2026-11-16/oltaris_sapphire_organ_doses.csv": "d7ce28042b553f1107749a6e85c0846fd1bcd5a98c861d66a033e6f4b96dadb3",
+    "data/processed/spe_hourly.csv": "f7d75639409f86cb272c321a522d793c3e59b0eaf24ff5c90259354a7ce8c4dc",
+    "data/processed/october_2003_goes10_hourly_proton_flux.csv": "55767a4827bfc3044ff99a06862bdc6861a7792ba16fe0c58f265cd68a18c209"
+  },
+  "environment_sha256": "270871c7ea81422f0ad7adf3a7e4b0a01dac0eaae3447efb3dab24a5f3256108",
+  "generator_sha256": "41b0b497dc1b7c4d4633c2aadeae3632ebb51beac10070c9bc52c778d9967bad",
+  "validation": [
+    {
+      "template": "august_1972",
+      "scenario": "SAPPHIRE-1-in-100",
+      "shielding_g_cm2": 0.4,
+      "bins": 264,
+      "gap_filled_bins": 8,
+      "weights_sum": 1.0000000000000002,
+      "expected_total_mGy_eq": 623.3,
+      "integrated_total_mGy_eq": 623.3
+    },
+    {
+      "template": "august_1972",
+      "scenario": "SAPPHIRE-1-in-100",
+      "shielding_g_cm2": 20.0,
+      "bins": 264,
+      "gap_filled_bins": 8,
+      "weights_sum": 1.0000000000000002,
+      "expected_total_mGy_eq": 63.99,
+      "integrated_total_mGy_eq": 63.99
+    },
+    {
+      "template": "august_1972",
+      "scenario": "SAPPHIRE-1-in-1000",
+      "shielding_g_cm2": 0.4,
+      "bins": 264,
+      "gap_filled_bins": 8,
+      "weights_sum": 1.0000000000000002,
+      "expected_total_mGy_eq": 1087.0,
+      "integrated_total_mGy_eq": 1087.0000000000002
+    },
+    {
+      "template": "august_1972",
+      "scenario": "SAPPHIRE-1-in-1000",
+      "shielding_g_cm2": 20.0,
+      "bins": 264,
+      "gap_filled_bins": 8,
+      "weights_sum": 1.0000000000000002,
+      "expected_total_mGy_eq": 111.6,
+      "integrated_total_mGy_eq": 111.60000000000002
+    },
+    {
+      "template": "october_2003_goes10",
+      "scenario": "SAPPHIRE-1-in-100",
+      "shielding_g_cm2": 0.4,
+      "bins": 336,
+      "gap_filled_bins": 0,
+      "weights_sum": 0.9999999999999998,
+      "expected_total_mGy_eq": 623.3,
+      "integrated_total_mGy_eq": 623.3
+    },
+    {
+      "template": "october_2003_goes10",
+      "scenario": "SAPPHIRE-1-in-100",
+      "shielding_g_cm2": 20.0,
+      "bins": 336,
+      "gap_filled_bins": 0,
+      "weights_sum": 0.9999999999999998,
+      "expected_total_mGy_eq": 63.99,
+      "integrated_total_mGy_eq": 63.989999999999995
+    },
+    {
+      "template": "october_2003_goes10",
+      "scenario": "SAPPHIRE-1-in-1000",
+      "shielding_g_cm2": 0.4,
+      "bins": 336,
+      "gap_filled_bins": 0,
+      "weights_sum": 0.9999999999999998,
+      "expected_total_mGy_eq": 1087.0,
+      "integrated_total_mGy_eq": 1087.0
+    },
+    {
+      "template": "october_2003_goes10",
+      "scenario": "SAPPHIRE-1-in-1000",
+      "shielding_g_cm2": 20.0,
+      "bins": 336,
+      "gap_filled_bins": 0,
+      "weights_sum": 0.9999999999999998,
+      "expected_total_mGy_eq": 111.6,
+      "integrated_total_mGy_eq": 111.59999999999998
+    }
+  ],
+  "limitations": [
+    "Fixed spectral shape through time",
+    "No heliocentric distance rescaling",
+    "Idealized aluminium spheres and MAX male anatomy",
+    "Corrected OLTARIS summaries supplied by user; native exports pending verification",
+    "Exact GOES-10 archive match pending verification",
+    "Historical record endpoints do not establish physical event closure",
+    "Two severity levels crossed with two timing templates; not independent observed events"
+  ]
+}
