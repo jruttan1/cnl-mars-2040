@@ -110,7 +110,10 @@ Do not regenerate frozen environments while developing strategies.
 All strategies must share the same radiation and physical constraints; only their information and decisions
 should differ. Strategy A does not see true/future dose. Its optional dose-estimate abort rule requires explicit
 experimental settings; there is no default clinical threshold. NTP/NEP labels do not invent different repair
-times. Symptoms, biomarkers, survival, reactor physics and return trajectories are not modeled.
+times. With `--recovery`, NTP propellant recovery and NEP cooling recovery have configurable illustrative
+32-hour and 16-hour windows, respectively—not published limits. Stabilization, worksite clearance and
+engine-specific readiness constrain decisions; see `docs/mission_recovery.md`.
+Symptoms, biomarkers, survival, reactor physics and return trajectories are not modeled.
 
 The test suite has been removed at the owner's request. Old experiments, alternate charts, the notebook,
 inventories and administrative logs are no longer in the active repo. Recovery copies and cleanup checks

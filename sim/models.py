@@ -113,7 +113,7 @@ class State:
 
 @dataclass(frozen=True)
 class Decision:
-    action: Literal['start', 'wait', 'abort', 'continue', 'resume_mission', 'safe_hold', 'abort_mission']
+    action: Literal['start', 'wait', 'abort', 'continue', 'stabilize', 'resume_mission', 'safe_hold', 'abort_mission']
     reason: str
     astronaut: str | None = None
     repair_type: str | None = None
@@ -134,3 +134,4 @@ class MissionState:
     status: str = 'running'
     exposure_history: list[dict] = field(default_factory=list)
     recovery_config: RecoveryConfig | None = None
+    engineering_stabilized: bool = False

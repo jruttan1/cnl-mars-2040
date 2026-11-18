@@ -101,7 +101,7 @@ def observe(state: MissionState, recovery=None) -> State:
     eva = state.active_eva
     active = None if eva is None else ActiveEVAObservation(
         eva.astronaut.name, eva.repair_type, t-eva.start_time, eva.astronaut.estimated_dose_mGy)
-    recovery_obs = None if recovery is None else recovery.observe(state.completed_repairs)
+    recovery_obs = None if recovery is None else recovery.observe(state.completed_repairs, state.engineering_stabilized)
     if recovery_obs is not None and not recovery_obs.ready_repairs:
         launch = False
         if not reason:
@@ -180,6 +180,17 @@ def simulate_mission(strategy, scenario=None, astronauts=None, repairs=None, con
         state.next_eva_time = state.current_mission_time+cfg.turnaround_hours
         state.progress.append(eva)
         state.active_eva = None
+
+    def deadline_failed():
+        if recovery is None or not recovery.missed_deadline(state.current_mission_time, state.completed_repairs):
+            return False
+        state.status = ('ntp_propellant_recovery_window_lost' if scenario.engine_type == 'NTP'
+                        else 'nep_thermal_recovery_window_lost')
+        if state.active_eva:
+            abort_eva(state.active_eva, state.current_mission_time, state.status)
+            log('aborted', state.status, state.active_eva)
+            finish(state.active_eva)
+        return True
     # A finite horizon and a strictly increasing clock bound every run.
     while state.current_mission_time < end:
         t = state.current_mission_time
@@ -195,15 +206,23 @@ def simulate_mission(strategy, scenario=None, astronauts=None, repairs=None, con
             else:
                 credit_completed_eva(eva)
             finish(eva);obs = observe(state, recovery)
+        if deadline_failed():
+            break
         if recovery is None and len(state.completed_repairs) == len(repairs):
             state.status = 'all_repairs_completed';break
         decision = strategy(obs)
         log(decision.action, decision.reason, state.active_eva)
+        if decision.action == 'stabilize':
+            if recovery is None or state.active_eva or state.engineering_stabilized or obs.recovery.safety_blockers:
+                raise ValueError('Spacecraft stabilization is not permitted')
+            state.engineering_stabilized = True
+            continue
         if decision.action == 'start':
             if state.active_eva or not obs.launch_allowed or decision.astronaut not in obs.available_astronauts or decision.repair_type not in obs.outstanding_repairs:
                 raise ValueError('Strategy requested an invalid EVA launch')
             if recovery is not None:
-                recovery.require_launch(decision.repair_type, decision.astronaut, state.completed_repairs)
+                recovery.require_launch(decision.repair_type, decision.astronaut, state.completed_repairs,
+                                        state.engineering_stabilized)
             a = next(a for a in state.astronauts if a.name == decision.astronaut)
             state.active_eva = start_eva(t, a, decision.repair_type, scenario.engine_type, cfg)
             state.event_log[-1].update(astronaut=a.name, repair=decision.repair_type)
@@ -229,6 +248,8 @@ def simulate_mission(strategy, scenario=None, astronauts=None, repairs=None, con
             raise ValueError('Unknown decision')
         # Split at known operational boundaries, never at predicted radiation peaks.
         boundaries = [end, t+cfg.time_step_hours, state.next_eva_time]
+        if recovery is not None and recovery.deadline is not None:
+            boundaries.append(recovery.deadline)
         boundaries += [a.available_from for a in state.astronauts]
         boundaries += [x for interval in cfg.operational_restrictions for x in interval]
         if state.active_eva:
@@ -267,5 +288,6 @@ def simulate_mission(strategy, scenario=None, astronauts=None, repairs=None, con
             finish(eva)
         state.status = ('all_repairs_completed' if recovery is None and len(state.completed_repairs)==len(repairs) else
                         'radiation_data_exhausted' if end < cfg.max_hours else 'emergency_duration_reached')
+        deadline_failed()
     log('mission_ended',state.status)
     return state

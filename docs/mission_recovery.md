@@ -1,71 +1,72 @@
-# Qualitative case constraints
+# Shared mission-recovery rules
 
-**Purpose:** define what a strategy must take into account—not build another spacecraft simulator.
-`sim/mission_recovery.py` checks a few shared rules. The existing simulator still owns EVA timing,
-crew rotation, repair progress and radiation accumulation. Enable the rules with `--recovery`.
+Enable with `--recovery` or pass `RecoveryConfig()` to `simulate_mission`.
+There is one simulator: it owns the clock, EVA progress, exposure and outcomes.
+`sim/mission_recovery.py` only checks rules. Its configuration is fixed for a run.
 
-## What the case gives us
+| Decision | NTP reference scenario | NEP reference scenario |
+| --- | --- | --- |
+| Stabilize before EVA | Confirm coast shutdown and temporary cooling | Remote shutdown and damaged-loop isolation; requires remote control |
+| Propulsion repair means | External leak isolation/feed/control restoration | External power/cooling/thruster restoration |
+| Repair priority | Existing configured order; monitoring before propulsion | Monitoring, propulsion/cooling, communications |
+| Worksite clearance | Required for propulsion work | Required for all EVAs in the assumed shielded work area |
+| Complete propulsion repair by | 32 mission hours | 16 mission hours |
+| Continue mission only if | Restart and propellant margin confirmed | Sustained power and cooling confirmed |
 
-The CNL case describes competing NTP/NEP Mars missions, meteoroid damage to propulsion,
-monitoring and communications, roughly seven-hour repair EVAs, an impending solar particle event,
-and unreliable conventional radiation monitoring. Recovery, crew safety and ethics must be balanced.
-The original case and engineering-reference snapshots remain in `data/raw/mission_recovery/`,
-with URLs and hashes in `provenance.json`.
+**The windows, access rules, damage details and readiness confirmations are hypothetical scenario
+assumptions, not measured conditions or technology-wide limits.** They demonstrate the cost of delay;
+they do not establish that NEP is inherently less safe. Set either `*_repair_deadline_hours` to `None`
+to disable that window, or change it for sensitivity comparisons. Each existing repair remains a
+seven-hour EVA by default; no extra task types or detailed reactor physics are added.
 
-## What we take into account
+## Evidence versus assumptions
 
-| Consideration | Simple representation |
-| --- | --- |
-| NTP versus NEP | NTP repair context is external propellant-feed/control interfaces; NEP is external power/heat-rejection/thruster interfaces. Neither includes reactor-core repair. |
-| Reactor hazards | All EVAs require assumed confirmation of shutdown, decay-heat removal and shielding integrity. Missing confirmation blocks work, rather than inventing an accident dose. |
-| Damaged monitoring | By default, restore monitoring before propulsion work. This means engineering checks, **not** restored perfect radiation dosimetry. |
-| Damaged communications | Optionally require communications before propulsion work when the scenario requires ground involvement. No invented signal/review delay. |
-| Crew safety and ethics | A crew member must consent and be qualified for the repair. Existing EVA restrictions and crew rotation still apply. Competition never bypasses these checks. |
-| Mission continuation | All required repairs must be complete, the EVA must have ended, and continuation approval must be supplied. Otherwise wait, hold or abandon the mission objective. |
+- **CNL facts:** NTP/NEP missions, meteoroid damage to propulsion/monitoring/communications,
+  multiple approximately seven-hour EVAs, approaching SPE and unreliable monitoring.
+- **Published principles:** the National Academies' *Space Nuclear Propulsion for Human Mars
+  Exploration*, chapters 3–4 (archived as `national_academies_ntp.html` and
+  `national_academies_nep.html`), distinguishes NTP propellant systems from NEP power conversion
+  and heat rejection. CNSC guidance supports continued decay-heat removal after shutdown,
+  not a spacecraft cooldown duration. Sources and hashes are in `data/raw/mission_recovery/provenance.json`.
+- **Our assumptions:** every numerical window and boolean gate here. The slide's 10 MWt,
+  6 Sv/h and 24-hour examples are not used as established values. Reactor dose is not calculated.
 
-**Evidence versus assumptions:** the case supplies the emergency, not these exact rules.
-NASA's propulsion overview (`20210026680`) and the National Academies' NTP/NEP chapters support
-the different engineering interfaces. CNSC guidance supports the general shutdown decay-heat concern;
-NASA's Mars communications study (`20220013418`) supports communication constraints. Their archived
-sources do not establish numerical limits or the particular gates used here. The repair abstraction,
-prerequisites, consent/qualification policy and confirmation switches are configurable simulation assumptions.
+## Exact behavior
 
-## Configuration and integration
+Stabilization is a zero-duration procedural confirmation in the existing mission loop, not a
+simulated thermal transient. Shutdown, cooling and shielding must already be confirmed; missing
+confirmation prevents stabilization. Stabilization cannot be repeated or performed during EVA.
+All EVAs require stabilization, consent, qualification and existing operational permissions.
+Monitoring repairs restore engineering checks, not perfect radiation knowledge.
 
-`RecoveryConfig` has six boolean assumptions and optional `CrewPermission` records:
-- Shutdown, cooling and shielding confirmation default to `True` for a repairable scenario—not measured facts.
-- `monitoring_before_propulsion=True`; `communications_before_propulsion=False` assumes local authority.
-- `continuation_authorized=True` supplies approval; it does not calculate technical readiness or health safety.
-- Crew default to consenting and qualified; explicit permissions override this assumption.
+Windows run from mission hour zero and never reset. A propulsion repair completed exactly at its
+deadline succeeds unless an operational abort applies. Otherwise the simulator ends with
+`ntp_propellant_recovery_window_lost` or `nep_thermal_recovery_window_lost`, returning an active EVA
+with its accrued exposure and no partial repair credit. This means the assumed recovery option was
+lost—not crew death or a predicted reactor accident. A hold/abandon decision ends the modeled
+window; it does not simulate indefinite safe shelter or guarantee a return trajectory.
+
+Continuation requires completed repairs, crew inside, engine readiness and authorization.
+Boolean confirmations default to true for a repairable reference scenario, not as empirical facts.
+An explicitly omitted repair is assumed already functional; its deadline does not apply.
+NEP's default priority is advisory to strategies, while launch prerequisites and deadlines are enforced
+by the simulator regardless of strategy. `communications_before_propulsion` can require ground involvement.
 
 ```python
-from sim.mission_recovery import RecoveryConfig, CrewPermission
+from sim.mission_recovery import RecoveryConfig
 
-constraints = RecoveryConfig(
-    communications_before_propulsion=True,
-    continuation_authorized=False,
-    crew_permissions=(CrewPermission('Crew 1', consents_to_eva=False),),
-)
-# Pass recovery_config=constraints to simulate_mission(...).
+constraints = RecoveryConfig(nep_repair_deadline_hours=24.0,
+                             ntp_restart_and_propellant_margin=False)
+# simulate_mission(policy, ..., recovery_config=constraints)
 ```
 
-`MissionRecovery.observe(completed_repairs)` returns an immutable view of eligible repairs/crew,
-blockers and engine context. `require_launch(...)` enforces those rules even if a strategy ignores them.
-Repair order comes from the existing mission configuration, subject to prerequisites. Systems omitted
-from an explicitly reduced repair scope are assumed already functional. Configuration is fixed per run.
-Strategy A uses feasible repairs in configured order; B–D remain unimplemented. Future comparisons should
-reuse the same scenario constraints across strategies and vary only their information and decisions.
+Use identical scenario/configuration across strategies; vary only their observations and decisions.
+B–D and Monte Carlo remain unimplemented. Radiation inputs and calculations are unchanged;
+calls without recovery retain legacy behavior. Existing event logs and summaries record decisions,
+configuration and `qualitative_constraints_v3`; no separate recovery ledger is created.
 
-## Deliberately not modeled
-
-There are **no new** cooldown times, support reserves, consumable-kit budgets, rest/workload limits,
-checkout durations, repair-failure schedules or recovery deadlines. NTP/NEP labels alone do not imply
-different repair durations or radiation doses. Add such differences only if later evidence warrants them.
-There is no reactor physics, trajectory calculation, health prediction or Monte Carlo implementation here.
-Holding/abandoning ends the modeled decision window; it does not promise survival or an Earth return.
-If the time/data horizon ends before a continuation decision, repairs alone do not imply authorization.
-
-Frozen radiation inputs and calculations are unchanged. Calls without `recovery_config` retain legacy
-behavior. Current output uses the existing `event_log.csv` for reasons and `summary.json` for configuration,
-`recovery_model_version=qualitative_constraints_v2` and status; there is no separate recovery event/state ledger.
-The earlier v1 recovery validation records are historical, not evidence for this simplified implementation.
+Verification (2026-11-17): eight legacy runs across both engines, timing templates and severities
+were unchanged, excluding the new stabilization flag. All 94 protected source/frozen files retained
+their SHA-256 hashes. Temporary checks covered 29 mission runs, safety/readiness gates, delayed
+repair failure, disabled deadlines, exact/fractional deadline boundaries, time-step independence,
+exposure accounting and invalid inputs. No permanent test suite was added.
