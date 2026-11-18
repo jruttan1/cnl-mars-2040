@@ -108,7 +108,8 @@ def observe(state: MissionState, recovery=None) -> State:
             reason = '; '.join(reason for _, reason in recovery_obs.blocked_repairs) or 'Mission decision pending'
     return State(t, available, tuple(r for r in state.required_repairs if r not in state.completed_repairs),
                  tuple(state.completed_repairs), active, launch, reason, restricted,
-                 cfg.eva_time_limit_hours, cfg.radiation_abort_threshold_mGy, recovery_obs)
+                 cfg.eva_time_limit_hours, cfg.radiation_abort_threshold_mGy, recovery_obs,
+                 cfg.eva_duration_hours, cfg.turnaround_hours, state.next_eva_time)
 
 
 def _validate(scenario, crew, repairs, cfg):

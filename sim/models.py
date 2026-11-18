@@ -109,6 +109,9 @@ class State:
     max_continuous_eva_hours: float
     radiation_abort_threshold_mGy: float | None
     recovery: RecoveryObservation | None = None
+    planned_eva_hours: float = DEFAULT_ASSUMPTIONS.eva_duration_hours
+    turnaround_hours: float = DEFAULT_ASSUMPTIONS.turnaround_hours
+    next_eva_time: float = 0.0
 
 
 @dataclass(frozen=True)

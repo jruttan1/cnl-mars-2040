@@ -50,6 +50,7 @@ class RecoveryObservation:
     stabilization_required: bool
     stabilization_action: str
     repair_deadline_hours: float | None
+    deadline_repairs: tuple[str, ...] = ()
 
 
 class MissionRecovery:
@@ -85,6 +86,10 @@ class MissionRecovery:
 
     def observe(self, completed, stabilized=False):
         config = self.config
+        prerequisites = tuple(repair for repair, enabled in (
+            ('monitoring', config.monitoring_before_propulsion),
+            ('communications', config.communications_before_propulsion),
+        ) if enabled and repair in self.required and repair not in completed)
         safety = tuple(reason for confirmed, reason in (
             (config.shutdown_confirmed, 'Reactor shutdown not confirmed'),
             (config.decay_heat_removal_available, 'Decay-heat removal not confirmed'),
@@ -101,12 +106,7 @@ class MissionRecovery:
             if (repair == 'propulsion' or self.engine == 'NEP') and not config.reactor_worksite_cleared:
                 reasons.append('Reactor worksite access not cleared')
             if repair == 'propulsion':
-                for prerequisite, enabled in (
-                    ('monitoring', config.monitoring_before_propulsion),
-                    ('communications', config.communications_before_propulsion),
-                ):
-                    if enabled and prerequisite in self.required and prerequisite not in completed:
-                        reasons.append(f'Restore {prerequisite} before propulsion work')
+                reasons.extend(f'Restore {prerequisite} before propulsion work' for prerequisite in prerequisites)
             eligible = tuple(name for name in self.names
                              if (permission := self.permissions.get(name, CrewPermission(name))).consents_to_eva
                              and repair in permission.qualified_repairs)
@@ -133,7 +133,9 @@ class MissionRecovery:
             ready.sort(key=lambda repair: ('monitoring', 'propulsion', 'communications').index(repair))
         return RecoveryObservation(self.propulsion_task, safety, tuple(ready), tuple(blocked),
                                    tuple(crews), tuple(continuation), not stabilized,
-                                   self.stabilization, self.deadline if 'propulsion' in self.required else None)
+                                   self.stabilization, self.deadline if 'propulsion' in self.required else None,
+                                   prerequisites + ('propulsion',) if 'propulsion' in self.required
+                                   and 'propulsion' not in completed else ())
 
     def require_launch(self, repair, astronaut, completed, stabilized=False):
         observation = self.observe(completed, stabilized)
