@@ -3,17 +3,19 @@
 The simulator estimates BFO exposure during hypothetical repair EVAs using **SAPPHIRE-derived
 organ-dose estimates distributed using historical solar particle event timing profiles**.
 The common OLTARIS anatomical environment is frozen as `oltaris_bfo_v1`. Strategy A is implemented;
-Strategies B–D and Monte Carlo simulation are not implemented.
+Strategies B–D and Monte Carlo simulation are not implemented. An optional shared qualitative mission-recovery model now adds engineering, operational and crew-permission constraints.
 
 ## Start here
 
 ```bash
-.venv/bin/python -B -m unittest discover -s tests
 .venv/bin/python -B run_strategy_a.py
 .venv/bin/python -B run_strategy_a.py --template october_2003_goes10 --output-dir outputs/strategy_a_goes10
 ```
 
 For a new environment, create `.venv` with Python 3.12 and install `requirements.txt`.
+The project test suite was removed at the owner's request. Historical test logs remain as past
+validation evidence, not current automated coverage. A recovery copy of the removed suite is at
+`/Users/jack/Documents/cnl_archive/removed_tests_20261117_195041/tests/`.
 Edit `sim/assumptions.py` for everyday mission settings and `sim/defaults.py` for advanced options.
 `sim/strategies.py` contains policy rules; `sim/models.py` defines observations and decisions;
 `sim/mission_simulator.py` owns progression and hidden exposure accounting.
@@ -117,7 +119,7 @@ moved records to the external archive. No scientific provenance was rewritten.
 
 `bfo_proxy.py` and `audit_band_spectra.py` remain because existing regression tests import them. The
 former is an unverified King-ratio experiment, not a simulator input; the latter retains Band normalization
-diagnostics. Superseded Weibull data remain required by the organizer and unit-separation tests.
+diagnostics. Superseded Weibull data remain required by the organizer for historical comparisons.
 Failed MULASSIS NaN results are excluded, not treated as zero. Removing these legacy modules or their
 tests would be a separate scope decision. `radiation_model.ipynb` is an independent SHIELDOSE/reference
 notebook; its saved outputs have been cleared, with original contents archived.
@@ -127,8 +129,7 @@ notebook; its saved outputs have been cleared, with original contents archived.
 Defaults: five crew, one astronaut per EVA, one simultaneous EVA, seven-hour repairs, one-hour global
 turnaround, crew rotation and no consecutive assignments to the same astronaut. Communications,
 monitoring and propulsion each require one completed EVA. Emergency hour zero is storm hour 48;
-the mission ceiling is 264 hours, capped by remaining source coverage. Engine default is NTP; NEP is
-configurable but has no distinct default priorities or reactor-radiation model.
+the mission ceiling is 264 hours, capped by remaining source coverage. Engine default is NTP. NTP/NEP have different repair contexts, but neither label implies different default timing or doses. Optional case constraints enforce repair prerequisites and permissions. Neither mode calculates reactor radiation.
 
 A repair finishes only after its full uninterrupted EVA; aborted attempts make no partial progress.
 Return to cabin is instantaneous at abort. Travel, airlock duration, fatigue and medical rest are not
@@ -157,21 +158,20 @@ models need explicit errors, availability times, missingness and latency. Perfec
 used, must be labeled an oracle benchmark. Paired strategy experiments must share scenario, timing,
 crew, constraints and, when stochastic models exist, random seeds. Compare repair completion, duration,
 aborts and individual organ exposure without assuming any strategy wins. Health/biomarker models,
-individual symptoms and Monte Carlo simulation are not implemented by this cleanup.
+individual symptoms and Monte Carlo simulation remain unimplemented.
 
 ## Outputs and repository structure
 
 ```text
 cnl/
   sim/                       mission engine, records, assumptions and strategies
-  tests/                     unchanged regression suite
   charts/                    all reproducible plotting scripts
   data/processed/oltaris/    frozen primary anatomical environment and source tables
   data/processed/            historical observations and frozen SHIELDOSE reference
   data/raw/                  scientific sources, provenance and required rebuild inputs
-  outputs/model/             frozen reference manifest, audits and required test fixtures
+  outputs/model/             frozen reference manifest, audits and retained reference tables
   outputs/validation/        scientific validation records and cleanup verification
-  outputs/analysis/          current inventories and retained analysis method/provenance
+  outputs/analysis/          historical inventories and retained analysis method/provenance
   *.py, *.ipynb              runners, data generators and reference notebook
 ```
 
@@ -182,10 +182,10 @@ Strategy runs create `outputs/strategy_a/` or the chosen output directory. Their
 mGy and Gray Equivalent separate. Repeated existing exporters may create new version backups in
 `data/raw/archive/model_output_versions/`; this cleanup does not alter exporter behavior.
 
-Two generated CSVs remain as existing regression fixtures: `outputs/model/historical/mission_radiation_environment.csv`
+Two generated CSVs formerly used as regression fixtures remain as reference outputs: `outputs/model/historical/mission_radiation_environment.csv`
 and `outputs/model/synthetic_sapphire_interval_exposure.csv`. Frozen copies, checksums and scientific
 audit/provenance files are not covered by broad output-ignore patterns. See `outputs/README.md` for the
-output map, and `outputs/analysis/repository_file_guide.txt` for an updated annotated inventory.
+output map. The inventories in `outputs/analysis/` predate simplification and test removal; they are historical snapshots.
 
 ## Cleanup archive and reproducibility
 
@@ -199,6 +199,30 @@ states are preserved there. Git-tracked generated removals remain visible as wor
 no staging, commits, index edits or Git-history changes were performed. Python bytecode was the only
 permanently deleted material. `.venv/` remains installed and ignored.
 
-The cleanup report and verification are under `outputs/validation/repository_cleanup/`. Scientific-source
-records, frozen data, code and tests remain byte-identical; notebook code cells remain unchanged.
-No simulation features or scientific assumptions were changed.
+The cleanup report and verification are under `outputs/validation/repository_cleanup/`. At the cleanup snapshot, scientific-source records, frozen data, code and tests were byte-identical and notebook code cells were unchanged. That cleanup made no simulation changes; the later optional recovery implementation is documented below.
+
+## Qualitative engineering recovery (optional)
+
+Enable the shared `sim/mission_recovery.py` model with `--recovery`:
+
+```bash
+.venv/bin/python -B run_strategy_a.py --recovery --engine NTP --output-dir outputs/runs/recovery_ntp
+.venv/bin/python -B run_strategy_a.py --recovery --engine NEP --output-dir outputs/runs/recovery_nep
+```
+
+This is a small shared rule checker, not a second emergency simulator:
+- Confirm reactor shutdown, cooling and shielding before EVA work.
+- Restore monitoring before propulsion work; optionally require communications too.
+- Respect crew consent and repair qualifications.
+- Require completed repairs, crew return and approval before mission continuation.
+
+NTP/NEP define different repair contexts, not invented cooldowns or technology-specific risk scores.
+The existing mission configuration owns repair order and timing. There are no added support reserves,
+kit budgets, checkout durations or failure schedules. Case facts, engineering context and configurable
+assumptions are separated in [docs/mission_recovery.md](docs/mission_recovery.md); source records remain
+in `data/raw/mission_recovery/`. The simplified model version is `qualitative_constraints_v2`.
+
+Strategy A uses these rules; B–D remain placeholders. Calls without `recovery_config` retain legacy
+behavior. All strategies must share the same constraints. `summary.json` records configuration and status;
+the existing `event_log.csv` records decisions and reasons. Holds and continuation approvals are not
+predictions of survival, a feasible return trajectory or health effects. Frozen radiation inputs are unchanged.

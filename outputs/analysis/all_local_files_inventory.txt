@@ -2,7 +2,7 @@ ALL LOCAL FILES — snapshot 2026-11-17
 Root: /Users/jack/Documents/cnl
 One row per local file; project guide omits dependency/internal/cache detail.
 Columns: relative path | category | Git status | bytes | purpose
-.git/COMMIT_EDITMSG | Git internals | ignored/local | 8 | Git repository bookkeeping/configuration; not a radiation or mission input.
+.git/COMMIT_EDITMSG | Git internals | ignored/local | 13 | Git repository bookkeeping/configuration; not a radiation or mission input.
 .git/HEAD | Git internals | ignored/local | 21 | Git repository bookkeeping/configuration; not a radiation or mission input.
 .git/config | Git internals | ignored/local | 234 | Git repository bookkeeping/configuration; not a radiation or mission input.
 .git/description | Git internals | ignored/local | 73 | Git repository bookkeeping/configuration; not a radiation or mission input.
@@ -21,457 +21,27 @@ Columns: relative path | category | Git status | bytes | purpose
 .git/hooks/push-to-checkout.sample | Git internals | ignored/local | 2783 | Git hook script or sample; tooling, not simulator logic.
 .git/hooks/sendemail-validate.sample | Git internals | ignored/local | 2308 | Git hook script or sample; tooling, not simulator logic.
 .git/hooks/update.sample | Git internals | ignored/local | 3650 | Git hook script or sample; tooling, not simulator logic.
-.git/index | Git internals | ignored/local | 14749 | Git repository bookkeeping/configuration; not a radiation or mission input.
+.git/index | Git internals | ignored/local | 19466 | Git repository bookkeeping/configuration; not a radiation or mission input.
 .git/info/exclude | Git internals | ignored/local | 240 | Git repository bookkeeping/configuration; not a radiation or mission input.
-.git/logs/HEAD | Git internals | ignored/local | 1251 | Git reflog recording local reference movements.
-.git/logs/refs/heads/main | Git internals | ignored/local | 1251 | Git reflog recording local reference movements.
-.git/objects/00/0c60e2c918084484451b5ba3d1507b5a7aa2cf | Git internals | ignored/local | 4379 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/01/f58645e54acbfa97008625a858ae193cbfaae2 | Git internals | ignored/local | 249 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/02/3b6729ee47d6be615faa97121ddb32cab861ba | Git internals | ignored/local | 2267 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/02/7545e06578c8d6159fd4e107c25fa15ae26379 | Git internals | ignored/local | 253 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/05/9842e5df8e296dfe154d80f59008a2a71ccd64 | Git internals | ignored/local | 9069 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/05/cca5b42794686e46327cbc34334803eac4e6c4 | Git internals | ignored/local | 3043 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/06/aaa4e9d79f7737e5cd19799ed5985777ab32ee | Git internals | ignored/local | 1575 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/07/cadb10f85742f00526f1778279198ab71b412f | Git internals | ignored/local | 424 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/08/2edd0129e0d7ae90b093e9312a5ea033930c3e | Git internals | ignored/local | 2175 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/08/8b0d393afc86779c8cf298e6e238934f52d6c8 | Git internals | ignored/local | 495 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/09/c31da1cb6fc32733a4d8b8ed308e27dc09b7fa | Git internals | ignored/local | 524 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/0a/2fc1984884261e7cd694f45b01474d237fbbd5 | Git internals | ignored/local | 8841 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/0a/6119e3c901cbab75c2e992850f65d325e091ad | Git internals | ignored/local | 6522 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/0a/910690efc3a7ab43459d95b97904d4ab64a341 | Git internals | ignored/local | 162 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/0b/87ce276b929fdf8bad60c15c48d55904353c1f | Git internals | ignored/local | 3020 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/0b/9b2cec6aa68609f7977dacfe36ebe1dbcc99bd | Git internals | ignored/local | 4087 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/0b/a0cbdd4bc584101c1549011f7f3497ffcea8dd | Git internals | ignored/local | 1395 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/0c/0bc80f0d92316c53b9893752336d8d527212a2 | Git internals | ignored/local | 16543 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/0c/0c16f3e2cbf844cf039fe6fd88f2db9117ae38 | Git internals | ignored/local | 4368 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/0d/1d27db987a307e0a72a88054d61980b660f0e6 | Git internals | ignored/local | 2569 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/0d/ffdf73a846201930f32fbdd5280437a02e8b58 | Git internals | ignored/local | 108 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/0e/2cb38854183805cea2eb9025231041470e18c4 | Git internals | ignored/local | 337 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/0e/4574e225f42499120334d556f6f74386e73abb | Git internals | ignored/local | 112 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/0f/0d90d2528230186148baf8c034b251323db60b | Git internals | ignored/local | 272 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/10/6d6c8d2ceab36709eb6ac2b73e41c21e3b094f | Git internals | ignored/local | 55634 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/10/8e99b5af6f947e43577b5addf0313ed533d5d5 | Git internals | ignored/local | 453 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/11/0fddfa400c293f7fb93908d085585fbce2848e | Git internals | ignored/local | 234 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/11/35582068885dc14342c9d3ffb254908ba6e8b2 | Git internals | ignored/local | 972 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/11/4dfd71c3385c760fc53edf4d235a0ab2c70f0c | Git internals | ignored/local | 701 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/11/9b53110e16f8919ef10e73c3c4ffddd9043315 | Git internals | ignored/local | 3568 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/11/db34470c598baf33362e1b8e2454b61a9137ea | Git internals | ignored/local | 8074 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/12/38faabf17a15f37ed0b3c8a87dd44264e57ce6 | Git internals | ignored/local | 1499 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/12/782ffb3449c3eae4698226fee0bff4cab4a059 | Git internals | ignored/local | 197 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/12/fa1b9078ddf81172b6eaa8dfe62013b387d5e9 | Git internals | ignored/local | 294 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/14/2cf62086051277c1d08135e1f96f231a73e63f | Git internals | ignored/local | 488 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/15/9abd5b9531eec20494b62e74e423b5fed4b73d | Git internals | ignored/local | 1702 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/16/0efca549139be5a86da6c14be8bdfbb72ab444 | Git internals | ignored/local | 4224 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/16/1ec6584240df2a944e82ceaf6d7a2f51211cbd | Git internals | ignored/local | 248 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/17/daed7a63f946a0eedb7e22368b9641d1afe9b5 | Git internals | ignored/local | 61 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/18/6dfe04fed7f8bffcf1cbd8f838e7ee54950438 | Git internals | ignored/local | 569 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/18/dbc19d9d54b21be12b488bdaaf0b19e40df1b3 | Git internals | ignored/local | 2360 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/18/e85d21de5826411e37303a828d79e474b58dfd | Git internals | ignored/local | 372 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/19/0762f75c87134aa39c89272d9c2644e5d1713d | Git internals | ignored/local | 524 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/19/10faf6486463c2f1e06734901f2f203ee2d66f | Git internals | ignored/local | 3356 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/19/6905f96bcf8635be32c093f9fd4acf67f0041d | Git internals | ignored/local | 558 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/1b/66d7317ff734a32d946ded8a7f55674b06d8e3 | Git internals | ignored/local | 218 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/1b/673eafb4d6545699ef76fc1b477561533a930a | Git internals | ignored/local | 6458 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/1b/6993fd7a87ba261f7881973af56b348a7f5f08 | Git internals | ignored/local | 4780 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/1b/871f34f88fff80e25d4c384a505dbd77f1d4b5 | Git internals | ignored/local | 1936 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/1b/a720e4818929d66f5d2c369d530171e783c62f | Git internals | ignored/local | 559 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/1d/0d7d6b84ae086cfa824c56e5fd683a40160f02 | Git internals | ignored/local | 206 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/1e/4f459a9dc568b79ecc6e4159dd9cb1d2b57e0c | Git internals | ignored/local | 78 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/1e/ae173e97b2a8232c2f92d23a6b0490a81e3965 | Git internals | ignored/local | 2618 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/1e/f7dd81e6ca7b540371f352c6225e26cbd272a9 | Git internals | ignored/local | 121507 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/1f/1657269100efa15cc9648d947ba998ea6b7e4d | Git internals | ignored/local | 3143 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/1f/7aa6d5bf3ce0d3bc17d2471e166c1eb8a9ab05 | Git internals | ignored/local | 51820 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/20/d22a5e17aec4d278a43586ecdcdfd05d73d561 | Git internals | ignored/local | 195 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/21/2c11e171f17ba2e821238d013ba0bada21edd0 | Git internals | ignored/local | 6535 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/21/ce40d33deacb25f70b120a4b0ea23fd1ad2c27 | Git internals | ignored/local | 251 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/22/a8a29670cd50a8321a10ffd551b16198b7beb6 | Git internals | ignored/local | 1980 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/22/f6faf61841ad69c44a56cd295e81f98d005113 | Git internals | ignored/local | 58197 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/23/e8877ab83d83a5b9c7b02d5c076041773d0eed | Git internals | ignored/local | 180 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/24/2dc44418c2e5aa728a89c511e4a4234ce5260f | Git internals | ignored/local | 197 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/24/bc7d3e3d93c6968271f33d336f1fe85ce21590 | Git internals | ignored/local | 12070 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/25/28592d42aa1421bb473deb75d112ab47e7c459 | Git internals | ignored/local | 2517 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/25/6821af2c713756d6814899ce04e589004e7a4c | Git internals | ignored/local | 100 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/25/a9623cb18f74292b23ca684ccbb1d007c1adf0 | Git internals | ignored/local | 691 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/27/1375ed239b3458e67f3ab65c0233da67fc0ca1 | Git internals | ignored/local | 196 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/27/479f2c5db8cd9a1d93d1d288fb77bf62ba31cc | Git internals | ignored/local | 345 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/27/5ea9c7879d2508850fab7e15897d3918f89b46 | Git internals | ignored/local | 219037 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/27/dd549f1fe62f2a7cbf121db0d71de1ef46ac16 | Git internals | ignored/local | 1771 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/2a/431057905a0a51870cf9fb835e8710e5a18376 | Git internals | ignored/local | 248 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/2b/e8f16e7cc4b2c21d462ceab4b1ccfe3e86b2c9 | Git internals | ignored/local | 52695 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/2b/ff91ace0df571e0aaf3b9615215918a1d1f533 | Git internals | ignored/local | 161744 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/2c/362dc72eb91e51a23db3a82d222ce496b561b8 | Git internals | ignored/local | 162 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/2d/086e0b8314691821d7cc4ceb5c98dc2e8efddf | Git internals | ignored/local | 2214 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/2d/12ad009d4607debbf223cc78ff73b2175ae022 | Git internals | ignored/local | 7168924 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/2d/4089e8bf4b66dc72721c6f5475bb782f32ccf0 | Git internals | ignored/local | 897589 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/2d/f3d2f4cb68f8a61ba839b473e44bdcf2d356bd | Git internals | ignored/local | 6159 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/2e/056b86724fe29f608a20b726746586cce1f88f | Git internals | ignored/local | 650 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/2e/a48b856ea30f4fccc5368d3024199731b413a0 | Git internals | ignored/local | 688 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/30/19c45a4811f6eaa54f0bb099adc554faf14723 | Git internals | ignored/local | 613923 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/31/1b6de8865b92f81b03a7c690c35bbbfe0e42e0 | Git internals | ignored/local | 3465 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/31/628065a80242e647485dd353e694ae10227886 | Git internals | ignored/local | 938 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/32/26e3571e2cb35e228cfbcce53defbdaa13aad8 | Git internals | ignored/local | 102 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/32/66c67def2c307ac8e314a41cdc66bebf634fc1 | Git internals | ignored/local | 407 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/32/89fd6b5e27ca950a2edae59f11ae97e6ee7e65 | Git internals | ignored/local | 3850 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/32/af9ee758fdcb1afb00e62e6f82816a3630070c | Git internals | ignored/local | 306 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/32/f7292696d5d8d2cc17eab0d68f7d7566c5f4bf | Git internals | ignored/local | 227694 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/33/33d368ac0981a8b1feef8cd1e08800963973ad | Git internals | ignored/local | 330 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/34/757bb0875b3c4f895a58a88177d280783cfcbd | Git internals | ignored/local | 813 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/34/ece64fd1eb5fec8f1cdf8fc9264ca1fa92807f | Git internals | ignored/local | 610090 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/35/2922e9eab4ab7d79f2e37a9a80e494fdb498e1 | Git internals | ignored/local | 955 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/35/cff2d605f2c61a404e01d647b8256e115086a3 | Git internals | ignored/local | 3888 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/36/e243d601c10c56616b634c72e5987705b615c9 | Git internals | ignored/local | 353 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/38/a3b371502b61f7cde630afb63b7223258e47e2 | Git internals | ignored/local | 70 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/38/c78ddcac9acf65fbb922778d2f17867193fee7 | Git internals | ignored/local | 1361 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/3a/0a7f10fb960f9080a88f538fec5202c415ffab | Git internals | ignored/local | 248 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/3a/6b4863989477c98f977b0466803e42c8108080 | Git internals | ignored/local | 524 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/3a/ccedfd80cc0696b8122ecd01d82f39e6904f57 | Git internals | ignored/local | 3127 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/3a/cd6cfe9e88fff906b905cd49d34ba80b6c9ce8 | Git internals | ignored/local | 153 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/3b/fe5dcf1e327e8ad3b3e70b410868768614c79e | Git internals | ignored/local | 10406 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/3d/26c9a9901c492e6bf13328314509b2379854af | Git internals | ignored/local | 2522 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/3d/75fec937165b0cebccf6582fb114c457b25f56 | Git internals | ignored/local | 11032 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/3e/1569490467831efa26d601d468d3931a7cbd27 | Git internals | ignored/local | 1147 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/3e/2d42ebccdabe92cbcfb2e6a2cb160d275e8a83 | Git internals | ignored/local | 157 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/3e/7f033ecb84ad88fdd4ab9d3c6fb7406197b27d | Git internals | ignored/local | 125002 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/3e/f58babc3e5b2f69778dc0141b89f764776e27f | Git internals | ignored/local | 1333 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/3f/30de04c26e12e039e5c3238c6561b367c78c9f | Git internals | ignored/local | 529921 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/3f/51347c4e707c5cc8f80b9536bdf6bbbfba37d0 | Git internals | ignored/local | 368 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/3f/dd5c860b1995182e23fe5d8a8ff0635c4845a2 | Git internals | ignored/local | 98515 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/40/18a6cc79ee6a1992171b04dd47e29366376aa8 | Git internals | ignored/local | 5766 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/41/2420771103e5fc76d58593d148ab3d6af2efe4 | Git internals | ignored/local | 11215 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/41/371fd01b384d3ca659b23318fa8df405f9ed33 | Git internals | ignored/local | 109 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/41/c766ace26402a0d7eb9f9a8368af5fe330cb1f | Git internals | ignored/local | 205 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/44/7dc21d9b184e358b50137d103621f77c5a34c0 | Git internals | ignored/local | 1125 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/46/73efb0ca52377ea71c2f17a7ebea25eea994bc | Git internals | ignored/local | 673 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/47/adcfa04509fb622c7b75984fd0895d1d101c05 | Git internals | ignored/local | 46790 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/47/f4d8483d1e4eb1e91e7d34e6f225e8761e9ed2 | Git internals | ignored/local | 58 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/48/7a975b544dfc99bff82f8d667481d33f591cd7 | Git internals | ignored/local | 1405 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/4a/46ac5c44273b6040143ef667f14b7b337fb06e | Git internals | ignored/local | 254 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/4a/52a7084571ae1bf6c410b05b72dd41a9ead7da | Git internals | ignored/local | 476 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/4a/6079d277acebb87b8e9f56a4b586ab6752324a | Git internals | ignored/local | 106953 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/4b/4b056d30f8b640cc00f418f28f5e048bd3d9c6 | Git internals | ignored/local | 196 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/4b/7c5986335fc481437cb2ab32a683d606704d4c | Git internals | ignored/local | 248 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/4b/b23bf4f77f224e96a555246e3ba2d21067c983 | Git internals | ignored/local | 94 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/4b/c17165b6e04546ea0198c46a00647c2b42c248 | Git internals | ignored/local | 1837 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/4b/d20da5b5ab6181109a2042acf8060b943a47ac | Git internals | ignored/local | 651 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/4c/0c3a804733dd0a3c88a8dd8d400fee46e10703 | Git internals | ignored/local | 249 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/4c/13c7c3bb6fd91e4c9ce8acfb1ded844cafb9ff | Git internals | ignored/local | 5461 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/4c/a99b1b65796cabc8ae1ecb3ce019d59ccac8b1 | Git internals | ignored/local | 301 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/4c/f6d4d9833e66f1d1cf8123deac89034c33f184 | Git internals | ignored/local | 6968 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/4d/643214060055339068bb37bc88cb03953c1925 | Git internals | ignored/local | 369 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/4e/32a1e27832448b5d225e8af50315462e0a1dbf | Git internals | ignored/local | 7868 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/4e/e68fce094374b1d87c1562473d5e003fd55a98 | Git internals | ignored/local | 8765 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/4e/eeb584f83514edb3b97a187765f4b9ab5e9a0e | Git internals | ignored/local | 877 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/4f/206ce46bcc20a8137e084fcdaf45769e515ddb | Git internals | ignored/local | 134393 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/4f/24d587be697f6908553de2d76d9f5c66cb6f56 | Git internals | ignored/local | 558 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/50/56d566aa3f501b7e9859e36950d1a2fa6776df | Git internals | ignored/local | 1257 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/50/f949b498345831440bb5512b45be08eb5011e7 | Git internals | ignored/local | 248 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/51/183047a66f36c0817fe5d6f8c472777f1b80ef | Git internals | ignored/local | 535393 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/51/b360ba7b0a1aa64c2810bb8f8b9cdc50003a4d | Git internals | ignored/local | 935 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/52/a6ab1151a356bcaedaf967a92e4a97ed7683a1 | Git internals | ignored/local | 11118 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/53/53c260480caac60d8da9909e1e6704632e34e9 | Git internals | ignored/local | 3165 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/58/3ffc8fd785476a8e95bead1493d21c2f5c9f4d | Git internals | ignored/local | 296 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/58/529cb6b97dc3d1eb9c3b813948cc420054f7a3 | Git internals | ignored/local | 345 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/58/c1b09676418f0f60b3e99fd40ab5dab24192e4 | Git internals | ignored/local | 488 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/5a/173394284084aa04cbe753ce605159f3806ff8 | Git internals | ignored/local | 11570 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/5a/853acbc2d9e4b661897d69409282bdac882115 | Git internals | ignored/local | 319 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/5a/b594c64a560c94613284bc05c50793acdb5582 | Git internals | ignored/local | 246 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/5b/2a6c731d2e4f69b39ba932f3a35238c3558ed8 | Git internals | ignored/local | 4402 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/5b/c43e0fb905c8305dcb864e70682cde0f834d8b | Git internals | ignored/local | 8015 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/5d/1a1b343159bf4232dfff9cc1dd7844ad3a4de2 | Git internals | ignored/local | 353 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/5d/5a5f9e9be06169852e27864b902024729a3bbe | Git internals | ignored/local | 248 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/5d/f5618d8773b19eec10f8662c705f64e39e1f15 | Git internals | ignored/local | 2728 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/5e/7d9ea6cd25cf04815397cb957c7fc479bd4857 | Git internals | ignored/local | 6023 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/5f/19366b88f8d56950ae2203193b9f95e9ac29ed | Git internals | ignored/local | 3282 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/5f/8292507f8758c8663eab3de65c4d799d67129a | Git internals | ignored/local | 98268 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/61/61123a3e8bb80f17c875d459e77a67a544dc25 | Git internals | ignored/local | 141 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/61/cf1857ad3a103ce8dbc144ab7ac6309d6a6984 | Git internals | ignored/local | 1106 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/62/6af5fed45377c43132ab6a6c886455175f8829 | Git internals | ignored/local | 534 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/63/022ce150f1a373df6c66bb771df9dee350ffac | Git internals | ignored/local | 4782 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/63/ab5a2b46dd69abe7275d073b9fec2ccdc79f04 | Git internals | ignored/local | 322 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/63/cb8ca3cebccf37187deddec44093f46eda0d6b | Git internals | ignored/local | 3764 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/64/688ff3221a75bf71fa9b5279cbef1429848a96 | Git internals | ignored/local | 291 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/64/d0d2c0fc43d77f7f71a8333617c65e77b43961 | Git internals | ignored/local | 100 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/65/3fe7b78c1ab6527b6aa1ddaf162f6c8fc50113 | Git internals | ignored/local | 3727 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/65/40981cb2c85ae84ba63420f1fb507abab02c36 | Git internals | ignored/local | 249 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/65/84653684657ccc474ac0d92725a9d9d146b5b9 | Git internals | ignored/local | 575 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/65/cbbd72d622b32c81124cadbb097366055fd256 | Git internals | ignored/local | 2522 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/66/308f2c1673239f11d8a45def9b4441b8dba0e0 | Git internals | ignored/local | 871 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/67/5b5b129c8be911e95843eb24319415e140e32a | Git internals | ignored/local | 3408 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/67/86549003ef3d2a2ff1a8324da369df3a7f49aa | Git internals | ignored/local | 1303 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/68/55aed48fc7c91ba47d63de77c99c479fdb406a | Git internals | ignored/local | 100 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/68/996319ce6313213f1e0dc1bbc86424defd8b24 | Git internals | ignored/local | 614 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/68/9e55675b22f4214daf9f4df462387534316a27 | Git internals | ignored/local | 300 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/68/e9454dd416164c1eb215a05e79beaaca949283 | Git internals | ignored/local | 1292 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/69/1a1632052d40419ba289cebc0ab1bf35d8c324 | Git internals | ignored/local | 249 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/6a/6a50a194e90dd12a87f4450b61720bcd5b5c2b | Git internals | ignored/local | 502 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/6a/f02a8dbf1797095c34902410e4c0709692d290 | Git internals | ignored/local | 78 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/6a/f9f51daede02048bd79a887789eb1b26bee8f1 | Git internals | ignored/local | 250 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/6b/28a88c4231f71a189210f4f7090fcc54948d77 | Git internals | ignored/local | 270510 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/6c/10ef74145ccb1e47933d88207699efe7ce8c10 | Git internals | ignored/local | 3256 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/6d/44e0ade74fcb9a0bf57e3192db4725653cf3b9 | Git internals | ignored/local | 93 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/6d/622e3be20d296ca2e6891732770dbd51b62880 | Git internals | ignored/local | 203 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/6d/d38a2ecce1d49cf5ce28047c33da4c7d133d0c | Git internals | ignored/local | 79 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/6e/811918b12f939737c21669c9829cc6beffee0c | Git internals | ignored/local | 191 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/6f/5b0bb260f35322faab536e8ce1fe5d39fca080 | Git internals | ignored/local | 142 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/6f/f514299b8492e470a2a63c8c9b6bd544be3a47 | Git internals | ignored/local | 78 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/6f/f88865561034f0d8e99621193c8352028eaa93 | Git internals | ignored/local | 1439 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/70/9450bc90cc745c4ec3c701a3d9a010bf1e429f | Git internals | ignored/local | 370615 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/71/941841b52ab156e0756553300a9cab073710e7 | Git internals | ignored/local | 572 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/73/698b8fb626d767e5d0fb0370567e09be3f6baf | Git internals | ignored/local | 132027 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/73/69c15d24c4e52c7e20fa424ea9ba0fd403c1c7 | Git internals | ignored/local | 489 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/74/2c2e1835a1deb0d0e23142954b289d977a59dc | Git internals | ignored/local | 534 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/74/52fd66d82856c87c0d3bdfbe43bc01c9f53da9 | Git internals | ignored/local | 3143 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/75/0c9dbf27a6cbfcb41f057fc5928514161aacd7 | Git internals | ignored/local | 253 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/75/47fdb1e6b125084d5e1d2e0b846126ec1ab982 | Git internals | ignored/local | 56 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/76/61821fa09fd26760e9074e1516a6779e82f263 | Git internals | ignored/local | 248 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/76/9507edc7625bd4e20c8fc67a9aeacb1125e4b4 | Git internals | ignored/local | 286 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/77/7bf3069ad25cd8b59d6d4f5d5cbc4f8f7fb6b0 | Git internals | ignored/local | 380 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/77/8e0641c90bc4031bd873b7caa2dfc034dee6c7 | Git internals | ignored/local | 354 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/77/aff304e1153d4ed3fe0e2f3248be8aca36a7cc | Git internals | ignored/local | 2674 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/77/cdc346dd82ed3c6e3aa80b8c3b6cd6ac18a974 | Git internals | ignored/local | 2093 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/78/3f8528b82742b1bfc4a349a6a0ccf03f3069c0 | Git internals | ignored/local | 4383 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/78/8bcc31fecd97db933d6a8f3529c7d1f4ee2850 | Git internals | ignored/local | 498 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/78/c0aa4da183063a2cb5b756a402be9c5537cce0 | Git internals | ignored/local | 2245 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/78/e9e3907d6f968ff487815b133731a6baa78d80 | Git internals | ignored/local | 269 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/79/34c89e212477395ff6f3592942a417f0fb3be9 | Git internals | ignored/local | 473 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/7b/4ccdb514ca651c4d7d85b7bd0b72fcb71ffdba | Git internals | ignored/local | 463 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/7b/6fa42a61dfb7dc0d89055f1ab9abaf6ea501ac | Git internals | ignored/local | 94 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/7d/ab530bad8693edad5130fe46557af97447bf70 | Git internals | ignored/local | 426 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/7e/5dba97622806506ed1145652c63756947e0212 | Git internals | ignored/local | 223 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/7e/8cbd323988a5b4239611869b6044b8266d58ea | Git internals | ignored/local | 88 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/7f/1687955223d5702124430a45049309129ec904 | Git internals | ignored/local | 105210 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/81/f080903c504e807ea06e662d9164bb109ccd33 | Git internals | ignored/local | 97 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/82/72fdacdfd4e81a7108f9433a3b39aa5ddc0938 | Git internals | ignored/local | 1271 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/83/d5472ae888d215d24f022fee79126fa7c8a5a5 | Git internals | ignored/local | 665 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/84/fe74dd0f846a82803a25916e1ee2b0c6a63fad | Git internals | ignored/local | 247 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/86/5116b0be4455a5c508337a932de9d46c7b9bf0 | Git internals | ignored/local | 1739 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/86/81016c9adf777b9f535c316ba3f87d4b3e6ab5 | Git internals | ignored/local | 2717 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/87/0f08264adfbc5de754d18511aba0f732fbc445 | Git internals | ignored/local | 3126 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/87/79fa6ce55ab873206dd5145fe78ad398ade6db | Git internals | ignored/local | 462 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/87/db048353eb0e2fa7da0709ba2ef475a2da7691 | Git internals | ignored/local | 206 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/88/0267e1c13c426440c3aec49fc717297fea5595 | Git internals | ignored/local | 112 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/88/0b388d81d3e3e59d530d493bbdba0adf07bf0f | Git internals | ignored/local | 287 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/89/4dda716ee5d89f24d0741bdb76d2ccd67362db | Git internals | ignored/local | 270 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/89/c55c9e219c7d8594598a70d8d1f2876e6cda76 | Git internals | ignored/local | 5697 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/8a/5c88c446615539b8f511d1d8ac36b45f240a50 | Git internals | ignored/local | 244 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/8a/d385316eac9734f3b3aa94980e99b0173da72c | Git internals | ignored/local | 2751 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/8a/dd1825549042f0226e2fbacc5a2c1f242b3437 | Git internals | ignored/local | 159 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/8a/e3c35dfada5d6bb449ccae92adee0c8d3644b2 | Git internals | ignored/local | 168 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/8b/825444feb274c67b23e3e085c717b76abd9cf9 | Git internals | ignored/local | 288 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/8b/8b143894fe8c752f3d4623b36403d1806874c3 | Git internals | ignored/local | 1458 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/8c/13a8d5a9ca816b58203ac9284e324b8f5cd3f0 | Git internals | ignored/local | 299 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/8c/4105ffce61edd156a9e6ca9efd8902511af307 | Git internals | ignored/local | 136 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/8c/b18bc056c831d5d865ec75e2ce3c451f51d250 | Git internals | ignored/local | 372 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/8c/d0bc7f781d4c011eae4c23efc9055b535d2a87 | Git internals | ignored/local | 17721443 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/8c/f9b0d2d6fb0977877153f5175ae883922360f7 | Git internals | ignored/local | 297 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/8d/6f45bba57faab430064d5ecb4196fdc7c38464 | Git internals | ignored/local | 166003 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/8e/6115f6f4112e6ba3c4cc5ce66fe2824927493d | Git internals | ignored/local | 786 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/8e/68a66b1caa9d8afba73a6ceb2a0cbb691ba1fe | Git internals | ignored/local | 691 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/8e/8debef5d426184e9b0a393ca83ca64988a7d9c | Git internals | ignored/local | 67768 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/8f/183323c39b3f769bf5f7b44c9728b7b8c7c010 | Git internals | ignored/local | 178 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/8f/5c7ec512dbc5140e8830f4f255fd077226010d | Git internals | ignored/local | 411 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/90/0d617e087e326cc97028cb12bff1be0996a49f | Git internals | ignored/local | 13519 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/90/c7440913c93992a83e1c1186752a8e15997949 | Git internals | ignored/local | 251 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/91/7152bdf1c5730e2a5298766b2186ed2e2e6860 | Git internals | ignored/local | 3165 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/91/8d955b35108d9e0fcb9045eebae71950641063 | Git internals | ignored/local | 121 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/92/08d3d8cf15d2ad3c4f996429d5e238c1c76983 | Git internals | ignored/local | 3894 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/93/25c27fc997efb5e3be6d0113fe818ee3651db9 | Git internals | ignored/local | 171 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/93/cf8a894cfecf8ddca193e2a3b8eece1ba9dfe9 | Git internals | ignored/local | 745 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/93/fed3f02584ff638e8af9d87c490db58ae71882 | Git internals | ignored/local | 17761714 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/94/0e78ebee694427f78b9bb726a40eeefdb850d7 | Git internals | ignored/local | 2372 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/94/9f0b1119a208dda0815eddbd8d99336c6db83e | Git internals | ignored/local | 374 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/95/464280620033642c2abc607c8d99385ea06a63 | Git internals | ignored/local | 206 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/95/bc327d4d029dd321d4eeee4cec2f7306667157 | Git internals | ignored/local | 353 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/96/4cc7fa756067f7587b656c11a1163a3118f180 | Git internals | ignored/local | 2117 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/96/c73f9103705f965b6feb4b1d456f461958393d | Git internals | ignored/local | 129 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/97/8b1b384dfbddaa7038899b10e8ef8e6cd46900 | Git internals | ignored/local | 250 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/97/ac38cf455a53adbc0897728cb63f3c27e32054 | Git internals | ignored/local | 5730 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/97/dee8109b332f85e72104d2ed0fca92cfef534a | Git internals | ignored/local | 488 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/98/96bd294a48709b4b201d730fe74b95ea43a352 | Git internals | ignored/local | 428 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/98/984ee373d5c3a975d9893753f4d0dfe068309d | Git internals | ignored/local | 3291922 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/98/c5300f5e019b00c9022030b56fb7b342826c5f | Git internals | ignored/local | 6809 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/9a/0d70552ec2b3b44ed957ff0dec2d18e6954bfc | Git internals | ignored/local | 249 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/9a/56b99ca8896bc9eb2570134c0f9ca0f897ed55 | Git internals | ignored/local | 102 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/9a/7c9f2ac6945e421b25c20c7c22fb916f428f4c | Git internals | ignored/local | 1193 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/9a/a2af015c45c18d4fbc8afdf176771218182119 | Git internals | ignored/local | 102 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/9b/860b4d42e1cad03cbb97b1e0364081f3ebca24 | Git internals | ignored/local | 558 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/9d/47b5e1158da0a8a2d466e38272b56a4101a915 | Git internals | ignored/local | 4658 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/9d/73c70c6edb4e4847d51e3f6422e0e66a237add | Git internals | ignored/local | 369 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/9e/50c7e81b8d9f7726d188c675d8bf98c1865bdf | Git internals | ignored/local | 6067 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/9e/f19247668973ea7604bd1fe688cfc74194d384 | Git internals | ignored/local | 2949 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/9f/318171b742a795656105700d374e18e3f175b6 | Git internals | ignored/local | 248 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/9f/60012f37fa22cda2ee803687b8b79f430ae5b6 | Git internals | ignored/local | 650 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/9f/caf906ddb7cdee5307c684c1fbc6119500b9f8 | Git internals | ignored/local | 155 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/a1/65c5228e229522bebcbb10435178038469fa66 | Git internals | ignored/local | 228685 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/a1/bd55829d4b2fd3ff6beb68989ebf45e93e9dc3 | Git internals | ignored/local | 1140 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/a1/c6f464d8ac96eb7cbc2b6a02517fdb2a824ba8 | Git internals | ignored/local | 206 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/a1/ecf1f3a6e60863fc933a128e65e647d39ddc5b | Git internals | ignored/local | 1094 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/a2/05966be5062499d2c538710760972618a03d78 | Git internals | ignored/local | 81897 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/a2/762b697daa5fcd4603d06ccebde14a7921ac86 | Git internals | ignored/local | 461 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/a3/1becf5a6024826ec674c7506c600b0170c2af2 | Git internals | ignored/local | 168081 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/a3/61bffd13bc25f78004c610ea54a2c4edb58252 | Git internals | ignored/local | 79 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/a4/06ef30232275ecc177005ddabb972c862eafd4 | Git internals | ignored/local | 130 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/a4/1f1dd3476813ad9254ab8645076d646b2eb003 | Git internals | ignored/local | 179 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/a4/b69ef054a117fc365f72152974564402b66a0d | Git internals | ignored/local | 346 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/a5/009c29fab9906bbba4c703a1d7d7db9a082d99 | Git internals | ignored/local | 689 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/a5/80333bfa3710b560124911e713ad7c0fcf9c15 | Git internals | ignored/local | 1178 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/a5/cb1b8e0ef55e6b989c3afd09d1aec8fb01394c | Git internals | ignored/local | 65546 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/a5/d3d0ed48178006e4bb7763fade2347c113d6b1 | Git internals | ignored/local | 3395 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/a6/3fbdfb93729599af66068353b34d096f4be1e0 | Git internals | ignored/local | 12092 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/a6/b09d588cbaa7f20b8853b4b8359524fb1e1ef0 | Git internals | ignored/local | 782 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/a6/e3f9dcb9d3c3a8f2128831c85e655c2b894f70 | Git internals | ignored/local | 2500 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/a6/f722a68c7a28f297d4b7d2b01a1d76b033aa72 | Git internals | ignored/local | 1342 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/a8/8fc6adb767bbbb55711f27330572ab47dcc5cc | Git internals | ignored/local | 3158 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/a8/dae48cae35593d03d546146890f07d9d51a08f | Git internals | ignored/local | 249 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/a9/78687fc0609d50cdd5065f6e37aa1d13a5279f | Git internals | ignored/local | 1282 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/a9/f278974c6efefde27ab7d2cf4508b40bec647b | Git internals | ignored/local | 65 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/ab/e2081c9d817fc9f6084c120395a19250a2427e | Git internals | ignored/local | 137 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/ac/99d6180f9336d387d19479721565b9add44ffd | Git internals | ignored/local | 379 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/ad/abfab7647744ac133e0332a07ee2b20bcea2f0 | Git internals | ignored/local | 9568 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/ae/b5da5e1a75fbfbab5bb07ca3fe48a351fe1261 | Git internals | ignored/local | 235 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/af/7c3162c2dc433fc84cdc965eb7e2d7809032e4 | Git internals | ignored/local | 378 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/b0/853ed83ae5bacc3678db5d16414fedf13e285a | Git internals | ignored/local | 118581 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/b0/c9149fec716e6c1c66323930a67181f4e17fd2 | Git internals | ignored/local | 248 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/b1/9e235b1387701978d748f1d53fd563635e14e1 | Git internals | ignored/local | 213 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/b2/295ca48da0d5360951ed633798004bc12e5186 | Git internals | ignored/local | 648 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/b3/42e157d4800ed8355dfd4d1eaf3d93028c0d3f | Git internals | ignored/local | 116934 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/b4/d6ee700fd81ded29bcf034beff2baee0cfcf61 | Git internals | ignored/local | 1234 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/b5/d93f33b3e5338dd6cd17665095b18f4bb463c6 | Git internals | ignored/local | 618 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/b6/2938faacbb140df11ec8f1765183097730ac48 | Git internals | ignored/local | 251 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/b7/bc983a4829122a3abbd649d617e469068846f4 | Git internals | ignored/local | 2349 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/b7/e396aaeeebc02a18fc95cca3e54855ac3045da | Git internals | ignored/local | 481 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/b7/ef50367a5d8e697e4b8e424a1aeb64866fa23b | Git internals | ignored/local | 318 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/b7/fcabfc526eb0231885b35889738ea3e1e96e5f | Git internals | ignored/local | 348 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/b9/40ab159f501cceafabfeac7eef1a52c063dcd0 | Git internals | ignored/local | 248 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/b9/8d78c201b7da7e4a44ad7398816d3b47bb1e9b | Git internals | ignored/local | 95326 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/b9/c637a1c81a1301958554a82475a55d73c1434b | Git internals | ignored/local | 510 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/b9/ecd69f4ed93d8d8837b817efd74bf511cd7aab | Git internals | ignored/local | 238 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/ba/ee1a09de4e43eb669fa327864bd30b96be23a5 | Git internals | ignored/local | 676553 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/bb/04d3e7b043e53f6adfb42f52139418e4c9e572 | Git internals | ignored/local | 179 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/bb/8db5b35c2abef2783ae4944c75fbaada99d21d | Git internals | ignored/local | 1326 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/bb/aa905f7010a6de2cbbdf6f267d85b168cdd4e4 | Git internals | ignored/local | 717 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/bb/d6c185b53a4dd78923b9534af649211406b45c | Git internals | ignored/local | 172 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/bb/ea9e988ee508cd0a26a653d83394e5ea633097 | Git internals | ignored/local | 573 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/bb/f25190bdae0eb9e750e6eb855ee50daf0ccea5 | Git internals | ignored/local | 1810 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/bd/a67922f416fdcdca6406a46a18f07706ba35ea | Git internals | ignored/local | 2617 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/bf/148306b613fa3c6f3b2e526a2888d0bdecea93 | Git internals | ignored/local | 5569 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/bf/3b7672e75b2ecba6dc0ed7c5e735d8eac44428 | Git internals | ignored/local | 167 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/bf/7ce483c7779d050da9e35efcccf200f7accc23 | Git internals | ignored/local | 248 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/bf/9b5970d13faf1589c6b10703d7b2b04b1cf5e8 | Git internals | ignored/local | 2926 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/c0/02902e62a93e489ea097457780d87113e0d72a | Git internals | ignored/local | 69630 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/c1/534ee7b79a4e081d8b7dfdc7ff12017e2d983c | Git internals | ignored/local | 78 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/c2/069c7d0258b7d1f6b488d24a11661ccb69fdea | Git internals | ignored/local | 1549770 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/c2/7f56d2ca2b1ffa9bb1e170bb1ecdf1df4ce306 | Git internals | ignored/local | 137 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/c2/fa4388c3f80493321580a21ebeee41ca604a4a | Git internals | ignored/local | 1507 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/c3/042d5e5de931c06c6433a9d84cc8dd13a0bdc2 | Git internals | ignored/local | 598 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/c3/cd26d62a430fe336b29066ddd6c98a9c43c514 | Git internals | ignored/local | 374 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/c4/d2593b7a386b6479c016584ff7f349d4ba6038 | Git internals | ignored/local | 2303 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/c5/9d070fc1754607cdbd74cc7b8a5393e3362fe1 | Git internals | ignored/local | 141 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/c6/4f82d135c2c5deccb61030bf648f2219869eb2 | Git internals | ignored/local | 1090 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/c6/84e477d28344e0357fe9b32ff10ebac8d5be3f | Git internals | ignored/local | 249 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/c6/a1dd14855fe79380925518e66ff8c1d52cf7fb | Git internals | ignored/local | 4626 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/c8/4457c4bbcab600d57c3b160e4d9da713b297f7 | Git internals | ignored/local | 2395 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/c8/e421a000e35eca12db8b74ab0afa1c573d669a | Git internals | ignored/local | 217 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/c8/f7c35d1e9789bed42ae7594ba0c9b6ae61cdaa | Git internals | ignored/local | 7549 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/c9/61db435ab1b7a9981da2fb07614a0dfe057b72 | Git internals | ignored/local | 79 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/c9/f66e70ec3650b77fad153f4dac427eadfdd1bf | Git internals | ignored/local | 139739 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/ca/147340f98f2bc854b1165d1b27fc5804c8e806 | Git internals | ignored/local | 10749 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/ca/8246e55d27ceeb6231d63077a556de1719f34f | Git internals | ignored/local | 184 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/ca/afaaa77ecf890426d4a47118af148505bceec6 | Git internals | ignored/local | 3818 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/ca/c58a08695d4e71cd140679bad0080d75951deb | Git internals | ignored/local | 17761714 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/cc/6d7da37fc48547fc9d5c563b9145d67ba80ec8 | Git internals | ignored/local | 260483 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/cd/0facb63730a1fb8604384bf1cfc97c28fc8d17 | Git internals | ignored/local | 599 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/cd/7af320557b121b344ef2e0d6a970fce7f60ae7 | Git internals | ignored/local | 542 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/ce/6dd24b148a5578b72b66e34f8d083b193c8833 | Git internals | ignored/local | 3052 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/ce/808409c3d2354988f60c784c172df592a6626c | Git internals | ignored/local | 145 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/cf/1975583bf5fb6291e2a4b3b8794cde8c34e11d | Git internals | ignored/local | 1071 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/cf/3bacfee7bdcd28fdb7d13177dcea9558d20b08 | Git internals | ignored/local | 184 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/cf/435d65cddd4c8ec9ac798600b00c4b693ef968 | Git internals | ignored/local | 3932 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/cf/a1429d12b6a50cb6a71d78a0a11e142c763f9e | Git internals | ignored/local | 18271 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/d0/362f8f03f78f9f8e18297357a00b47cbfa1e76 | Git internals | ignored/local | 917 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/d0/3bb7e12237d1a5b9b56c2022b9e285fbe481b7 | Git internals | ignored/local | 16990 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/d1/308d3db2ee8b7d6f946a66752428f180cf0299 | Git internals | ignored/local | 197 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/d1/c1d5f1675eb880453b8b18177f82f450e0a58a | Git internals | ignored/local | 182 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/d2/630ce244f18125a935fac70debedebf4838135 | Git internals | ignored/local | 503268 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/d2/c91d7c3d9c557bb83e0024b347ce6910f10c05 | Git internals | ignored/local | 213 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/d3/408e5183661edef5a55114165244941202c76e | Git internals | ignored/local | 534 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/d3/471cade2f603cf0b7080e83affff55882043ac | Git internals | ignored/local | 524 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/d3/ab51655ff8bbbc128945bacadee110ef4fc749 | Git internals | ignored/local | 249 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/d4/323020e49fb2aac9a437cf76d02146695fc444 | Git internals | ignored/local | 2791 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/d4/59f7e46cd2b5a54ee04a76d93f4cdfbf7fdbc1 | Git internals | ignored/local | 487 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/d4/eb793222c164e470433eef7543201cfa675ca6 | Git internals | ignored/local | 1812 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/d4/f5b69ccdd585ddbeb22750e06821a2b67d9716 | Git internals | ignored/local | 248 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/d6/4a0cd42220e2273044ccf4ea3c66f817649442 | Git internals | ignored/local | 3126 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/d6/4d8decba2d56a3203a179780b4496be60bba5d | Git internals | ignored/local | 201 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/d6/cec1f5acf2abcc56d33532c1d8aa972b325a49 | Git internals | ignored/local | 142 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/d7/228ff139934c47ebe279683a3ba7750193286e | Git internals | ignored/local | 164 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/d8/2726fffa37452b051df579cdd4b4521abc6374 | Git internals | ignored/local | 201 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/d8/baf264c44b22111900e3bf4d2328a0f7637b43 | Git internals | ignored/local | 4470 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/db/16282b2ebf1f9f35c707b38572797e6191be7d | Git internals | ignored/local | 338 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/db/c2b56acb2421539fcf6c78510d2b0e1f7cb4b8 | Git internals | ignored/local | 1293 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/dd/1f781a99763a17d93df36848166a524496f606 | Git internals | ignored/local | 462 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/dd/94dcf7332b9494881dde5f8c44c05294886055 | Git internals | ignored/local | 6816 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/dd/f344c7f6c6f07868cd6ff1db013f4b7ed84f18 | Git internals | ignored/local | 271 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/de/75cabca413c7336e969bb5556289abc5df92f8 | Git internals | ignored/local | 3955 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/de/957c2723814056f9f70ccd1e3f9fd3e7e888e9 | Git internals | ignored/local | 205 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/df/2eb1ff14cf97b093fe9e8ba5364d7c9c52c4d0 | Git internals | ignored/local | 161 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/df/56c7f409a7920b823c59329bb63b9df0583693 | Git internals | ignored/local | 1518 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/df/9016bcf616b5206779273904be7dc8ceb20c07 | Git internals | ignored/local | 3056 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/e0/dec7bb894564c367544b4131b4c58ad6eb4e9a | Git internals | ignored/local | 249 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/e1/5601d0936863443380faf57545c6a530158652 | Git internals | ignored/local | 3988 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/e1/bb3b393ba94315f50eca790827ff2deecc8ca3 | Git internals | ignored/local | 248 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/e1/d60991fea0d4c98ac66a655365ade73eb94e7e | Git internals | ignored/local | 330609 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/e2/0651a85303011f3a30890485f9d08837d68479 | Git internals | ignored/local | 14265 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/e2/2af6d039d93ab6a1399b8c11dba1f42f83dbaa | Git internals | ignored/local | 159636 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/e2/68c394be4f43d182bb834573bbf3be22a215e7 | Git internals | ignored/local | 5605 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/e2/a5bc16b28d17eefb26692ac0bc9149384fc329 | Git internals | ignored/local | 249 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/e2/ba5257b90c5b8a2c7a2d55804b03fd5d419fb8 | Git internals | ignored/local | 1229 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/e3/70fea550dc7a9ac1b6eb66f2e5df54b2e3e365 | Git internals | ignored/local | 1245 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/e3/ea266d35638ab2ddfe032bf9548609c12f2908 | Git internals | ignored/local | 942 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/e3/ed0cef92a3ef3604e6478f67257234f908a6dc | Git internals | ignored/local | 251 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/e4/d6103e2f9648ffd65a31f3c16690229411dc7b | Git internals | ignored/local | 13633 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/e5/8004eaa2170bde6bd4f8d5e4ef586f165e8652 | Git internals | ignored/local | 900 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/e5/f8e234cc4bc3b420610c3d494ca9bdb2ea96e9 | Git internals | ignored/local | 78 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/e6/9de29bb2d1d6434b8b29ae775ad8c2e48c5391 | Git internals | ignored/local | 15 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/e6/af54fed3e4ba06de2c533d270d218b09a79703 | Git internals | ignored/local | 1718 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/e7/39e2463288b95893eb3f175e5b31aff06fe862 | Git internals | ignored/local | 41570 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/e8/862f454e87488f331200afa48d9f909bb3e6fa | Git internals | ignored/local | 330 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/eb/61106affa26bd71a8cd92b6d4e5a81550e2894 | Git internals | ignored/local | 413 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/eb/cd17e5537d75d5569be1e4d9a91a1148377347 | Git internals | ignored/local | 5304 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/eb/ed155293d19f8bb082a2ae9d61878a4bffede7 | Git internals | ignored/local | 206 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/ec/11da80cf92b07fcd4f3b9a6450bf663929fe18 | Git internals | ignored/local | 3098 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/ed/49e0d13c3434d998a2b1bbea1e8102b3a411b9 | Git internals | ignored/local | 2379 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/ed/ac46c400fe0c994dcf71ca8a51f2b3ec04dae0 | Git internals | ignored/local | 895 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/ed/badbf376efca6e6daa6f3efa2f73410a862b9c | Git internals | ignored/local | 1084 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/ed/e71480e613a20e0b9dbecce19c4b8bcca96739 | Git internals | ignored/local | 634 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/ee/7713d5c86279ab9803700efb5b74d26c652a68 | Git internals | ignored/local | 14538 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/ef/03197c3c0d6ede832f046793729219df3b655c | Git internals | ignored/local | 573 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/f0/2a5c9b4bb8e50499824c0725af3bd214b5d536 | Git internals | ignored/local | 377 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/f0/f4bf065114fe13fe1301897a6eceff3015b673 | Git internals | ignored/local | 1329 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/f2/8074c602e04f6cca92ade7ec30375569050739 | Git internals | ignored/local | 525 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/f2/d1f9d67062cca8804c938d75da9d2c506b8d80 | Git internals | ignored/local | 188 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/f2/e98ee85dfccb8673921ed33014395fc5a4b166 | Git internals | ignored/local | 599 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/f3/ce19a5fc8a353c7e94bddc6f3b28822787598f | Git internals | ignored/local | 206 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/f4/3be6ca9f38c6292fa8fd38a19a69e9f5ed8996 | Git internals | ignored/local | 6462 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/f4/cb68488740f9423058d2bd94a9083b9be48c2c | Git internals | ignored/local | 198 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/f5/14c5dadef65744638aa2727f375a8cce55dc91 | Git internals | ignored/local | 155 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/f5/80d3c475a7a1758ef28b32a8814442361747e2 | Git internals | ignored/local | 248 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/f7/028977b3ca20581f2340db1433be1c41f4ddc5 | Git internals | ignored/local | 3359 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/f7/0683f2c71fba8e826008e9bb3295c27a9583f9 | Git internals | ignored/local | 1335 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/f7/da102dc324858f4c1dc7146f8e754ff1f81318 | Git internals | ignored/local | 158793 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/f7/ed7cc6ad352a2db5de3d372fbc9699363fecf0 | Git internals | ignored/local | 215 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/f8/796f35ed555e248d827c0c2167b7928e252d3a | Git internals | ignored/local | 248 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/f9/8acbdee1698eb9f24293f1abeaf9a74d13086a | Git internals | ignored/local | 419 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/fc/72aa7c2d974e957893453efd2956a8f4175f87 | Git internals | ignored/local | 910830 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/fd/4a2a0307df99ed32edb8f96bae33b818da08ee | Git internals | ignored/local | 78 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/ff/2f6e25411d42b91359ec60d976a7dab5595c2d | Git internals | ignored/local | 2337 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/ff/48fa000feb14c3c29aced8493e9425c9dbcb8f | Git internals | ignored/local | 330 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/ff/ee776856380bf1a87ba223f0b2fa67707af244 | Git internals | ignored/local | 3399 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/ff/f8fdc49d88543d7f2fc24cda0bbc94f29daf81 | Git internals | ignored/local | 723 | Git object storage: compressed repository content/history or object pack/index.
-.git/objects/info/commit-graphs/commit-graph-chain | Git internals | ignored/local | 41 | Git object storage: compressed repository content/history or object pack/index.
+.git/info/refs | Git internals | ignored/local | 4569 | Git repository bookkeeping/configuration; not a radiation or mission input.
+.git/logs/HEAD | Git internals | ignored/local | 1409 | Git reflog recording local reference movements.
+.git/logs/refs/heads/main | Git internals | ignored/local | 1409 | Git reflog recording local reference movements.
+.git/objects/info/commit-graphs/commit-graph-chain | Git internals | ignored/local | 82 | Git object storage: compressed repository content/history or object pack/index.
 .git/objects/info/commit-graphs/graph-14e7ef8a3589079fb283cba0533a9cf868160996.graph | Git internals | ignored/local | 3858 | Git object storage: compressed repository content/history or object pack/index.
+.git/objects/info/commit-graphs/graph-e2ce2bad3aba7951de2930faad6b6b16ec3a9bfb.graph | Git internals | ignored/local | 2718 | Git object storage: compressed repository content/history or object pack/index.
+.git/objects/info/packs | Git internals | ignored/local | 107 | Git object storage: compressed repository content/history or object pack/index.
+.git/objects/pack/multi-pack-index | Git internals | ignored/local | 14852 | Git object storage: compressed repository content/history or object pack/index.
+.git/objects/pack/pack-1163065f24157cc2f4576f363464a2e70031eabc.idx | Git internals | ignored/local | 1100 | Git object storage: compressed repository content/history or object pack/index.
+.git/objects/pack/pack-1163065f24157cc2f4576f363464a2e70031eabc.mtimes | Git internals | ignored/local | 56 | Git object storage: compressed repository content/history or object pack/index.
+.git/objects/pack/pack-1163065f24157cc2f4576f363464a2e70031eabc.pack | Git internals | ignored/local | 41 | Git object storage: compressed repository content/history or object pack/index.
+.git/objects/pack/pack-1163065f24157cc2f4576f363464a2e70031eabc.rev | Git internals | ignored/local | 56 | Git object storage: compressed repository content/history or object pack/index.
+.git/objects/pack/pack-f7e513145bcb4fe53d85272d585706d966332727.idx | Git internals | ignored/local | 14680 | Git object storage: compressed repository content/history or object pack/index.
+.git/objects/pack/pack-f7e513145bcb4fe53d85272d585706d966332727.pack | Git internals | ignored/local | 35083374 | Git object storage: compressed repository content/history or object pack/index.
+.git/objects/pack/pack-f7e513145bcb4fe53d85272d585706d966332727.rev | Git internals | ignored/local | 1996 | Git object storage: compressed repository content/history or object pack/index.
 .git/packed-refs | Git internals | ignored/local | 2363 | Git repository bookkeeping/configuration; not a radiation or mission input.
+.git/refs/heads/main | Git internals | ignored/local | 41 | Git branch/tag/remote reference pointer.
 .git/refs/t3/orchestration-v2/checkpoints/MWVjM2UxNTViMTJiOTc1NTRlNDIxM2I4YmZkY2M0OGI/ordinal/1 | Git internals | ignored/local | 41 | Git branch/tag/remote reference pointer.
+.git/refs/t3/orchestration-v2/checkpoints/MWVjM2UxNTViMTJiOTc1NTRlNDIxM2I4YmZkY2M0OGI/ordinal/10 | Git internals | ignored/local | 41 | Git branch/tag/remote reference pointer.
 .git/refs/t3/orchestration-v2/checkpoints/MWVjM2UxNTViMTJiOTc1NTRlNDIxM2I4YmZkY2M0OGI/ordinal/2 | Git internals | ignored/local | 41 | Git branch/tag/remote reference pointer.
 .git/refs/t3/orchestration-v2/checkpoints/MWVjM2UxNTViMTJiOTc1NTRlNDIxM2I4YmZkY2M0OGI/ordinal/3 | Git internals | ignored/local | 41 | Git branch/tag/remote reference pointer.
 .git/refs/t3/orchestration-v2/checkpoints/MWVjM2UxNTViMTJiOTc1NTRlNDIxM2I4YmZkY2M0OGI/ordinal/4 | Git internals | ignored/local | 41 | Git branch/tag/remote reference pointer.
@@ -22681,9 +22251,9 @@ Columns: relative path | category | Git status | bytes | purpose
 .venv/share/man/man1/ipython.1 | Installed environment | ignored/local | 2058 | Local Python virtual-environment interpreter, launcher or configuration.
 .venv/share/man/man1/ttx.1 | Installed environment | ignored/local | 5377 | Local Python virtual-environment interpreter, launcher or configuration.
 .vscode/settings.json | Project/source/output | tracked | 171 | VS Code settings: selects .venv Python and hides raw-data/environment/cache folders in Explorer; hiding does not delete them.
-README.md | Project/source/output | tracked | 13775 | Project overview, source roles, units, assumptions, frozen radiation policy and strategy-development requirements.
-anatomical_environment.py | Project/source/output | untracked | 9718 | Loads and validates the frozen common OLTARIS BFO environment; integrates exposure intervals and calculates separate NASA reference comparisons. Export is blocked by the freeze record.
-audit_band_spectra.py | Project/source/output | untracked | 23692 | Audits Band spectrum equations, normalization and older boundary exports against SAPPHIRE; diagnostic history, not a transport simulator.
+README.md | Project/source/output | tracked | 15874 | Project overview, source roles, units, assumptions, frozen radiation policy and strategy-development requirements.
+anatomical_environment.py | Project/source/output | tracked | 9718 | Loads and validates the frozen common OLTARIS BFO environment; integrates exposure intervals and calculates separate NASA reference comparisons. Export is blocked by the freeze record.
+audit_band_spectra.py | Project/source/output | tracked | 23692 | Audits Band spectrum equations, normalization and older boundary exports against SAPPHIRE; diagnostic history, not a transport simulator.
 bfo_proxy.py | Project/source/output | tracked | 5599 | Legacy unverified King-to-SAPPHIRE BFO transfer-ratio experiment at 20 g/cm²; not used by the current simulator.
 charts/01_spe_proton_flux.py | Project/source/output | tracked | 1172 | Plot generator: Historical measured proton-flux time profile.
 charts/02_shielding_vs_dose.py | Project/source/output | tracked | 3623 | Plot generator: Shielding-response plot for one selected event, target, geometry and quantity.
@@ -22693,7 +22263,7 @@ charts/05_cumulative_exposure.py | Project/source/output | tracked | 361 | Plot 
 charts/06_shielding_sensitivity.py | Project/source/output | tracked | 3093 | Plot generator: SHIELDOSE full-event tissue doses at six exported aluminium depths.
 charts/07_absorbed_dose_health_reference.py | Project/source/output | tracked | 3678 | Plot generator: Clinical context graphic, separate from modeled astronaut exposure; not a symptom predictor.
 charts/08_synthetic_sapphire_proton_profile.py | Project/source/output | tracked | 4594 | Plot generator: Historically timed synthetic proton fluence; not an anatomical dose calculation.
-charts/09_anatomical_eva_exposure.py | Project/source/output | untracked | 15910 | Plot generator: Current common-environment BFO rate, rolling EVA and accumulation plot; hatches interpolated bins and exports fixed-window sensitivity.
+charts/09_anatomical_eva_exposure.py | Project/source/output | tracked | 15910 | Plot generator: Current common-environment BFO rate, rolling EVA and accumulation plot; hatches interpolated bins and exports fixed-window sensitivity.
 charts/common.py | Project/source/output | tracked | 770 | Shared consolidated-data loading and plot-save helpers.
 charts/environment_common.py | Project/source/output | tracked | 2842 | Shared historical/reference display helpers, envelopes, gap shading and figure finishing.
 charts/historical_04_radiation_dose_rate.py | Project/source/output | tracked | 3862 | Plot generator: Older King-based historical dose-rate reference plot.
@@ -22703,25 +22273,32 @@ data/processed/mission_radiation_environment.csv | Project/source/output | track
 data/processed/october_1989_hourly_proton_flux.csv | Project/source/output | tracked | 26792 | 1989 timing candidate; 96/360 hours missing, disabled in the active model.
 data/processed/october_2003_goes10_hourly_proton_flux.csv | Project/source/output | tracked | 19070 | Active alternative timing source: 336 complete supplied GOES-10 hours; exact official archive match remains unverified.
 data/processed/october_2003_hourly_proton_flux.csv | Project/source/output | tracked | 23280 | Incomplete 2003 OMNI2 record (205/336 hours missing); excluded, distinct from GOES-10.
-data/processed/oltaris/mission_bfo_environment.csv | Project/source/output | untracked | 4274120 | PRIMARY FROZEN simulator exposure table: 21,600 bins, two severities, two shield depths, nine timing variants and two historical templates; separate absorbed and Gray Equivalent rates.
-data/processed/oltaris/mission_bfo_environment_manifest.json | Project/source/output | untracked | 2320 | Anatomical dataset/source hashes, build provenance, units, geometry, distance interpretation and limitations.
-data/processed/oltaris/oltaris_sapphire_anatomical_summary.csv | Project/source/output | untracked | 3114 | Processed four-run corrected Band/MAX summary with BFO absorbed mGy and Gray Equivalent mGy-Eq, settings and source provenance.
-data/processed/oltaris/oltaris_sapphire_organ_doses.csv | Project/source/output | untracked | 38297 | Processed 112 corrected organ records; preserves distinct absorbed, dose-equivalent and Gray Equivalent quantities where supplied.
-data/processed/oltaris/radiation_environment_freeze.json | Project/source/output | untracked | 755 | Pins the anatomical dataset and manifest checksums as oltaris_bfo_v1; prevents silent replacement during strategy development.
-data/processed/oltaris/superseded_weibull_anatomical_doses.csv | Project/source/output | untracked | 6243 | Processed historical Weibull result; mSv export values and separately supplied mGy/mGy-Eq summaries retain their provenance. Not an active input.
+data/processed/oltaris/mission_bfo_environment.csv | Project/source/output | tracked | 4274120 | PRIMARY FROZEN simulator exposure table: 21,600 bins, two severities, two shield depths, nine timing variants and two historical templates; separate absorbed and Gray Equivalent rates.
+data/processed/oltaris/mission_bfo_environment_manifest.json | Project/source/output | tracked | 2320 | Anatomical dataset/source hashes, build provenance, units, geometry, distance interpretation and limitations.
+data/processed/oltaris/oltaris_sapphire_anatomical_summary.csv | Project/source/output | tracked | 3114 | Processed four-run corrected Band/MAX summary with BFO absorbed mGy and Gray Equivalent mGy-Eq, settings and source provenance.
+data/processed/oltaris/oltaris_sapphire_organ_doses.csv | Project/source/output | tracked | 38297 | Processed 112 corrected organ records; preserves distinct absorbed, dose-equivalent and Gray Equivalent quantities where supplied.
+data/processed/oltaris/radiation_environment_freeze.json | Project/source/output | tracked | 755 | Pins the anatomical dataset and manifest checksums as oltaris_bfo_v1; prevents silent replacement during strategy development.
+data/processed/oltaris/superseded_weibull_anatomical_doses.csv | Project/source/output | tracked | 6243 | Processed historical Weibull result; mSv export values and separately supplied mGy/mGy-Eq summaries retain their provenance. Not an active input.
 data/processed/raw_nasa_omni2/omni2_1989.dat | Project/source/output | ignored/local | 2873280 | Full-year raw OMNI2 download for 1989; used to construct historical candidate series, not directly read by strategy decisions.
 data/processed/raw_nasa_omni2/omni2_2003.dat | Project/source/output | ignored/local | 2873280 | Full-year raw OMNI2 download for 2003; used to construct historical candidate series, not directly read by strategy decisions.
 data/processed/shielding_dose.csv | Project/source/output | tracked | 1125359 | Consolidated shielding-response records with quantities/provenance; includes verified reference rows and separately identified older records.
 data/processed/spe_hourly.csv | Project/source/output | tracked | 43288 | Consolidated August 1972 hourly observations and missing-data flags; supplies relative timing, not dose magnitude.
 data/processed/spe_scenarios.csv | Project/source/output | tracked | 41941 | Consolidated SAPPHIRE spectra and scenario/source settings.
 data/raw/archive/before_verified_sapphire/preservation_manifest.json | Historical archive | tracked | 24103 | ARCHIVE — snapshot before verified SPENVIS source adoption: records preserved paths, moves, hashes or source associations.
-data/raw/archive/move_manifest.csv | Historical archive | untracked | 24624 | ARCHIVE — archive bookkeeping: records preserved paths, moves, hashes or source associations.
+data/raw/archive/move_manifest.csv | Historical archive | tracked | 24624 | ARCHIVE — archive bookkeeping: records preserved paths, moves, hashes or source associations.
 data/raw/archive/previous_processed/exposure_settings.csv | Historical archive | tracked | 54946 | REQUIRED rebuild source table read by prepare_data.build(); retained in place despite historical directory name. exposure_settings.csv
 data/raw/archive/previous_processed/organ_dose.csv | Historical archive | tracked | 27188 | REQUIRED rebuild source table read by prepare_data.build(); retained in place despite historical directory name. organ_dose.csv
-data/raw/archive/previous_processed/shielding_dose.csv | Historical archive | untracked | 17479961 | REQUIRED rebuild source table read by prepare_data.build(); retained in place despite historical directory name. shielding_dose.csv
+data/raw/archive/previous_processed/shielding_dose.csv | Historical archive | tracked | 17479961 | REQUIRED rebuild source table read by prepare_data.build(); retained in place despite historical directory name. shielding_dose.csv
 data/raw/archive/previous_processed/spe_hourly.csv | Historical archive | tracked | 91515 | REQUIRED rebuild source table read by prepare_data.build(); retained in place despite historical directory name. spe_hourly.csv
 data/raw/archive/previous_processed/spe_spectra.csv | Historical archive | tracked | 58690 | REQUIRED rebuild source table read by prepare_data.build(); retained in place despite historical directory name. spe_spectra.csv
-data/raw/archive/reorganization_validation.json | Historical archive | untracked | 368 | ARCHIVE — archive bookkeeping: saved validation/metadata record (reorganization_validation.json).
+data/raw/archive/reorganization_validation.json | Historical archive | tracked | 368 | ARCHIVE — archive bookkeeping: saved validation/metadata record (reorganization_validation.json).
+data/raw/mission_recovery/cnl_case_overview.pdf | Project/source/output | tracked | 61154 | Original one-page Western–CNL Mars 2040 case overview, preserved from Downloads.
+data/raw/mission_recovery/cnsc_decay_heat.html | Project/source/output | untracked | 47871 | CNSC explanation of shutdown/decay heat; general principle only, not spacecraft-specific design limits.
+data/raw/mission_recovery/nasa_mars_communications.html | Project/source/output | tracked | 95562 | NASA NTRS record on Mars communication delays, disruptions and blackouts.
+data/raw/mission_recovery/nasa_propulsion_materials.html | Project/source/output | tracked | 103584 | NASA NTRS record on NTP/NEP materials and operating distinctions; numerical recovery defaults are not sourced here.
+data/raw/mission_recovery/national_academies_nep.html | Project/source/output | tracked | 746649 | National Academies NEP architecture chapter; supports power-conversion/heat-rejection/distribution distinctions.
+data/raw/mission_recovery/national_academies_ntp.html | Project/source/output | tracked | 671325 | National Academies NTP architecture chapter; supports qualitative propellant/reactor/engine distinctions.
+data/raw/mission_recovery/provenance.json | Project/source/output | tracked | 2041 | Case and published engineering source paths, URLs, hashes, retrieval date and evidence scope.
 data/raw/oltaris/OLTARIS_Aug1972_King_Al0p4_gcm2/NASA_Q_leukemia_dose_equivalent_vs_depth_mSv.dat | Project/source/output | tracked | 7679 | Historical August 1972 King OLTARIS reference (0.4 g/cm² association): NASA-Q leukemia dose-equivalent response versus shielding/tissue depth in mSv. Not current SAPPHIRE anatomical normalization.
 data/raw/oltaris/OLTARIS_Aug1972_King_Al0p4_gcm2/NASA_Q_solid_cancer_dose_equivalent_vs_depth_mSv.dat | Project/source/output | tracked | 7683 | Historical August 1972 King OLTARIS reference (0.4 g/cm² association): NASA-Q solid-cancer dose-equivalent response versus depth in mSv. Not current SAPPHIRE anatomical normalization.
 data/raw/oltaris/OLTARIS_Aug1972_King_Al0p4_gcm2/README.md | Project/source/output | tracked | 5392 | Historical August 1972 King OLTARIS reference (0.4 g/cm² association): Documentation of the associated source group or earlier workflow. Not current SAPPHIRE anatomical normalization.
@@ -22736,13 +22313,13 @@ data/raw/oltaris/OLTARIS_Aug1972_King_Al20_gcm2/README.md | Project/source/outpu
 data/raw/oltaris/OLTARIS_Aug1972_King_Al20_gcm2/absorbed_dose_vs_aluminum_and_tissue_depth_mGy.dat | Project/source/output | tracked | 7658 | Historical August 1972 King OLTARIS reference (20 g/cm² association): Absorbed-dose response over aluminium/tissue-depth coordinates in mGy; not automatically an anatomical sphere result. Not current SAPPHIRE anatomical normalization.
 data/raw/oltaris/OLTARIS_Aug1972_King_Al20_gcm2/effective_dose_equivalent_and_organ_results_mSv.txt | Project/source/output | tracked | 569 | Historical August 1972 King OLTARIS reference (20 g/cm² association): Effective dose equivalent and/or organ dose-equivalent records; preserve mSv, not absorbed mGy. Not current SAPPHIRE anatomical normalization.
 data/raw/oltaris/OLTARIS_Aug1972_King_Al20_gcm2/particle_fluence_vs_energy_isotope_and_depth.dat | Project/source/output | ignored/local | 43663021 | Historical August 1972 King OLTARIS reference (20 g/cm² association): Particle fluence resolved by energy, isotope and depth. Not current SAPPHIRE anatomical normalization.
-data/raw/oltaris/sapphire_corrected_band_2026-11-16/oltaris_sapphire_anatomical_summary.csv | Project/source/output | untracked | 2122 | Preserved user-supplied corrected four-run OLTARIS summary; source for current anatomical totals.
-data/raw/oltaris/sapphire_corrected_band_2026-11-16/oltaris_sapphire_organ_doses.csv | Project/source/output | untracked | 12399 | Preserved user-supplied corrected organ export table; source for processed organ records.
-data/raw/oltaris/sapphire_corrected_band_2026-11-16/provenance.json | Project/source/output | untracked | 1354 | Original attachment/source paths, checksums and corrected-run provenance.
-data/raw/oltaris/sapphire_superseded_weibull_2026-11-16/effective_dose_equivalent-3.txt | Project/source/output | untracked | 590 | Superseded Weibull native effective/organ dose-equivalent export in mSv, not absorbed mGy.
-data/raw/oltaris/sapphire_superseded_weibull_2026-11-16/li_dose_database_mGy-3.dat | Project/source/output | untracked | 7658 | Superseded Weibull native absorbed-dose lookup database; not current anatomical normalization.
-data/raw/oltaris/sapphire_superseded_weibull_2026-11-16/li_flux_database-3.dat | Project/source/output | untracked | 43663021 | Superseded Weibull native particle-flux/fluence database.
-data/raw/oltaris/sapphire_superseded_weibull_2026-11-16/provenance.json | Project/source/output | untracked | 2045 | Source identities/hashes and separate provenance of user-supplied Weibull absorbed/Gray Equivalent summary values.
+data/raw/oltaris/sapphire_corrected_band_2026-11-16/oltaris_sapphire_anatomical_summary.csv | Project/source/output | tracked | 2122 | Preserved user-supplied corrected four-run OLTARIS summary; source for current anatomical totals.
+data/raw/oltaris/sapphire_corrected_band_2026-11-16/oltaris_sapphire_organ_doses.csv | Project/source/output | tracked | 12399 | Preserved user-supplied corrected organ export table; source for processed organ records.
+data/raw/oltaris/sapphire_corrected_band_2026-11-16/provenance.json | Project/source/output | tracked | 1354 | Original attachment/source paths, checksums and corrected-run provenance.
+data/raw/oltaris/sapphire_superseded_weibull_2026-11-16/effective_dose_equivalent-3.txt | Project/source/output | tracked | 590 | Superseded Weibull native effective/organ dose-equivalent export in mSv, not absorbed mGy.
+data/raw/oltaris/sapphire_superseded_weibull_2026-11-16/li_dose_database_mGy-3.dat | Project/source/output | tracked | 7658 | Superseded Weibull native absorbed-dose lookup database; not current anatomical normalization.
+data/raw/oltaris/sapphire_superseded_weibull_2026-11-16/li_flux_database-3.dat | Project/source/output | tracked | 43663021 | Superseded Weibull native particle-flux/fluence database.
+data/raw/oltaris/sapphire_superseded_weibull_2026-11-16/provenance.json | Project/source/output | tracked | 2045 | Source identities/hashes and separate provenance of user-supplied Weibull absorbed/Gray Equivalent summary values.
 data/raw/omniweb/OMNIWeb_Aug1972/README.md | Project/source/output | tracked | 5367 | Documents the preserved August 1972 OMNIWeb observations and provenance.
 data/raw/omniweb/OMNIWeb_Aug1972/hourly_measured_proton_flux.csv | Project/source/output | tracked | 23640 | Preserved August 1972 measured hourly proton-flux table with timing-channel information.
 data/raw/omniweb/OMNIWeb_Aug1972/measured_proton_flux_hours.png | Project/source/output | tracked | 130054 | Historical measured proton-flux preview, not modeled organ dose.
@@ -22752,12 +22329,12 @@ data/raw/omniweb/OMNIWeb_Aug1972/validation.json | Project/source/output | track
 data/raw/omniweb/OMNIWeb_Aug1972_measured_proton_flux_hours.png | Project/source/output | tracked | 130054 | Historical measured proton-flux preview, not modeled organ dose.
 data/raw/omniweb/omni2_5AkMqBOXbn.fmt.txt | Project/source/output | tracked | 347 | Original OMNIWeb column/format definition for the historical observation export; retained duplicate in originals where applicable.
 data/raw/omniweb/omni2_5AkMqBOXbn.lst.txt | Project/source/output | tracked | 10296 | Original OMNIWeb numeric hourly observation export; retained duplicate in originals where applicable.
-data/raw/reference_documents/goes_channel_definitions.json | Project/source/output | untracked | 542 | Structured >10/>30/>60 MeV integral-channel definitions, units, cadence and unverified local-product attribution.
-data/raw/reference_documents/goes_channel_notes.html | Project/source/output | untracked | 24529 | Archived official NOAA GOES data/channel notes.
-data/raw/reference_documents/goes_hourly_product.html | Project/source/output | untracked | 5658 | Archived GSFC/SPDF hourly GOES product description.
-data/raw/reference_documents/manifest.json | Project/source/output | untracked | 1097 | Downloaded reference URLs, retrieval dates and SHA-256 hashes.
-data/raw/reference_documents/nasa_std_3001_vol1_rev_c.pdf | Project/source/output | untracked | 1660855 | Pinned NASA human-system standard, Volume 1 Revision C; source of BFO exposure reference limits.
-data/raw/reference_documents/supplied_october_2003_goes10_hourly_proton_flux.csv | Project/source/output | untracked | 19070 | Byte-preserved copy of the supplied GOES timing record; official archive equivalence remains unverified.
+data/raw/reference_documents/goes_channel_definitions.json | Project/source/output | tracked | 542 | Structured >10/>30/>60 MeV integral-channel definitions, units, cadence and unverified local-product attribution.
+data/raw/reference_documents/goes_channel_notes.html | Project/source/output | tracked | 24529 | Archived official NOAA GOES data/channel notes.
+data/raw/reference_documents/goes_hourly_product.html | Project/source/output | tracked | 5658 | Archived GSFC/SPDF hourly GOES product description.
+data/raw/reference_documents/manifest.json | Project/source/output | tracked | 1097 | Downloaded reference URLs, retrieval dates and SHA-256 hashes.
+data/raw/reference_documents/nasa_std_3001_vol1_rev_c.pdf | Project/source/output | tracked | 1660855 | Pinned NASA human-system standard, Volume 1 Revision C; source of BFO exposure reference limits.
+data/raw/reference_documents/supplied_october_2003_goes10_hourly_proton_flux.csv | Project/source/output | tracked | 19070 | Byte-preserved copy of the supplied GOES timing record; official archive equivalence remains unverified.
 data/raw/spenvis/SAPPHIRE-1-in-100/README.md | Project/source/output | tracked | 8552 | Earlier SPENVIS source group (original spectra retained; older transport associations quarantined): Documentation of the associated source group or earlier workflow.
 data/raw/spenvis/SAPPHIRE-1-in-100/mulassis-effective-dose-output.txt | Project/source/output | tracked | 715 | Earlier SPENVIS source group (original spectra retained; older transport associations quarantined): MULASSIS effective-dose result/report; failed NaN values are unusable and excluded from active normalization.
 data/raw/spenvis/SAPPHIRE-1-in-100/mulassis-effective-dose-report.html | Project/source/output | tracked | 1024 | Earlier SPENVIS source group (original spectra retained; older transport associations quarantined): MULASSIS effective-dose result/report; failed NaN values are unusable and excluded from active normalization.
@@ -22784,12 +22361,13 @@ data/raw/spenvis/sapphire_100yr/sapphire_100yr_shieldose_data.txt | Project/sour
 data/raw/spenvis/sapphire_100yr/sapphire_100yr_shieldose_report.html | Project/source/output | tracked | 2677 | November 16 source group used by the frozen SHIELDOSE reference: SHIELDOSE-2 idealized tissue-target absorbed-dose export/report or shielding-response plot; independent of anatomical BFO dose.
 data/raw/spenvis/sapphire_100yr/sapphire_100yr_source_report.html | Project/source/output | tracked | 40880 | November 16 source group used by the frozen SHIELDOSE reference: Original SAPPHIRE proton fluence spectrum and run-setting report.
 data/raw/spenvis/verified_sapphire_manifest.json | Project/source/output | tracked | 2805 | Source paths, hashes and user-confirmed pairings for the November 16 SPENVIS source/SHIELDOSE groups.
-organize_oltaris_anatomical.py | Project/source/output | untracked | 21116 | Archives supplied corrected and superseded OLTARIS files, creates unit-separated anatomical tables and checks the corrected spectral approximation.
-outputs/README.md | Project/source/output | tracked | 1707 | Map of current outputs and distinction between anatomical simulator results and frozen SHIELDOSE references.
-outputs/analysis/all_local_files_inventory.txt | Project/source/output | untracked | self | Exhaustive local file listing with category, Git status, byte size and purpose, including dependencies, caches and Git internals.
-outputs/analysis/anatomical_eva/README.md | Project/source/output | untracked | 3707 | Method, units, timing interpretation and limitations of the anatomical EVA comparison.
-outputs/analysis/anatomical_eva/provenance.json | Project/source/output | untracked | 1440 | Hashes, source paths, timing definitions and units for the anatomical EVA outputs.
-outputs/analysis/repository_file_guide.txt | Project/source/output | untracked | 33484 | This annotated project-file inventory, including every historical backup, as of this snapshot.
+docs/mission_recovery.md | Project/source/output | untracked | 14250 | Case facts, engineering references, configurable hypothetical assumptions, interfaces, limitations and future Monte Carlo contract.
+organize_oltaris_anatomical.py | Project/source/output | tracked | 21116 | Archives supplied corrected and superseded OLTARIS files, creates unit-separated anatomical tables and checks the corrected spectral approximation.
+outputs/README.md | Project/source/output | tracked | 2021 | Map of current outputs and distinction between anatomical simulator results and frozen SHIELDOSE references.
+outputs/analysis/all_local_files_inventory.txt | Project/source/output | tracked | self | Exhaustive local file listing with category, Git status, byte size and purpose, including dependencies, caches and Git internals.
+outputs/analysis/anatomical_eva/README.md | Project/source/output | tracked | 3707 | Method, units, timing interpretation and limitations of the anatomical EVA comparison.
+outputs/analysis/anatomical_eva/provenance.json | Project/source/output | tracked | 1440 | Hashes, source paths, timing definitions and units for the anatomical EVA outputs.
+outputs/analysis/repository_file_guide.txt | Project/source/output | tracked | 38550 | This annotated project-file inventory, including every historical backup, as of this snapshot.
 outputs/mission_radiation_environment.csv | Project/source/output | tracked | 81679894 | Presentation copy of the frozen SHIELDOSE reference CSV, not the anatomical simulator table.
 outputs/model/baseline_manifest.json | Project/source/output | tracked | 2263 | Checksum and source provenance for the independent frozen SHIELDOSE baseline.
 outputs/model/baseline_validation.md | Project/source/output | tracked | 7568 | Numerical conservation and interpretation checks for the SHIELDOSE reference, not a clinical validation.
@@ -22797,35 +22375,53 @@ outputs/model/historical/mission_radiation_environment.csv | Project/source/outp
 outputs/model/historical/radiation_environment_audit.json | Project/source/output | tracked | 11107 | Numerical/source audit for the historical King-based time allocation.
 outputs/model/sapphire_transport_audit.json | Project/source/output | tracked | 29392 | Machine-readable source/transport association audit for the independent SAPPHIRE/SHIELDOSE workflow.
 outputs/model/synthetic_sapphire_interval_exposure.csv | Project/source/output | tracked | 23997 | SHIELDOSE reference dose integrated over configured example intervals.
-outputs/validation/integration_preservation_check.json | Project/source/output | untracked | 10829 | Recorded checksum comparison confirming 101 checked pre-integration baseline/source artifacts were unchanged.
-outputs/validation/oltaris_anatomical/README.md | Project/source/output | untracked | 4828 | Corrected/superseded source validation findings and spectrum-fit interpretation.
-outputs/validation/oltaris_anatomical/spectrum_metrics.csv | Project/source/output | untracked | 651 | Aggregate corrected spectrum-fit error metrics.
-outputs/validation/oltaris_anatomical/spectrum_overlay.png | Project/source/output | untracked | 236683 | Corrected approximation versus original SAPPHIRE integral-fluence overlay.
-outputs/validation/oltaris_anatomical/spectrum_percentage_errors.csv | Project/source/output | untracked | 14758 | Point-by-point percent errors at original spectrum energies.
-outputs/validation/oltaris_anatomical/validation.json | Project/source/output | untracked | 3609 | Machine-readable checks of anatomical tables, source hashes and spectrum consistency.
-outputs/validation/repository_cleanup/manifest.json | Project/source/output | untracked | 157057 | Every cleanup move/deletion with original path, checksum, reason, Git status and external archive destination.
-outputs/validation/repository_cleanup/report.txt | Project/source/output | untracked | 4879 | Cleanup summary, retained dependencies, manual-review items and restore instructions.
-outputs/validation/repository_cleanup/tests_after.log | Project/source/output | untracked | 1948 | Recorded final suite: 65 tests passed after cleanup.
-outputs/validation/repository_cleanup/tests_before.log | Project/source/output | untracked | 1948 | Recorded baseline: 65 tests passed before cleanup.
-outputs/validation/repository_cleanup/verification.json | Project/source/output | untracked | 3381 | Source/frozen/Git/code checksums and 72 identical mission-state comparisons; before/after test counts.
+outputs/runs/recovery_nep/bfo_exposure_history.csv | Project/source/output | ignored/local | 9266 | Strategy A run (illustrative NEP recovery): Per-astronaut interval ledger with EVA/cabin location, shielding, absorbed mGy and Gray Equivalent mGy-Eq.
+outputs/runs/recovery_nep/event_log.csv | Project/source/output | ignored/local | 2690 | Strategy A run (illustrative NEP recovery): Chronological starts, waits, continuations, aborts, repairs and termination reasons.
+outputs/runs/recovery_nep/mission_timeline.png | Project/source/output | ignored/local | 67707 | Strategy A run (illustrative NEP recovery): EVA assignments and cabin-time timeline.
+outputs/runs/recovery_nep/nasa_bfo_reference_comparisons.csv | Project/source/output | ignored/local | 3291 | Strategy A run (illustrative NEP recovery): Mission-contribution rolling-window comparisons with NASA BFO references; compliance is not assessed.
+outputs/runs/recovery_nep/recovery_events.csv | Project/source/output | ignored/local | 1165 | Strategy A run (illustrative NEP recovery): Qualitative recovery permissions, resource actions, repair/checkout outcomes and terminal reasons.
+outputs/runs/recovery_nep/summary.json | Project/source/output | ignored/local | 12245 | Strategy A run (illustrative NEP recovery): Run configuration, environment provenance, crew exposure and repair outcomes.
+outputs/runs/recovery_ntp/bfo_exposure_history.csv | Project/source/output | ignored/local | 8572 | Strategy A run (illustrative NTP recovery): Per-astronaut interval ledger with EVA/cabin location, shielding, absorbed mGy and Gray Equivalent mGy-Eq.
+outputs/runs/recovery_ntp/event_log.csv | Project/source/output | ignored/local | 2599 | Strategy A run (illustrative NTP recovery): Chronological starts, waits, continuations, aborts, repairs and termination reasons.
+outputs/runs/recovery_ntp/mission_timeline.png | Project/source/output | ignored/local | 67757 | Strategy A run (illustrative NTP recovery): EVA assignments and cabin-time timeline.
+outputs/runs/recovery_ntp/nasa_bfo_reference_comparisons.csv | Project/source/output | ignored/local | 3293 | Strategy A run (illustrative NTP recovery): Mission-contribution rolling-window comparisons with NASA BFO references; compliance is not assessed.
+outputs/runs/recovery_ntp/recovery_events.csv | Project/source/output | ignored/local | 1171 | Strategy A run (illustrative NTP recovery): Qualitative recovery permissions, resource actions, repair/checkout outcomes and terminal reasons.
+outputs/runs/recovery_ntp/summary.json | Project/source/output | ignored/local | 12246 | Strategy A run (illustrative NTP recovery): Run configuration, environment provenance, crew exposure and repair outcomes.
+outputs/validation/integration_preservation_check.json | Project/source/output | tracked | 10829 | Recorded checksum comparison confirming 101 checked pre-integration baseline/source artifacts were unchanged.
+outputs/validation/mission_recovery/README.md | Project/source/output | untracked | 1156 | Scope of recovery implementation verification and protected-source checks.
+outputs/validation/mission_recovery/integration.json | Project/source/output | untracked | 15151 | 72 unchanged legacy runs, eight real-environment recovery runs, test counts and 90 protected hashes.
+outputs/validation/mission_recovery/tests_after.log | Project/source/output | untracked | 1965 | Post-implementation log: 82 tests passed.
+outputs/validation/mission_recovery/tests_before.log | Project/source/output | untracked | 1948 | Baseline test log: 65 tests passed.
+outputs/validation/oltaris_anatomical/README.md | Project/source/output | tracked | 4828 | Corrected/superseded source validation findings and spectrum-fit interpretation.
+outputs/validation/oltaris_anatomical/spectrum_metrics.csv | Project/source/output | tracked | 651 | Aggregate corrected spectrum-fit error metrics.
+outputs/validation/oltaris_anatomical/spectrum_overlay.png | Project/source/output | tracked | 236683 | Corrected approximation versus original SAPPHIRE integral-fluence overlay.
+outputs/validation/oltaris_anatomical/spectrum_percentage_errors.csv | Project/source/output | tracked | 14758 | Point-by-point percent errors at original spectrum energies.
+outputs/validation/oltaris_anatomical/validation.json | Project/source/output | tracked | 3609 | Machine-readable checks of anatomical tables, source hashes and spectrum consistency.
+outputs/validation/repository_cleanup/manifest.json | Project/source/output | tracked | 157057 | Every cleanup move/deletion with original path, checksum, reason, Git status and external archive destination.
+outputs/validation/repository_cleanup/report.txt | Project/source/output | tracked | 4879 | Cleanup summary, retained dependencies, manual-review items and restore instructions.
+outputs/validation/repository_cleanup/tests_after.log | Project/source/output | tracked | 1948 | Recorded final suite: 65 tests passed after cleanup.
+outputs/validation/repository_cleanup/tests_before.log | Project/source/output | tracked | 1948 | Recorded baseline: 65 tests passed before cleanup.
+outputs/validation/repository_cleanup/verification.json | Project/source/output | tracked | 3381 | Source/frozen/Git/code checksums and 72 identical mission-state comparisons; before/after test counts.
 prepare_data.py | Project/source/output | tracked | 7766 | Reconstructs consolidated historical timing, spectra and shielding tables from preserved inputs; ordinary strategy runs do not need it.
 radiation_config.json | Project/source/output | tracked | 1806 | Radiation/reference plotting configuration: timing template, window, source settings and scenario parameters; retained frozen.
 radiation_model.ipynb | Project/source/output | tracked | 10567 | Independent SHIELDOSE/reference notebook; introductory scope clarified and saved outputs cleared during cleanup. All executable cells preserved.
 radiation_model.py | Project/source/output | tracked | 51278 | Historical timing interpolation/normalization plus independent SHIELDOSE synthetic environment, baseline loading and historical-reference calculations. Timing helpers also underpin anatomical allocation.
 requirements.txt | Project/source/output | tracked | 255 | Python package dependencies needed to run the project.
-run_strategy_a.py | Project/source/output | tracked | 7782 | CLI for Strategy A; writes event logs, separate BFO exposure ledger, NASA reference comparisons, summary and timeline. Supports separate output directories.
+run_strategy_a.py | Project/source/output | tracked | 8589 | CLI for Strategy A; writes event logs, separate BFO exposure ledger, NASA reference comparisons, summary and timeline. Supports separate output directories.
 sim/assumptions.py | Project/source/output | tracked | 623 | MissionAssumptions: everyday crew/EVA/turnaround settings, inheriting advanced defaults.
 sim/defaults.py | Project/source/output | tracked | 2577 | Advanced operational settings, scenario choices, shielding, timing, optional estimate policy and repair priorities.
-sim/mission_simulator.py | Project/source/output | tracked | 14537 | Shared mission engine: advances time, runs repairs/EVAs, accounts EVA and cabin BFO exposure and supplies restricted strategy observations.
-sim/models.py | Project/source/output | tracked | 4352 | Typed records for scenarios, astronauts, EVAs, mission state, restricted observations and decisions; keeps mGy separate from mGy-Eq.
-sim/strategies.py | Project/source/output | tracked | 1634 | Strategy A decision rules; B, C and D are explicit NotImplemented placeholders.
+sim/mission_recovery.py | Project/source/output | tracked | 17598 | Shared qualitative recovery controller, immutable configs/observations and state/events; engine-specific constraints, resources, crew permissions, checkout and mission outcomes; no radiation/RNG imports.
+sim/mission_simulator.py | Project/source/output | tracked | 17621 | Mission engine with optional shared recovery integration, hard interlocks and unchanged frozen BFO exposure accounting.
+sim/models.py | Project/source/output | tracked | 4668 | Typed records for scenarios, astronauts, EVAs, mission state, restricted observations and decisions; keeps mGy separate from mGy-Eq.
+sim/strategies.py | Project/source/output | tracked | 2793 | Strategy A operational fallback, including optional recovery decisions; B–D remain unimplemented placeholders.
 spenvis_audit.py | Project/source/output | tracked | 12953 | Parses SPENVIS source/transport reports and checks spectrum associations, shielding values, units and legacy exclusions.
-tests/test_anatomical_environment.py | Project/source/output | untracked | 4298 | Tests: Organ exposure conservation, unit separation and NASA comparison boundaries.
-tests/test_anatomical_eva.py | Project/source/output | untracked | 2399 | Tests: Conservation and exact interval integration for the standalone EVA chart.
-tests/test_band_audit.py | Project/source/output | untracked | 2169 | Tests: Tests of spectrum mathematics and provenance; no mission model changes.
+tests/test_anatomical_environment.py | Project/source/output | tracked | 4298 | Tests: Organ exposure conservation, unit separation and NASA comparison boundaries.
+tests/test_anatomical_eva.py | Project/source/output | tracked | 2399 | Tests: Conservation and exact interval integration for the standalone EVA chart.
+tests/test_band_audit.py | Project/source/output | tracked | 2169 | Tests: Tests of spectrum mathematics and provenance; no mission model changes.
 tests/test_bfo_proxy.py | Project/source/output | tracked | 3657 | Tests: Arithmetic checks for an explicitly unverified organ-dose proxy, not physics validation.
 tests/test_historical_templates.py | Project/source/output | tracked | 6631 | Tests: Independent event normalization, selection and mission boundary regressions.
-tests/test_oltaris_anatomical.py | Project/source/output | untracked | 2459 | Tests: Isolated data-integrity checks; no transport or mission simulation.
+tests/test_mission_recovery.py | Project/source/output | tracked | 12926 | Tests: Synthetic engineering scenarios, not validated reactor limits or clinical rules.
+tests/test_oltaris_anatomical.py | Project/source/output | tracked | 2459 | Tests: Isolated data-integrity checks; no transport or mission simulation.
 tests/test_radiation_model.py | Project/source/output | tracked | 6000 | Tests: Scientific invariants and boundary cases; run with unittest discovery.
 tests/test_sapphire_model.py | Project/source/output | tracked | 11832 | Tests: Synthetic scenario conservation and fail-closed transport tests.  Small invented numbers below are isolated test fixtures, never scientific outputs.
 tests/test_strategy_a.py | Project/source/output | tracked | 12203 | Tests: Operational fixtures below are synthetic test inputs, not physical thresholds.

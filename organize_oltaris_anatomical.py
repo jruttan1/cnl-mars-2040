@@ -272,7 +272,7 @@ def write_report(summary, comparison, metrics):
               'Overlay: spectrum_overlay.png. No conclusions are drawn outside 0.1–1000 MeV.', '',
               '## Reproduction and isolation', '',
               'Run `.venv/bin/python organize_oltaris_anatomical.py` after initial archival.',
-              'Run `.venv/bin/python -m unittest discover -s tests -p test_oltaris_anatomical.py` for checks.',
+              'The project test suite has been removed; prior test logs are historical validation evidence.',
               'Only standalone anatomical datasets and validation outputs are written. The frozen baseline,',
               'mission configuration and strategy code are neither imported nor modified. No simulation is run.', '']
     (OUT / 'README.md').write_text('\n'.join(lines))

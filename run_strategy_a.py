@@ -12,7 +12,7 @@ from sim.assumptions import DEFAULT_ASSUMPTIONS
 from radiation_model import load_config, HISTORICAL_TEMPLATES
 from sim.mission_simulator import simulate_mission
 from sim.strategies import strategy_a
-from sim.mission_recovery import RecoveryConfig
+from sim.mission_recovery import MODEL_VERSION, RecoveryConfig
 from anatomical_environment import DESCRIPTION, MANIFEST, nasa_bfo_comparisons
 from radiation_model import write_preserving
 
@@ -36,7 +36,7 @@ def plot_timeline(result, path):
            title='Strategy A — repair attempts and time inside the spacecraft')
     ax.grid(axis='x',alpha=.2)
     ax.legend(handles=[Patch(facecolor='#237a67',label='Completed EVA'),
-        Patch(facecolor='#bd573b',hatch='//',label='Aborted EVA'),
+        Patch(facecolor='#bd573b',hatch='//',label='Aborted or unsuccessful EVA'),
         Patch(facecolor='#e2e8f0',label='Inside spacecraft')],loc='upper center',bbox_to_anchor=(.5,-.18),ncol=3)
     fig.text(.5,.015,'Operational assumptions only; repair completion is not proof of spacecraft survival or medical safety.',ha='center',fontsize=9)
     fig.tight_layout(rect=(0,.09,1,1));path.parent.mkdir(parents=True,exist_ok=True)
@@ -47,7 +47,7 @@ def main():
     defaults = DEFAULT_ASSUMPTIONS
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output-dir', type=Path, default=ROOT/'outputs/strategy_a')
-    parser.add_argument('--recovery', action='store_true', help='Enable qualitative mission recovery (hypothetical engineering assumptions)')
+    parser.add_argument('--recovery', action='store_true', help='Apply shared qualitative case constraints')
     parser.add_argument('--scenario',choices=[defaults.default_spe_severity,defaults.worst_case_spe_severity],default=defaults.default_spe_severity)
     parser.add_argument('--template', choices=[name for name, info in HISTORICAL_TEMPLATES.items() if info['enabled']],
                         default=load_config()['historical_template'])
@@ -79,15 +79,13 @@ def main():
     out=args.output_dir;out.mkdir(parents=True,exist_ok=True)
     write_preserving(out/'event_log.csv', pd.DataFrame(result.event_log).to_csv(index=False))
     write_preserving(out/'bfo_exposure_history.csv', pd.DataFrame(result.exposure_history).to_csv(index=False))
-    if result.recovery_state is not None:
-        write_preserving(out/'recovery_events.csv', pd.DataFrame(result.recovery_state.events).to_csv(index=False))
     comparisons = nasa_bfo_comparisons(result.exposure_history)
     write_preserving(out/'nasa_bfo_reference_comparisons.csv', pd.DataFrame(comparisons).to_csv(index=False))
     summary=dict(schema_version='oltaris_bfo_v1', description=DESCRIPTION,
         radiation_environment=json.loads(MANIFEST.read_text()), scenario=asdict(scenario),assumptions=asdict(cfg),
         quantities={'absorbed':'BFO absorbed dose (mGy)', 'gray_equivalent':'BFO Gray Equivalent (mGy-Eq)'},
         recovery_config=asdict(result.recovery_config) if result.recovery_config is not None else None,
-        recovery_state=asdict(result.recovery_state) if result.recovery_state is not None else None,
+        recovery_model_version=MODEL_VERSION if result.recovery_config is not None else None,
         health_response_model=None, nasa_compliance_status='not_assessed', status=result.status,
         mission_duration_hours=result.current_mission_time,required_repairs=result.required_repairs,
         completed_repairs=result.completed_repairs,
@@ -102,14 +100,12 @@ def main():
     print('Abort policy:', 'time cap and preset restrictions; no reliable dose estimate' if args.estimated_external_rate is None else 'time cap, preset restrictions and assumed imperfect dose estimate')
     for e in result.progress:
         print(f'  {e.start_time:g}–{e.reported_end_time:g} h (planned end {e.scheduled_end_time:g}): {e.astronaut.name}, {e.repair_type}, '
-              f'{"completed" if e.completed else "aborted"} — {e.end_reason}')
+              f'{"completed" if e.completed else "aborted" if e.aborted else "unsuccessful"} — {e.end_reason}')
     for event in result.event_log:
         if event['action']=='wait':print(f'  Delay at {event["hour"]:g} h: {event["reason"]}')
     print(f'Status: {result.status}; {len(result.completed_repairs)}/{len(result.required_repairs)} repairs; duration {result.current_mission_time:g} h')
     for a in result.astronauts:
         print(f'  {a.name}: BFO {a.bfo_absorbed_dose_mGy:.6f} mGy absorbed; {a.bfo_gray_equivalent_mGy_eq:.6f} mGy-Eq; inside {a.inside_hours:g} h, outside {a.outside_hours:g} h')
-    if result.recovery_state is not None:
-        print('Recovery:', result.recovery_state.outcome_reason or 'Incomplete at simulation horizon')
     print(DESCRIPTION)
     print('Reference spectra applied near 1.25 AU without distance adjustment; no symptoms or individual health outcomes predicted.')
     print(f'Saved summaries, exposure ledger, NASA reference comparisons and timeline in {out}')

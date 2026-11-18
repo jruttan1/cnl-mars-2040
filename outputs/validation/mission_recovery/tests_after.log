@@ -1,0 +1,26 @@
+................../Users/jack/Documents/cnl/radiation_model.py:104: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  for name, expected in [('year', times.dt.year), ('day_of_year', times.dt.dayofyear), ('hour_utc', times.dt.hour)]:
+./Users/jack/Documents/cnl/radiation_model.py:104: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  for name, expected in [('year', times.dt.year), ('day_of_year', times.dt.dayofyear), ('hour_utc', times.dt.hour)]:
+.../Users/jack/Documents/cnl/radiation_model.py:104: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  for name, expected in [('year', times.dt.year), ('day_of_year', times.dt.dayofyear), ('hour_utc', times.dt.hour)]:
+/Users/jack/Documents/cnl/radiation_model.py:104: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  for name, expected in [('year', times.dt.year), ('day_of_year', times.dt.dayofyear), ('hour_utc', times.dt.hour)]:
+..............................Ignoring wrong pointing object 25 0 (offset 0)
+Ignoring wrong pointing object 26 0 (offset 0)
+Ignoring wrong pointing object 27 0 (offset 0)
+Ignoring wrong pointing object 25 0 (offset 0)
+Ignoring wrong pointing object 26 0 (offset 0)
+Ignoring wrong pointing object 27 0 (offset 0)
+........Ignoring wrong pointing object 25 0 (offset 0)
+Ignoring wrong pointing object 26 0 (offset 0)
+Ignoring wrong pointing object 27 0 (offset 0)
+Ignoring wrong pointing object 25 0 (offset 0)
+Ignoring wrong pointing object 26 0 (offset 0)
+Ignoring wrong pointing object 27 0 (offset 0)
+..Ignoring wrong pointing object 17 0 (offset 0)
+....................
+----------------------------------------------------------------------
+Ran 82 tests in 36.599s
+
+OK

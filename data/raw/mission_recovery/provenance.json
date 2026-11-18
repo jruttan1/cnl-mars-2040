@@ -31,6 +31,13 @@
       "url": "https://www.nationalacademies.org/read/25977/chapter/5",
       "kind": "published_engineering_principle",
       "sha256": "9f83a80921b7b57f7eeb0069197c1087cae4357365bba9405aeee7efac1aa5f1"
+    },
+    {
+      "path": "data/raw/mission_recovery/cnsc_decay_heat.html",
+      "url": "https://www.cnsc-ccsn.gc.ca/eng/reactors/power-plants/nuclear-power-plant-safety-systems/",
+      "kind": "published_general_reactor_safety_principle",
+      "sha256": "17e6011cffb1da85559be4a60d3edf7f1e471c89cef514581d72370a8fe774c4",
+      "scope": "Decay heat persists after shutdown; terrestrial hardware/design limits not transferred to spacecraft"
     }
   ],
   "note": "Sources support qualitative distinctions only; no numerical recovery defaults are derived from these documents."
