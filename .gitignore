@@ -56,6 +56,8 @@ htmlcov/
 /outputs/model/exploratory_bfo_*.csv
 /outputs/model/synthetic_sapphire_temporal_weights.csv
 /outputs/model/historical/full_event_profiles.csv
+/outputs/model/historical/mission_radiation_environment.csv
+/outputs/model/synthetic_sapphire_interval_exposure.csv
 
 # Temporary/editor/OS artifacts
 *.tmp
