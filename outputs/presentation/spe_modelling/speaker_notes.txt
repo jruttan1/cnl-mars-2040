@@ -1,0 +1,46 @@
+SPE RADIATION MODELLING — CURRENT SLIDE SELECTION
+
+MAIN SLIDE, LEFT
+04_normalized_storm_timing.png (also SVG)
+Title: When does exposure occur?
+Shows the 1972 and 2003 timing templates separately normalized to 100% over their complete records. The vertical axis is share of total event exposure per hour, expressed as %/h, on a logarithmic scale. The plot is independent of the selected SAPPHIRE severity; there is no absorbed-dose or Gray Equivalent magnitude on this axis. Under the model's fixed-spectrum assumption, these weights allocate organ dose through time.
+Sources: 1972 IMP-5 / NASA OMNIWeb; supplied October–November 2003 GOES-10 hourly proton record. Both use >10 MeV. Hatching marks log-linearly reconstructed 1972 hours; the supplied 2003 channel is complete. Records span 264 and 336 hours respectively. Neither is extrapolated or rescaled in time. Time zero is the first recorded hour, not a verified physical storm onset.
+
+MAIN SLIDE, RIGHT
+05_seven_hour_eva_timing.png (also SVG)
+Title: What does EVA timing change?
+Shows BFO Gray Equivalent accumulated during a seven-hour EVA beginning at each possible hourly start in the 1972 template, for both SAPPHIRE severities. Shielding is 0.4 g/cm² aluminium throughout the EVA. The y-axis is dose in mGy-Eq, NOT a dose rate. Each point represents a different possible EVA, not a sequence of EVAs. Only complete seven-hour windows are included, from start hour 0 through 257. Hourly samples are connected for readability.
+The plotted dose is the integral of the existing modelled BFO Gray Equivalent rate over the next seven hours. Cabin dose before/after the EVA is not included. Peak labels are rounded; exact values and interpolation-overlap flags are retained in seven_hour_eva_windows.csv. Both peak windows start at hour 64 and end at hour 71. This is a retrospective timing illustration, not a forecast or a demonstrated strategy result.
+The 1972 timing curve includes reconstructed hours, including in the peak window. No extra interpolation or temporal smoothing is introduced for this plot.
+
+CAPTION
+SAPPHIRE sets the storm severity; OLTARIS estimates organ exposure; historical storms supply its timing. When the crew performs repairs determines how much exposure they receive.
+
+20-SECOND SCRIPT
+“We used SAPPHIRE and OLTARIS to estimate exposure at two storm severities. Historical storms give us the peaks and quieter periods on the left. The right shows how much radiation a seven-hour EVA receives depending on when it starts—even within the same storm.”
+
+BACKUP SLIDE
+01_sources_to_dose.png (also SVG)
+Full-event BFO, skin and eye-lens Gray Equivalent from the saved corrected OLTARIS summaries, at both severities and shielding configurations: EVA surrogate 0.4 g/cm² and cabin surrogate 20 g/cm² aluminium. All values are mGy-Eq, not absorbed mGy or dose equivalent mSv. Every bar assumes its shielding configuration remains in place for the full event. These are not seven-hour EVA doses. Paired bars compare severities within each body part. The dose axis is logarithmic, with a displayed lower bound of 10 mGy-Eq; bar tops and numeric labels give the full-event values, not the bar lengths. Gray Equivalent is biologically weighted, not unweighted absorbed dose.
+BFO = blood-forming organs. Different organs have different exposure-protection references; do not apply a BFO reference to skin or lens, or sum the three organ values into a whole-body dose.
+
+OTHER FIGURES
+02_histories_to_synthetic_spe.png retains the earlier BFO Gray Equivalent rate histories in mGy-Eq/h for backup.
+
+MODEL CHAIN
+SPENVIS / SAPPHIRE event-integrated proton spectra → corrected rigidity-based Band fits → OLTARIS MAX anatomical transport through idealized aluminium shielding → full-event organ dose.
+Historical >10 MeV proton intensity is gap-filled where needed, weighted by bin duration, and normalized separately over each full record. An hourly fraction times the organ total gives that hour's dose increment. Dividing by the bin duration gives the rate. Summing the next seven hourly increments gives the seven-hour EVA dose.
+The Band fit is fitted to SAPPHIRE spectra, not to SHIELDOSE dose. SHIELDOSE provides a separate tissue-target shielding reference, not anatomical BFO calibration.
+
+ASSUMPTIONS / Q&A
+Fixed spectral shape through time; timing is a proton-intensity proxy, not time-resolved energy-dependent anatomical transport. No validated heliocentric distance adjustment. Shielding spheres and MAX male anatomy are not personalized suits or spacecraft. Physical storm closure at record endpoints is unverified. Corrected OLTARIS summaries are user-supplied; independent verification against native corrected exports remains pending. Exact matching of the supplied GOES-10 file to the official archive also remains pending.
+These figures read the shared, checksum-verified simulator environment. They do not run a new transport calculation, mission simulation or strategy. Forecast strategies must receive imperfect forecasts, not these exact future curves.
+
+VALIDATION AND REPRODUCTION
+Run: .venv/bin/python -B charts/10_spe_modelling_story.py
+provenance.json records hashes, full-event conservation and seven-hour peak checks.
+normalized_timing.csv: both timing profiles and interpolation flags.
+seven_hour_eva_windows.csv: all 516 windows across the two severities, including interpolation-overlap flags.
+backup_organ_totals.csv: all 12 organ/shielding/severity values.
+plotted_hourly_environment.csv: the shared central timing variant, both severities and shielding states.
+No radiation source inputs or strategy code were modified.
