@@ -14,7 +14,7 @@ def load(name):
 
 
 def save(fig, filename, show=False, *, bottom_margin=0):
-    destination = ROOT / 'outputs/charts' / filename
+    destination = ROOT / 'results/charts' / filename
     destination.parent.mkdir(parents=True, exist_ok=True)
     fig.tight_layout(rect=(0, bottom_margin, 1, 1))
     fig.savefig(destination, dpi=160)

@@ -65,7 +65,7 @@ def main():
         'hourly intensity, astronaut dose, or statistical uncertainty intervals.\n\n'
         'Data: data/processed/spe_scenarios.csv.\nScript: charts/03_sapphire_spectra.py.\n'
     )
-    (ROOT / 'outputs/charts/03_sapphire_spectra.txt').write_text(caption, encoding='utf-8')
+    (ROOT / 'results/charts/03_sapphire_spectra.txt').write_text(caption, encoding='utf-8')
 
 
 if __name__ == '__main__':

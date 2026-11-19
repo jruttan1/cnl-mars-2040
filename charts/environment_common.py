@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from radiation_model import ROOT, export_historical_environment, sensitivity_bounds, accumulated_dose, write_preserving
+from radiation.radiation_model import ROOT, export_historical_environment, sensitivity_bounds, accumulated_dose, write_preserving
 
 COLORS = {'external_eva_reference': '#b54525', 'spacecraft_cabin_reference': '#176a9b'}
 SHOW = False
@@ -52,7 +52,7 @@ def sensitivity_legend():
 
 def finish(fig, stem, caption, rect=(0, 0.12, 1, 0.91)):
     fig.tight_layout(rect=rect)
-    destination = ROOT / 'outputs/charts' / (stem + '.png')
+    destination = ROOT / 'results/charts' / (stem + '.png')
     buffer = io.BytesIO()
     fig.savefig(buffer, format='png', dpi=180)
     content = buffer.getvalue()

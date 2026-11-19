@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.ticker import StrMethodFormatter
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
-from radiation_model import export_environment, MissingTransportError, accumulated_dose
+from radiation.radiation_model import export_environment, MissingTransportError, accumulated_dose
 from environment_common import finish
 
 SCENARIO_COLORS={'main':'#176a9b','worst_case':'#b54525'}
@@ -96,6 +96,6 @@ def plot_dose(cumulative=False, roles=('main','worst_case')):
                 else 'Rates are piecewise constant within hourly bins. All four curves share one logarithmic y-axis. Identical time shapes are imposed by the common temporal template; shielding changes the dose magnitude. ') +
              'These are target-tissue calculations, not measured or verified whole-body astronaut doses. '
              'Run association and event-integrated interpretation were confirmed by the user and checked against source/report contents.\n\n'
-             'Data: data/processed/mission_radiation_environment.csv; outputs/model/synthetic_sapphire_interval_exposure.csv. '
+             'Data: data/processed/mission_radiation_environment.csv; results/model/synthetic_sapphire_interval_exposure.csv. '
              'Settings: radiation_config.json. Source records: data/raw/spenvis/verified_sapphire_manifest.json.')
     finish(fig,stem,caption,rect=(0,0.14 if cumulative else 0.19,1,0.91))

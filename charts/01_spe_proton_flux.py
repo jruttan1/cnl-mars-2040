@@ -4,7 +4,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import matplotlib.pyplot as plt
 from common import save
-from radiation_model import load_config, load_hourly
+from radiation.radiation_model import load_config, load_hourly
 
 # Settings: thresholds are overlapping measurements; do not add them together.
 THRESHOLDS_MEV = [10, 30, 60]

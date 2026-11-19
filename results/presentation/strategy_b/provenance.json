@@ -1,0 +1,31 @@
+{
+  "status": "Illustration, not a strategy simulation or a calibrated forecast",
+  "template_warning_hour": 48,
+  "horizon_h": 120,
+  "eva_duration_h": 7,
+  "central_scenario": "SAPPHIRE-1-in-100",
+  "shielding_g_cm2": 0.4,
+  "timing_offsets_h": [
+    -6,
+    0,
+    6
+  ],
+  "amplitude_factors": [
+    0.7,
+    1.0,
+    1.3
+  ],
+  "band": "Min/max of nine coherent forecast members, not a confidence interval",
+  "repair_constraints": "No repair deadline or operational feasibility rule imposed",
+  "source_environment_sha256": "270871c7ea81422f0ad7adf3a7e4b0a01dac0eaae3447efb3dab24a5f3256108",
+  "source_manifest_sha256": "1e7f3e171dc22f969035acec154de95845ad3e69b8b1a34b0b9378de5faf31db",
+  "generator_sha256": "425d6b77352960fc5a48ec81e7ccd1ac8aa75a62ffcceda9d4e36af5d6872153",
+  "windows_checked": 2052,
+  "scheduling_chart_scenarios": [
+    "SAPPHIRE-1-in-100",
+    "SAPPHIRE-1-in-1000"
+  ],
+  "scheduling_chart_display": "Central hourly departure doses; no uncertainty whiskers or selected-start markers",
+  "scheduling_time_origin": "Hour 0 is an assumed warning at historical profile hour 48, not an observed warning",
+  "severity_windows_checked": 456
+}

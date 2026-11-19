@@ -1,4 +1,5 @@
 """Run from the project root: python -m sim.run_strategy_a --help."""
+from sim.repair_tasks import task_descriptions
 import argparse
 from dataclasses import asdict, replace
 from pathlib import Path
@@ -9,12 +10,12 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
 from sim.assumptions import DEFAULT_ASSUMPTIONS
-from radiation_model import load_config, HISTORICAL_TEMPLATES
+from radiation.radiation_model import load_config, HISTORICAL_TEMPLATES
 from sim.mission_simulator import simulate_mission
 from sim.strategies import strategy_a
 from sim.mission_recovery import MODEL_VERSION, RecoveryConfig
-from anatomical_environment import DESCRIPTION, MANIFEST, nasa_bfo_comparisons
-from radiation_model import write_preserving
+from radiation.anatomical_environment import DESCRIPTION, MANIFEST, nasa_bfo_comparisons
+from radiation.radiation_model import write_preserving
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -46,7 +47,7 @@ def plot_timeline(result, path):
 def main():
     defaults = DEFAULT_ASSUMPTIONS
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--output-dir', type=Path, default=ROOT/'outputs/strategy_a')
+    parser.add_argument('--output-dir', type=Path, default=ROOT/'results/strategy_a')
     parser.add_argument('--recovery', action='store_true', help='Apply shared qualitative case constraints')
     parser.add_argument('--scenario',choices=[defaults.default_spe_severity,defaults.worst_case_spe_severity],default=defaults.default_spe_severity)
     parser.add_argument('--template', choices=[name for name, info in HISTORICAL_TEMPLATES.items() if info['enabled']],
@@ -64,8 +65,11 @@ def main():
     parser.add_argument('--abort-threshold',type=float,default=defaults.radiation_abort_threshold_mGy,
                         help='Experimental BFO absorbed-dose policy parameter; NOT a medical limit')
     parser.add_argument('--restriction',type=float,nargs=2,action='append',default=None,metavar=('START','END'))
+    parser.add_argument('--gcr-scale', type=float, default=1.0,
+                        help='Constant GCR reference multiplier; 0 disables for SPE-only runs')
     args=parser.parse_args()
     cfg=replace(defaults, default_spe_severity=args.scenario, historical_template=args.template,
+        gcr_scale=args.gcr_scale,
         timing_variant=args.timing_variant, storm_start_hour=args.storm_start,
         engine_type=args.engine, max_hours=args.max_hours,time_step_hours=args.time_step,
         turnaround_hours=args.turnaround,max_continuous_eva_hours=args.eva_time_cap,
@@ -81,12 +85,15 @@ def main():
     write_preserving(out/'bfo_exposure_history.csv', pd.DataFrame(result.exposure_history).to_csv(index=False))
     comparisons = nasa_bfo_comparisons(result.exposure_history)
     write_preserving(out/'nasa_bfo_reference_comparisons.csv', pd.DataFrame(comparisons).to_csv(index=False))
-    summary=dict(schema_version='oltaris_bfo_v1', description=DESCRIPTION,
+    from .background_radiation import metadata as gcr_metadata
+    summary=dict(schema_version='oltaris_bfo_gcr_v2', description=DESCRIPTION + ' Constant reference GCR added during the emergency.',
+        background_gcr=gcr_metadata(scenario.gcr_scale),
         radiation_environment=json.loads(MANIFEST.read_text()), scenario=asdict(scenario),assumptions=asdict(cfg),
         quantities={'absorbed':'BFO absorbed dose (mGy)', 'gray_equivalent':'BFO Gray Equivalent (mGy-Eq)'},
         recovery_config=asdict(result.recovery_config) if result.recovery_config is not None else None,
         recovery_model_version=MODEL_VERSION if result.recovery_config is not None else None,
         engineering_stabilized=result.engineering_stabilized,
+        repair_tasks=task_descriptions(scenario.engine_type),
         health_response_model=None, nasa_compliance_status='not_assessed', status=result.status,
         mission_duration_hours=result.current_mission_time,required_repairs=result.required_repairs,
         completed_repairs=result.completed_repairs,

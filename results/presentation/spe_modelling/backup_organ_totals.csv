@@ -1,0 +1,25 @@
+organ,model,shielding_g_cm2,return_period_years,full_event_mGy_eq
+BFO,MAX male,0.4,100,623.3
+Skin,MAX male,0.4,100,57940.0
+Eye lens,MAX male,0.4,100,13130.0
+BFO,FAX female,0.4,100,866.3
+Skin,FAX female,0.4,100,57740.0
+Eye lens,FAX female,0.4,100,8261.0
+BFO,MAX male,0.4,1000,1087.0
+Skin,MAX male,0.4,1000,98430.0
+Eye lens,MAX male,0.4,1000,22600.0
+BFO,FAX female,0.4,1000,1510.0
+Skin,FAX female,0.4,1000,98100.0
+Eye lens,FAX female,0.4,1000,14340.0
+BFO,MAX male,20.0,100,63.99
+Skin,MAX male,20.0,100,131.2
+Eye lens,MAX male,20.0,100,116.4
+BFO,FAX female,20.0,100,70.14999999999999
+Skin,FAX female,20.0,100,131.3
+Eye lens,FAX female,20.0,100,120.39999999999999
+BFO,MAX male,20.0,1000,111.6
+Skin,MAX male,20.0,1000,228.8
+Eye lens,MAX male,20.0,1000,203.0
+BFO,FAX female,20.0,1000,122.30000000000001
+Skin,FAX female,20.0,1000,229.1
+Eye lens,FAX female,20.0,1000,210.10000000000002

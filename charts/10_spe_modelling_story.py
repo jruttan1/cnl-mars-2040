@@ -11,10 +11,10 @@ import numpy as np
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from anatomical_environment import load_environment, SUMMARY, MANIFEST, DATA
-from radiation_model import ROOT, sha256
+from radiation.anatomical_environment import load_environment, SUMMARY, MANIFEST, DATA
+from radiation.radiation_model import ROOT, sha256
 
-OUT = ROOT / 'outputs/presentation/spe_modelling'
+OUT = ROOT / 'results/presentation/spe_modelling'
 CENTRAL = 'gt10MeV__log_linear'
 COLORS = {100: '#167DAD', 1000: '#C25432'}
 TEMPLATES = {
@@ -69,41 +69,58 @@ def load_checked_data():
 
 
 def magnitude_chart(summary):
-    figure, axes = plt.subplots(1, 2, figsize=(12, 6.5), sharey=True)
-    figure.subplots_adjust(left=.12, right=.98, bottom=.20, top=.80, wspace=.14)
+    import re
+    female = {}
+    for source in sorted((ROOT / 'data/raw/oltaris/fax_2026-11-18').glob('*.txt')):
+        text = source.read_text()
+        assert 'Anatomical model is FAX' in text
+        years = 1000 if 'J0=2.066E+11' in text else 100
+        depth = float(re.search(r'Al Sphere \(([0-9.]+) g/cm2', text)[1])
+        section = text.split('Gray Equivalent\nOrgan')[1].split('Data Tables')[0]
+        female[years, depth] = {organ.lower(): float(value) * 10 for organ, value in
+            re.findall(r'(BFO|Skin|Lens)\s+([0-9.E+-]+)\s+cGy-eq', section)}
+    assert len(female) == 4
+    figure, axes = plt.subplots(1, 2, figsize=(13, 8), sharey=True)
+    figure.subplots_adjust(left=.08, right=.98, bottom=.18, top=.76, wspace=.12)
     organs = [('BFO', 'bfo'), ('Skin', 'skin'), ('Eye lens', 'lens')]
     records = []
-    for axis, shielding, title in zip(axes, (.4, 20), ('EVA — 0.4 g/cm² aluminum shielding', 'Cabin — 20 g/cm² aluminum shielding')):
-        for years, offset in ((100, -.18), (1000, .18)):
+    for axis, depth, title in zip(axes, (.4, 20),
+            ('EVA | 0.4 g/cm² aluminium', 'Cabin | 20 g/cm² aluminium')):
+        for years, base in ((100, -.21), (1000, .21)):
             run = summary[summary.sapphire_return_period_years.eq(years) &
-                          summary.aluminum_areal_density_g_cm2.eq(shielding)].iloc[0]
-            values = [float(run[f'{organ}_gray_equivalent_mGy_eq']) for _, organ in organs]
-            assert np.isfinite(values).all() and np.all(np.array(values) > 0)
-            positions = np.arange(3) + offset
-            axis.bar(positions, np.array(values) - 10, bottom=10, width=.32,
-                     color=COLORS[years], edgecolor='black', linewidth=.5,
-                     label=f'{years:,}-year scenario', zorder=3)
-            for position, value, (label, _) in zip(positions, values, organs):
-                axis.annotate(f'{value:,.2f}'.rstrip('0').rstrip('.'), (position, value), xytext=(0, 9),
-                              textcoords='offset points', ha='center', fontsize=9)
-                records.append(dict(organ=label, shielding_g_cm2=shielding,
-                                    return_period_years=years, full_event_mGy_eq=value))
+                          summary.aluminum_areal_density_g_cm2.eq(depth)].iloc[0]
+            for model, shift, hatch in [('MAX male', -.10, ''), ('FAX female', .10, '////')]:
+                values = [float(run[f'{key}_gray_equivalent_mGy_eq']) if model == 'MAX male'
+                          else female[years, depth][key] for _, key in organs]
+                positions = np.arange(3) + base + shift
+                axis.bar(positions, np.array(values)-10, bottom=10, width=.18,
+                         color=COLORS[years], edgecolor='#222222', linewidth=.6, hatch=hatch, zorder=3)
+                for x, value, (organ, _) in zip(positions, values, organs):
+                    axis.annotate(f'{value:,.2f}'.rstrip('0').rstrip('.'), (x, value),
+                                  xytext=(0, 6), textcoords='offset points', ha='left',
+                                  rotation=65, fontsize=8)
+                    records.append(dict(organ=organ, model=model, shielding_g_cm2=depth,
+                                        return_period_years=years, full_event_mGy_eq=value))
         axis.set_xticks(np.arange(3), ['Blood-forming\norgans (BFO)', 'Skin', 'Eye lens'])
-        axis.set_xlabel('Body part', labelpad=10)
-        axis.set_xlim(-.5, 2.5)
-        axis.set_yscale('log')
-        axis.set_ylim(10, 220000)
-        axis.set_yticks([10, 100, 1000, 10000, 100000],
-                       labels=['10', '100', '1,000', '10,000', '100,000'])
+        axis.set_xlim(-.6, 2.65)
+        axis.set_yscale('log'); axis.set_ylim(10, 350000)
+        axis.set_yticks([10,100,1000,10000,100000], ['10','100','1,000','10,000','100,000'])
         axis.minorticks_off()
-        axis.set_title(title, loc='left', fontsize=12, pad=12)
+        axis.set_title(title, loc='left', fontsize=15, pad=15)
         style_axis(axis)
-    axes[0].set_ylabel('Full-event radiation dose absorbed by body part\n(biologically weighted, mGy-Eq)')
-    handles, labels = axes[0].get_legend_handles_labels()
-    figure.legend(handles, labels, title='SAPPHIRE return period', loc='upper center',
-                  bbox_to_anchor=(.54, .985), ncol=2, frameon=False, fontsize=11, title_fontsize=11)
-    figure.text(.54, .035, 'Entire event at fixed shielding · logarithmic scale (each step = ×10)',
-                ha='center', fontsize=10)
+        axis.tick_params(labelsize=12)
+    axes[0].set_ylabel('Full-event organ dose (mGy-Eq)', fontsize=14, labelpad=15)
+    figure.suptitle('Organ exposure depends on shielding and reference anatomy', fontsize=16, y=.98)
+    handles = [Patch(facecolor=COLORS[y], edgecolor='#222222', label=f'1-in-{y:,}-year scenario')
+               for y in (100,1000)]
+    handles += [Patch(facecolor='white', edgecolor='#222222', hatch=h, label=m)
+                for m,h in [('MAX male',''),('FAX female','////')]]
+    figure.legend(handles=handles, loc='upper center', bbox_to_anchor=(.53,.92), ncol=2,
+                  frameon=False, fontsize=12)
+    figure.text(.53,.065,'Entire event at fixed shielding',
+                ha='center',fontsize=12)
+    figure.text(.53,.025,'MAX: male reference anatomy | FAX: female reference anatomy',
+                ha='center',fontsize=10,color='#555555')
     save(figure, '01_sources_to_dose')
     pd.DataFrame(records).to_csv(OUT / 'backup_organ_totals.csv', index=False)
 
@@ -132,7 +149,7 @@ def normalized_timing_chart(profiles):
                                 is_gap_filled=row.is_gap_filled))
     axis.set_yscale('log')
     axis.set_ylim(.00001, 30)
-    axis.set_yticks([.00001, .0001, .001, .01, .1, 1, 10])
+    axis.set_yticks([.00001, .0001, .001, .01, .1, 1, 10], labels=['0.00001', '0.0001', '0.001', '0.01', '0.1', '1', '10'])
     axis.minorticks_off()
     axis.set_xlim(0, 336)
     axis.set_xticks([0, 72, 144, 216, 288, 336])
@@ -143,7 +160,7 @@ def normalized_timing_chart(profiles):
     handles.append(Patch(facecolor='none', edgecolor='#C8C8C8', hatch='////'))
     axis.legend(handles, labels + ['1972 interpolation'], frameon=False, loc='lower right', fontsize=10)
     style_axis(axis)
-    figure.text(.55, .035, '>10 MeV timing proxy · each record normalized to 100% · log scale',
+    figure.text(.55, .035, '>10 MeV timing proxy · each record normalized to 100%',
                 ha='center', fontsize=10)
     save(figure, '04_normalized_storm_timing')
     pd.DataFrame(records).to_csv(OUT / 'normalized_timing.csv', index=False)

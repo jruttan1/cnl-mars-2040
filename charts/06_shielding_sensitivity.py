@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import ScalarFormatter
 from sapphire_common import SCENARIO_COLORS
 from environment_common import finish
-from radiation_model import load_config
-from spenvis_audit import verified_shieldose_rows
+from radiation.radiation_model import load_config
+from radiation.spenvis_audit import verified_shieldose_rows
 
 LOG_DOSE_AXIS = True
 LOG_SHIELDING_AXIS = True  # Spreads the six exported simulation coordinates clearly.

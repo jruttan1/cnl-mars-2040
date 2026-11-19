@@ -7,28 +7,28 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-DESTINATION = ROOT / 'outputs/final_case'
+DESTINATION = ROOT / 'results/final-case'
 FIGURES = (
-    ('outputs/analysis/anatomical_eva/eva_bfo_comparison.png', '01_astronaut_eva_exposure.png',
+    ('results/analysis/anatomical_eva/eva_bfo_comparison.png', '01_astronaut_eva_exposure.png',
      'Astronaut EVA exposure',
      'SAPPHIRE 100-year and 1,000-year anatomical BFO dose with 1972 and 2003 timing. '
      'Includes seven-hour exposure and accumulation; hatched periods are interpolated. '
      'The peak-window examples are retrospective comparisons, not Strategy A schedules.'),
-    ('outputs/runs/final_case_strategy_a/mission_timeline.png', '02_strategy_a_mission_timeline.png',
+    ('results/mission-runs/final_case_strategy_a/mission_timeline.png', '02_strategy_a_mission_timeline.png',
      'Strategy A mission timeline',
      'Current NTP / 100-year / 1972 example, with qualitative constraints enabled. '
      'Shows who performs each repair and when. Completion does not establish survival or medical safety.'),
-    ('outputs/charts/03_sapphire_spectra.png', '03_storm_severity.png',
+    ('results/charts/03_sapphire_spectra.png', '03_storm_severity.png',
      'Storm severity: 100-year versus 1,000-year',
      'Event-integrated SAPPHIRE proton fluence at selected energy thresholds. This is not absorbed dose.'),
-    ('outputs/charts/01_spe_proton_flux.png', '04_historical_storm_timing.png',
+    ('results/charts/01_spe_proton_flux.png', '04_historical_storm_timing.png',
      'Historical storm timing',
      'Measured 1972 proton-flux channels supply the timing profile, not measured astronaut dose.'),
-    ('outputs/charts/06_shielding_sensitivity.png', '05_shielding_reference.png',
+    ('results/charts/06_shielding_sensitivity.png', '05_shielding_reference.png',
      'Independent shielding reference',
      'SHIELDOSE-2 tissue-target dose versus aluminium shielding. '
      'This reference is separate from the simulator’s OLTARIS anatomical BFO dose.'),
-    ('outputs/validation/oltaris_anatomical/spectrum_overlay.png', '06_spectrum_fit_validation.png',
+    ('results/validation/oltaris_anatomical/spectrum_overlay.png', '06_spectrum_fit_validation.png',
      'Spectrum-fit validation',
      'Corrected Band fit against the original SAPPHIRE spectra; the earlier Weibull fit is historical. '
      'Agreement of spectra does not by itself establish dose accuracy.'),
@@ -43,7 +43,7 @@ def main():
                        cwd=ROOT, env=environment, check=True)
     subprocess.run([sys.executable, '-B', '-m', 'sim.run_strategy_a', '--recovery',
                     '--engine', 'NTP', '--scenario', 'SAPPHIRE-1-in-100', '--template', 'august_1972',
-                    '--output-dir', str(ROOT / 'outputs/runs/final_case_strategy_a')],
+                    '--output-dir', str(ROOT / 'results/mission-runs/final_case_strategy_a')],
                    cwd=ROOT, env=environment, check=True)
     DESTINATION.mkdir(parents=True, exist_ok=True)
     cards = []

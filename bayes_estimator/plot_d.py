@@ -2,7 +2,7 @@
 
 Run from the repo root:
     .venv/bin/python -B -m bayes_estimator.plot_d
-Saves: bayes_estimator/outputs/strategy_d_estimator.png
+Saves: results/bayes_estimator/strategy_d_estimator.png
 """
 import logging
 import os
@@ -99,7 +99,7 @@ def main():
                bbox_to_anchor=(0.52, 0.0), handlelength=2.2, columnspacing=2)
     fig.subplots_adjust(left=0.18, right=0.82, top=0.93, bottom=0.15, hspace=0.5)
 
-    out_dir = os.path.join(os.path.dirname(__file__), "outputs")
+    out_dir = os.path.join(os.path.dirname(__file__), "..", "results", "bayes_estimator")
     os.makedirs(out_dir, exist_ok=True)
     path = os.path.join(out_dir, "strategy_d_estimator.png")
     fig.savefig(path, dpi=200, facecolor="white")

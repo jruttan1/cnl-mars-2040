@@ -1,0 +1,169 @@
+   Logged in as John Ruttan  (11/18/2026)
+Send Comment  | Report Bug  | View Change Log
+banner graphic
+Projects
+Uploads 
+Slabs & Spheres 
+Materials
+Documentation
+Log out
+       
+Project Summary
+Project:
+Mars2040
+Environment:
+Solar Particle Event (SPE), Free Space 1AU
+Band Function:
+J0=1.010E+11 particles/cm2
+R0=65.9047 MV
+G1=0.26378
+G2=4.67433
+Geometry
+Al Sphere (20 g/cm2) (1002 rays in thickness distribution)
+Grid engine id:
+7177051
+TARIS version
+5.01
+Event Totals
+Help
+Data	     Total     	  Unit  	Link
+Dose at point 1	1.274E+02	mGy	Sphere Viewer
+Dose equivalent (Solid Cancer) at point 1	2.369E+02	mSv	Sphere Viewer
+Dose equivalent (Leukemia) at point 1	1.536E+02	mSv	Sphere Viewer
+Whole Body Effective Dose Equivalent & Average Organ Values
+For this calculation, the selected body model is added to the user-defined geometry.
+Use the button below to download text file containing Whole Body Effective Dose Equivalent and Average Organ Dose Equivalent Values. Values are delimited by semi-colons for easy import into Excel spreadsheet. 
+Data	    Value    	 Unit 
+Effective Dose Equivalent	1.117E+02	mSv
+Organ	   Avg. Dose   
+  Equivalent   	  Unit  
+Adrenals	8.843E+01	mSv
+Bladder	9.047E+01	mSv
+Brain	1.404E+02	mSv
+Breast	1.538E+02	mSv
+Colon	1.041E+02	mSv
+Heart	1.010E+02	mSv
+Hippocampus	1.304E+02	mSv
+Kidneys	9.616E+01	mSv
+Liver	1.038E+02	mSv
+Lungs	1.360E+02	mSv
+Ovaries	8.852E+01	mSv
+Pancreas	8.873E+01	mSv
+Skin	2.051E+02	mSv
+Spleen	1.059E+02	mSv
+Stomach	1.011E+02	mSv
+Thymus	1.285E+02	mSv
+Thyroid	1.361E+02	mSv
+Uterus	8.546E+01	mSv
+Small_intestine	9.841E+01	mSv
+Esophagus	1.053E+02	mSv
+Salivary_glands	1.536E+02	mSv
+Muscle	1.312E+02	mSv
+BFO	6.271E+01	mSv
+Bone	0.000E+00	mSv
+Lens	1.870E+02	mSv
+Retina	1.523E+02	mSv
+Trachea	1.261E+02	mSv
+Organ	   Avg. Dose   	  Unit  
+Adrenals	3.695E+01	mGy
+Bladder	3.790E+01	mGy
+Brain	5.962E+01	mGy
+Breast	6.628E+01	mGy
+Colon	4.390E+01	mGy
+Heart	4.233E+01	mGy
+Hippocampus	5.507E+01	mGy
+Kidneys	4.032E+01	mGy
+Liver	4.366E+01	mGy
+Lungs	5.785E+01	mGy
+Ovaries	3.700E+01	mGy
+Pancreas	3.707E+01	mGy
+Skin	8.781E+01	mGy
+Spleen	4.456E+01	mGy
+Stomach	4.246E+01	mGy
+Thymus	5.455E+01	mGy
+Thyroid	5.815E+01	mGy
+Uterus	3.567E+01	mGy
+Small_intestine	4.137E+01	mGy
+Esophagus	4.420E+01	mGy
+Salivary_glands	6.577E+01	mGy
+Muscle	5.591E+01	mGy
+BFO	4.723E+01	mGy
+Bone	5.365E+01	mGy
+Lens	8.062E+01	mGy
+Retina	6.533E+01	mGy
+Trachea	5.343E+01	mGy
+Gray Equivalent
+Organ	   Total   	  Unit  
+Lens	1.204E+01	cGy-eq
+Skin	1.313E+01	cGy-eq
+BFO	7.015E+00	cGy-eq
+Heart	6.275E+00	cGy-eq
+CNS	5.507E+00	cGy
+CNS(Z>10)	4.844E-19	cGy
+Data Tables
+Help
+Boundary flux/fluence and responses calculated at user-specified target point(s) in geometry. For slab geometry, response is also returned between each layer.
+
+To copy data to your desktop, select the Plot/copy data link. Then format the plot and select the menu on the right side of the plot window to download as an image or as data.
+
+
+Data	Links
+Boundary Fluence (particles/((EU*-cm2)) vs. Energy (EU*) vs. Isotope	Plot/copy data | Download
+Fluence (particles/(EU*-cm2)) vs. Energy (EU*) vs. Isotope at Point 1	Plot/copy data | Download
+Energy unit (EU*) is MeV for photon, electron, and positron; EU* is MeV/amu for all other particles.
+Interpolation Tables
+Help
+The data below are matrices of response vs. depth in 1, 2, or 3 materials. Point responses are computed by interpolating on these matrices at the thicknesses supplied by the user.
+
+To copy data to your desktop, select the Plot/copy data link. Then format the plot and select the menu on the right side of the plot window to download as an image or as data.
+
+
+Data	Links
+Dose (mGy) vs. Depth (g/cm2)	Plot/copy data | Download
+Fraction of Dose vs. Depth (g/cm2) by Particle Type	Plot/copy data | Download
+Dose (mGy) vs. Depth (g/cm2) by Particle Type	Plot/copy data | Download
+Dose Equivalent (Solid Cancer, mSv) vs. Depth (g/cm2)	Plot/copy data | Download
+Fraction of Dose Equivalent (Solid Cancer) vs. Depth (g/cm2) by Particle Type	Plot/copy data | Download
+Dose Equivalent (Solid Cancer, mSv) vs. Depth (g/cm2) by Particle Type	Plot/copy data | Download
+Dose Equivalent (Leukemia, mSv) vs. Depth (g/cm2)	Plot/copy data | Download
+Fraction of Dose Equivalent (Leukemia) vs. Depth (g/cm2) by Particle Type	Plot/copy data | Download
+Dose Equivalent (Leukemia, mSv) vs. Depth (g/cm2) by Particle Type	Plot/copy data | Download
+Fluence (particles/(EU*-cm2)) vs. Energy (EU*) vs. Isotope vs. Depth (g/cm2)	Plot/copy data | Download
+Energy unit (EU*) is MeV for photon, electron, and positron; EU* is MeV/amu for all other particles.
+The button below downloads a zip archive of all table data. Downloads may take a few minutes to complete; especially when there are Flux/Fluence or LET data sets.
+Project Details
+Project:
+Mars2040
+Environment:
+Solar Particle Event (SPE), Free Space 1AU
+Band Function:
+J0=1.010E+11 particles/cm2
+R0=65.9047 MV
+G1=0.26378
+G2=4.67433
+Geometry
+Al Sphere (20 g/cm2) (1002 rays in thickness distribution)
+Description
+20 g/cm2 Al Sphere, 1002 rays
+Responses:
+Differential Flux / Fluence    Dose in Tissue    Dose Equivalent (quality factor = NASAQ)    Effective Dose Equivalent    Gray Equivalent
+
+Anatomical model is FAX with "Never Smoker Population" weighted tissue.
+Job
+job_13        hint: click on job name or description to edit-in-place
+Job description
+---
+Job type:
+1-D Analysis
+Grid engine id:
+7177051
+TARIS version
+5.01
+First Gov . gov
++ Freedom of Information Act
++ NASA Privacy Statement, Disclaimer, and Accessibility Certification
+ NASA Logo - nasa.gov
+NASA Official: Chris Sandridge
+Website Manager: Brandon Lee
+OLTARIS Last Modified on 08/18/2026
+TARIS Version 5.01

@@ -1,0 +1,30 @@
+{
+  "source_url": "https://ntrs.nasa.gov/api/citations/20130001648/downloads/20130001648.pdf",
+  "title": "Space Radiation Cancer Risk Projections and Uncertainties \u2013 2010",
+  "report": "NASA/TP-2011-216155, July 2011",
+  "table": "2.7(a,b), printed pages 30\u201331; PDF pages 42\u201343",
+  "sha256": "026410260e8bdb762561f52c98a5fa949f430f5896891fe6388b9e34dbc933ee",
+  "columns": [
+    "BFO absorbed mGy/year",
+    "BFO Gray Equivalent mGy-Eq/year",
+    "Skin Gray Equivalent mGy-Eq/year",
+    "Lens Gray Equivalent mGy-Eq/year"
+  ],
+  "annual_values": {
+    "5": [
+      185.7,
+      337.2,
+      375.8,
+      372.4
+    ],
+    "20": [
+      182.0,
+      314.9,
+      342.3,
+      338.4
+    ]
+  },
+  "conditions": "Male organs, spherical aluminium shielding, solar minimum, interplanetary GCR",
+  "conversion": "annual / 365 / 24; no mSv values used",
+  "eva_mapping": "5 g/cm\u00b2 reference applied as a light-shield proxy to EVA channel 0.4 g/cm\u00b2; not an exact match or conservative bound"
+}

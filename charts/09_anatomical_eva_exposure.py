@@ -10,10 +10,10 @@ import numpy as np
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from radiation_model import ROOT, BASELINE_PATH, sha256
-from anatomical_environment import load_environment, MANIFEST
+from radiation.radiation_model import ROOT, BASELINE_PATH, sha256
+from radiation.anatomical_environment import load_environment, MANIFEST
 
-OUT = ROOT / 'outputs/analysis/anatomical_eva'
+OUT = ROOT / 'results/analysis/anatomical_eva'
 DOSES = ROOT / 'data/processed/oltaris/oltaris_sapphire_anatomical_summary.csv'
 CENTRAL = 'gt10MeV__log_linear'
 TEMPLATES = {'august_1972': 'August 1972', 'october_2003_goes10': 'October–November 2003'}
@@ -227,7 +227,7 @@ health-response framework would be needed to translate exposure into effects.
 
 `.venv/bin/python charts/09_anatomical_eva_exposure.py`
 
-Only outputs/analysis/anatomical_eva is written. Frozen baseline files, radiation_config.json, existing
+Only results/analysis/anatomical_eva is written. Frozen baseline files, radiation_config.json, existing
 SHIELDOSE reference charts and strategy logic remain unchanged. No transport simulation is rerun.
 ''')
     print(pd.DataFrame(examples).to_string(index=False))

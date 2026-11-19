@@ -1,152 +1,102 @@
-# CNL Mars mission simulator
+# CNL Mars 2040 — Team 21 simulator
 
-**What this does:** compares mission decisions during repair EVAs while tracking each astronaut's
-estimated radiation exposure. Strategy A works; Strategies B–D have decision skeletons only.
-Their information models and decision criteria, and Monte Carlo, are not implemented yet.
+Western University, Team 21, for the Fall 2026 CNL Case Competition (*Nuclear Emergency During a Mars Mission*).
 
-The radiation input is **SAPPHIRE-derived organ-dose estimates distributed using historical solar
-particle event timing profiles**. It is not measured astronaut dose or a prediction of health outcomes.
+**The question:** a crew has to repair its ship outside, during a solar storm, next to a reactor. How
+should it decide when to go out, and does better radiation information change those decisions?
 
-## Start here
+## The short version
 
-**Open the finished figures: [Final-case chart gallery](outputs/final_case/index.html).**
-Six PNGs are together in `outputs/final_case/`; you do not need to browse JSON or CSV files to see them.
-Recreate the whole gallery with `.venv/bin/python -B charts/build_final_case.py`.
+- Two ships: **NTP** (nuclear thermal) and **NEP** (nuclear electric). Each has different repair priorities and hazards.
+- Four strategies, each adding information to the one before:
+  - **A** — immediate repair after stabilizing the ship. Only a generic storm warning. *Not in the Monte Carlo.*
+  - **B** — forecast-informed EVA timing.
+  - **C** — forecast plus blood tests (γ-H2AX and lymphocytes) feeding a Bayesian dose estimator.
+  - **D** — forecast plus a hypothetical 2040 in-suit panel (four radiation-responsive genes, plus foci and FDXR).
+- Doses come from SAPPHIRE storm spectra, NASA OLTARIS organ transport, and historical storm timing (1972 and 2003).
+- All strategies see the same storm, damage and crew. Only what they are allowed to observe differs.
+
+## What the charts show
+
+**Storm timing.** The 1972 and 2003 storms are normalized so each sums to 100%. This shows *when* dose
+happens, not how big the storm is.
+![Storm timing](results/presentation/spe_modelling/04_normalized_storm_timing.png)
+
+**Dose sources.** The storm spectra, shielding and organ dose chain.
+![Sources to dose](results/presentation/spe_modelling/01_sources_to_dose.png)
+
+**Timing matters for EVAs.** Blood-forming-organ dose from a seven-hour EVA, starting at each hour of the 1972 profile.
+![Seven-hour EVA timing](results/presentation/spe_modelling/05_seven_hour_eva_timing.png)
+
+**Forecast for B.** Shading shows how the forecast spreads when storm timing and strength are uncertain.
+![Uncertain forecast](results/presentation/strategy_b/01_uncertain_forecast.png)
+
+**Start selection for B.** Exposure for each possible EVA start.
+![EVA start selection](results/presentation/strategy_b/02_eva_start_selection.png)
+
+**Biodosimetry estimator for C.** The dose range narrows once blood results arrive.
+![Strategy C estimator](results/bayes_estimator/strategy_c_estimator.png)
+
+**Anatomical EVA exposure.** Organ dose comparison for the EVA shielding cases.
+![EVA BFO comparison](results/analysis/anatomical_eva/eva_bfo_comparison.png)
+
+**Spectrum fit check.** The corrected Band fit against the source spectra.
+![Spectrum fit](results/validation/oltaris_anatomical/spectrum_overlay.png)
+
+**Monte Carlo results** (100 matched emergencies, both ships, both reference anatomies, evaluated through 96 h):
+![Monte Carlo results](results/presentation/final_results/06_monte_carlo_final_results.png)
+
+What it says:
+- Urgent repair by 48 h: B 36, C 36, D 37–38 of 100.
+- All repairs below the dose references: 0 for every strategy. With the full storm known in hindsight, 83 of 100 could have.
+- Skin reference reached: B 2, C 1, D 1.
+- Aborted EVAs: B 38–39, C 45–46, D 48–55. In-suit readings let D pull crew back more often, which also costs repairs.
+
+Two matched examples (draw 42 and draw 86) are in [`07_monte_carlo_two_matched_examples.png`](results/presentation/final_results/07_monte_carlo_two_matched_examples.png).
+
+**Gallery of final-case figures:** [`results/final-case/index.html`](results/final-case/index.html).
+
+## Honest limits
+
+- The storm is a **scenario**, not a forecast. Timing comes from historical profiles scaled to SAPPHIRE totals.
+- Repair deadlines, hold durations and EVA schedules are **our assumptions**, swept in sensitivity runs.
+- The biomarker models are **exploratory**. They are calibrated on lab gamma-irradiated blood, not solar protons. The in-suit panel (D) is hypothetical.
+- The anatomy is a male reference phantom. The 0.4 and 20 g/cm² shields are surrogates, not spacesuit or spacecraft geometry.
+- The simulator does not predict symptoms or health outcomes.
+
+## Where things are
+
+| Folder | Contents |
+| --- | --- |
+| `sim/` | Mission engine, strategies and runners |
+| `radiation/` | Storm spectra, organ-dose transport and data preparation |
+| `bayes_estimator/` | Biodosimetry estimator for Strategy C and D |
+| `charts/` | Plotting scripts and the gallery builder |
+| `configs/` | Monte Carlo experiment settings |
+| `docs/` | Method notes |
+| `data/` | Source records and processed tables |
+| `results/` | Figures, deck, and selected Monte Carlo and mission outputs |
+
+## Running it
+
+Python 3.12.
 
 ```bash
+python3.12 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+
+# one mission, recovery constraints on
 .venv/bin/python -B -m sim.run_strategy_a --recovery
-.venv/bin/python -B -m sim.run_strategy_a --recovery --engine NEP --template october_2003_goes10 --output-dir outputs/runs/nep_goes10
+
+# strategy comparison for one ship
+.venv/bin/python -B -m sim.run_comparison --engine NTP --output-dir results/comparison_ntp
+
+# Monte Carlo (2003 timing, 1-in-1,000 storm)
+.venv/bin/python -m sim.run_monte_carlo --config configs/monte_carlo_2003_1000.json --workers 4 --output-dir results/monte-carlo/my_run
+
+# charts
 .venv/bin/python -B charts/09_anatomical_eva_exposure.py
+.venv/bin/python -B charts/build_final_case.py
 ```
 
-The first two commands run missions; the third makes the anatomical exposure comparison chart.
-Results are written to `outputs/strategy_a/`, your chosen run directory, or `outputs/analysis/anatomical_eva/`.
-Without `--recovery`, the mission runs without the optional qualitative case constraints.
-For a fresh setup, create a Python 3.12 `.venv` and install `requirements.txt`.
-
-## Files you actually work with
-
-| File | Purpose |
-| --- | --- |
-| `sim/assumptions.py` | Everyday settings: crew size, EVA length and turnaround. |
-| `sim/defaults.py` | Advanced mission and radiation-scenario selections. |
-| `sim/strategies.py` | Strategy A and concise B–D decision skeletons. |
-| `sim/mission_recovery.py` | Shared repair prerequisites, reactor confirmations, crew permissions and continuation checks. |
-| `docs/mission_recovery.md` | Plain-language case constraints and which parts are assumptions. |
-| `sim/run_strategy_a.py` | Runs the mission and exports results. |
-| `sim/mission_simulator.py`, `sim/models.py` | Mission progression and records; normally leave these alone. |
-
-The existing scheduler assumes five crew, one astronaut outside at a time, seven-hour repairs and
-one-hour turnaround. It rotates crew without consecutive assignments. Aborts do not earn partial repair
-credit; returning to the cabin is instantaneous. Crew accumulate dose both inside and outside.
-Mission hour zero defaults to storm hour 48, with a 264-hour ceiling capped by remaining data coverage.
-These are scenario/scheduling assumptions, not validated flight procedures.
-
-## B–D decision skeletons
-
-All three reuse A's existing operational checks: stabilization, access, repair prerequisites,
-deadline feasibility, crew eligibility and operational EVA aborts. These are not new assumptions.
-
-```text
-Operational checks require stabilize / wait / abort / hold?
-  Yes -> take that existing operational action.
-  No  -> evaluate the strategy-specific information:
-
-  B: Imperfect forecast -> projected EVA exposure -> timing / EVA decision [TODO]
-  C: Follow B -> B's estimated-exposure threshold reached?
-       No  -> continue B's policy [TODO]
-       Yes -> blood test -> update dose estimate -> reassess crew / EVA [TODO]
-  D: Multimodal measurements -> same estimator as C -> crew / EVA decision [TODO]
-```
-
-The TODO branches are deliberately not executable: B–D raise `NotImplementedError` before
-approving a start, continuation of an EVA, or mission continuation. They do not silently fall
-back to A, invent measurements, or read true dose/the historical storm as a forecast.
-No B–D performance results should be reported from these skeletons.
-
-Still needed: forecast uncertainty and decision rules for B; measurement calibration, timing,
-shared Bayesian inference and decision rules for C/D. The proposed biomarker names in `AGENTS.md`
-are not implemented measurement models. C's blood-test trigger follows the user's specified
-design: use B's estimated exposure, not hidden true dose. Its threshold value and units, sampling
-logistics, result delay, repeat-test rule and actions while awaiting results remain unspecified.
-Forecast integration with D and unavailable-information handling also remain unspecified. Biological estimates
-would be absorbed dose in mGy, not interchangeable with mGy-Eq exposure references.
-
-## Four useful charts
-
-Run any of these with `.venv/bin/python -B charts/<filename>`:
-- `01_spe_proton_flux.py`: the measured 1972 timing profile.
-- `03_sapphire_spectra.py`: the 100-year and 1,000-year proton spectra.
-- `06_shielding_sensitivity.py`: the independent SHIELDOSE tissue-target shielding reference.
-- `09_anatomical_eva_exposure.py`: the primary anatomical EVA dose comparison.
-
-`build_final_case.py` collects these figures, a current mission timeline and the retained spectrum-fit
-validation into the gallery. The other Python files in `charts/` are shared plotting helpers.
-
-## Radiation: what the numbers mean
-
-Corrected OLTARIS MAX full-event totals, using the **Band fit**, not the superseded Weibull fit:
-
-| Severity | Aluminium g/cm² | BFO absorbed mGy | BFO Gray Equivalent mGy-Eq |
-| --- | ---: | ---: | ---: |
-| 100-year | 0.4 | 415.1 | 623.3 |
-| 100-year | 20 | 43.14 | 63.99 |
-| 1,000-year | 0.4 | 723.7 | 1087.0 |
-| 1,000-year | 20 | 75.2 | 111.6 |
-
-- **mGy** is absorbed organ dose, the exposure input for a future biological-response model.
-- **mGy-Eq** is kept separately for NASA BFO reference comparisons. It is not mGy or mSv.
-- Organ/effective dose equivalents in **mSv** must not be substituted for either quantity.
-- The 0.4/20 g/cm² spheres represent EVA/cabin shielding assumptions, not verified spacecraft hardware.
-  MAX anatomy is not personalized to each crew member; other shielding depths are unsupported here.
-- NASA comparisons use the archived Revision C references (250 mGy-Eq/30 days, 500/year), mission
-  contribution only. Prior exposure and matching RBE definitions remain unverified: no compliance claim.
-
-Historical proton flux supplies the peaks and dips; OLTARIS supplies total dose. Weights sum to one
-over the complete event, assuming a fixed spectral shape—not time-resolved particle transport.
-The 1972 template has 264 hours with eight missing per channel; GOES-10 2003 has 336 complete supplied
-hours. The default is >10 MeV/log-linear filling; nine channel/filling alternatives measure sensitivity,
-not statistical confidence. In the highlighted 1972 seven-hour window, 35.2% of dose is allocated to
-interpolated observations; that is not a dose-error percentage. Overlapping EVA windows are alternatives,
-not doses to sum. The sparse 1989 and separate 2003 OMNI2 records are not enabled mission templates.
-
-The corrected spectrum fit differs by about 3.2% or less at original energy nodes, not necessarily in dose.
-Corrected user-supplied CSVs are preserved; native corrected OLTARIS solver exports remain pending.
-Exact matching of the supplied GOES data to the official archive and physical event closure remain unverified.
-The hypothetical mission is near **1.25 AU without distance rescaling**; original source distance labels remain.
-
-## Scientific files: keep, don't manually edit
-
-| Location | Why it stays |
-| --- | --- |
-| `data/processed/oltaris/` | Readable anatomical summaries plus the frozen hourly environment, manifest and checksums. |
-| `data/processed/` | Historical timing tables and the frozen independent SHIELDOSE reference. |
-| `data/raw/` | Original scientific exports, case document, engineering references and provenance. |
-| `outputs/model/` | Frozen SHIELDOSE manifest and scientific audit records. |
-| `outputs/mission_radiation_environment.csv` | Preserved frozen SHIELDOSE presentation copy. |
-| `outputs/validation/oltaris_anatomical/` | Spectrum overlay, error tables and anatomical validation evidence. |
-
-SHIELDOSE is an independent idealized tissue-target reference, **not** the simulator's anatomical BFO input.
-It uses aluminium spheres, 4π irradiation and proton results without nuclear attenuation; rad × 10 = mGy.
-Source duplicates, excluded/failed runs and older fits stay where provenance or reproduction depends on them.
-The five source tables in `data/raw/archive/previous_processed/` are required rebuild inputs, not junk.
-
-`anatomical_environment.py` loads and checks frozen data. `radiation_model.py`, `prepare_data.py`,
-`organize_oltaris_anatomical.py`, `spenvis_audit.py` and `audit_band_spectra.py` preserve the calculations,
-data preparation and scientific checks. They are infrastructure, not files to edit for strategy development.
-Do not regenerate frozen environments while developing strategies.
-
-## Boundaries for the final case
-
-All strategies must share the same radiation and physical constraints; only their information and decisions
-should differ. Strategy A does not see true/future dose. Its optional dose-estimate abort rule requires explicit
-experimental settings; there is no default clinical threshold. NTP/NEP labels do not invent different repair
-times. With `--recovery`, NTP propellant recovery and NEP cooling recovery have configurable illustrative
-32-hour and 16-hour windows, respectively—not published limits. Stabilization, worksite clearance and
-engine-specific readiness constrain decisions; see `docs/mission_recovery.md`.
-Symptoms, biomarkers, survival, reactor physics and return trajectories are not modeled.
-
-The test suite has been removed at the owner's request. Old experiments, alternate charts, the notebook,
-inventories and administrative logs are no longer in the active repo. Recovery copies and cleanup checks
-are outside it at `/Users/jack/Documents/cnl_archive/final_case_cleanup_20261117_195447/`;
-the removed tests are at `/Users/jack/Documents/cnl_archive/removed_tests_20261117_195041/`.
+Method details are in [`docs/`](docs/), starting with [`docs/mission_recovery.md`](docs/mission_recovery.md). Source data is in [`data/raw/`](data/raw/).

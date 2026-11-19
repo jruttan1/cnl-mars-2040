@@ -1,0 +1,59 @@
+{
+  "trials": 100,
+  "seed": 21,
+  "template": "october_2003_goes10",
+  "severity": "1000",
+  "engines": [
+    "NTP",
+    "NEP"
+  ],
+  "anatomies": [
+    "MAX",
+    "FAX"
+  ],
+  "observation_hours": 96.0,
+  "true_profile_origin_h": [
+    24.0,
+    72.0
+  ],
+  "forecast_origin_error_h": [
+    -6.0,
+    6.0
+  ],
+  "urgent_deadline_h": [
+    48,
+    48
+  ],
+  "eva_work_hours": [
+    7,
+    7
+  ],
+  "gcr_scale": 1.0,
+  "protected_nep_tasks": [
+    "communications",
+    "monitoring",
+    "propulsion_initial",
+    "propulsion"
+  ],
+  "cleared_ntp_tasks": [
+    "communications",
+    "monitoring",
+    "propulsion_initial",
+    "propulsion"
+  ],
+  "continued_shelter_feasible": true,
+  "warning_hold_h": 0.0,
+  "urgent_repair": "propulsion_initial",
+  "mixed_storms": true,
+  "true_spe_scale": [
+    0.35,
+    1.25
+  ],
+  "forecast_scale_error": [
+    0.6,
+    1.4
+  ],
+  "wide_forecast": true,
+  "matched_current_rate": true,
+  "forecast_stress_weight": 0.05
+}
