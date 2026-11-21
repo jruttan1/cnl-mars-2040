@@ -35,4 +35,3 @@ export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 MKL_NUM
 ## Known limits
 
 - Outcomes barely differ between strategies here; the safety gate keeps everyone far below the exposure reference.
-- Unit tests were archived outside this repository during the submission cleanup; this work was checked by invariant audits on the run output, not by that suite.
