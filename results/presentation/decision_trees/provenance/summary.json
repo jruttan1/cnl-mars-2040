@@ -1,0 +1,1073 @@
+{
+  "strategies": [
+    {
+      "engine": "NEP",
+      "anatomy": "FAX",
+      "strategy": "B",
+      "trials": 100,
+      "all_repairs_completed_fraction": 0.02,
+      "all_repairs_completed_ci95": [
+        0.00550196755016235,
+        0.07001179072854388
+      ],
+      "urgent_repair_on_time_fraction": 0.42,
+      "mean_repairs_completed": 1.05,
+      "common_horizon_trials": 100,
+      "repairs_below_references_fraction": 0.02,
+      "repairs_below_references_ci95": [
+        0.00550196755016235,
+        0.07001179072854388
+      ],
+      "any_reference_exceeded_fraction": 0.02,
+      "mean_completed_recovery_h": 81.0,
+      "mean_aborted_evas": 0.51,
+      "status_counts": {
+        "mission_continuation_authorized": 2,
+        "no_feasible_recovery_plan": 58,
+        "observation_or_mission_horizon_reached": 40
+      },
+      "mean_max_BFO_mGy_eq": 91.51835416760122,
+      "BFO_reference_hit_cases": 0,
+      "median_first_BFO_hit_h_among_hits": null,
+      "mean_max_Skin_mGy_eq": 322.49244722877734,
+      "Skin_reference_hit_cases": 2,
+      "median_first_Skin_hit_h_among_hits": 20.071855071212767,
+      "mean_max_Lens_mGy_eq": 173.9571214618158,
+      "Lens_reference_hit_cases": 0,
+      "median_first_Lens_hit_h_among_hits": null,
+      "mean_crew_total_bfo_absorbed_person_mGy": 301.0618766918618,
+      "mean_crew_mean_bfo_absorbed_mGy": 60.21237533837237
+    },
+    {
+      "engine": "NEP",
+      "anatomy": "FAX",
+      "strategy": "C",
+      "trials": 100,
+      "all_repairs_completed_fraction": 0.03,
+      "all_repairs_completed_ci95": [
+        0.010254524024038925,
+        0.0845193642905276
+      ],
+      "urgent_repair_on_time_fraction": 0.43,
+      "mean_repairs_completed": 1.03,
+      "common_horizon_trials": 100,
+      "repairs_below_references_fraction": 0.03,
+      "repairs_below_references_ci95": [
+        0.010254524024038925,
+        0.0845193642905276
+      ],
+      "any_reference_exceeded_fraction": 0.02,
+      "mean_completed_recovery_h": 91.0,
+      "mean_aborted_evas": 0.54,
+      "status_counts": {
+        "mission_continuation_authorized": 1,
+        "no_feasible_recovery_plan": 57,
+        "observation_or_mission_horizon_reached": 42
+      },
+      "mean_max_BFO_mGy_eq": 91.81442981439362,
+      "BFO_reference_hit_cases": 0,
+      "median_first_BFO_hit_h_among_hits": null,
+      "mean_max_Skin_mGy_eq": 343.333484166361,
+      "Skin_reference_hit_cases": 2,
+      "median_first_Skin_hit_h_among_hits": 20.128989171515745,
+      "mean_max_Lens_mGy_eq": 176.9667669071242,
+      "Lens_reference_hit_cases": 0,
+      "median_first_Lens_hit_h_among_hits": null,
+      "mean_crew_total_bfo_absorbed_person_mGy": 301.504254616525,
+      "mean_crew_mean_bfo_absorbed_mGy": 60.30085092330499
+    },
+    {
+      "engine": "NEP",
+      "anatomy": "FAX",
+      "strategy": "D",
+      "trials": 100,
+      "all_repairs_completed_fraction": 0.05,
+      "all_repairs_completed_ci95": [
+        0.02154367915436796,
+        0.11175046923191913
+      ],
+      "urgent_repair_on_time_fraction": 0.42,
+      "mean_repairs_completed": 1.08,
+      "common_horizon_trials": 100,
+      "repairs_below_references_fraction": 0.05,
+      "repairs_below_references_ci95": [
+        0.02154367915436796,
+        0.11175046923191913
+      ],
+      "any_reference_exceeded_fraction": 0.01,
+      "mean_completed_recovery_h": 82.9,
+      "mean_aborted_evas": 0.65,
+      "status_counts": {
+        "mission_continuation_authorized": 4,
+        "no_feasible_recovery_plan": 58,
+        "observation_or_mission_horizon_reached": 38
+      },
+      "mean_max_BFO_mGy_eq": 91.47508617409777,
+      "BFO_reference_hit_cases": 0,
+      "median_first_BFO_hit_h_among_hits": null,
+      "mean_max_Skin_mGy_eq": 319.37585283347323,
+      "Skin_reference_hit_cases": 1,
+      "median_first_Skin_hit_h_among_hits": 33.10200419567067,
+      "mean_max_Lens_mGy_eq": 173.50840166311446,
+      "Lens_reference_hit_cases": 0,
+      "median_first_Lens_hit_h_among_hits": null,
+      "mean_crew_total_bfo_absorbed_person_mGy": 301.5106762565377,
+      "mean_crew_mean_bfo_absorbed_mGy": 60.30213525130754
+    },
+    {
+      "engine": "NEP",
+      "anatomy": "MAX",
+      "strategy": "B",
+      "trials": 100,
+      "all_repairs_completed_fraction": 0.02,
+      "all_repairs_completed_ci95": [
+        0.00550196755016235,
+        0.07001179072854388
+      ],
+      "urgent_repair_on_time_fraction": 0.42,
+      "mean_repairs_completed": 1.05,
+      "common_horizon_trials": 100,
+      "repairs_below_references_fraction": 0.02,
+      "repairs_below_references_ci95": [
+        0.00550196755016235,
+        0.07001179072854388
+      ],
+      "any_reference_exceeded_fraction": 0.02,
+      "mean_completed_recovery_h": 81.0,
+      "mean_aborted_evas": 0.51,
+      "status_counts": {
+        "mission_continuation_authorized": 2,
+        "no_feasible_recovery_plan": 58,
+        "observation_or_mission_horizon_reached": 40
+      },
+      "mean_max_BFO_mGy_eq": 83.34420117119664,
+      "BFO_reference_hit_cases": 0,
+      "median_first_BFO_hit_h_among_hits": null,
+      "mean_max_Skin_mGy_eq": 322.79808758600745,
+      "Skin_reference_hit_cases": 2,
+      "median_first_Skin_hit_h_among_hits": 19.977558866608984,
+      "mean_max_Lens_mGy_eq": 182.3142379304948,
+      "Lens_reference_hit_cases": 0,
+      "median_first_Lens_hit_h_among_hits": null,
+      "mean_crew_total_bfo_absorbed_person_mGy": 275.3611053494201,
+      "mean_crew_mean_bfo_absorbed_mGy": 55.07222106988402
+    },
+    {
+      "engine": "NEP",
+      "anatomy": "MAX",
+      "strategy": "C",
+      "trials": 100,
+      "all_repairs_completed_fraction": 0.03,
+      "all_repairs_completed_ci95": [
+        0.010254524024038925,
+        0.0845193642905276
+      ],
+      "urgent_repair_on_time_fraction": 0.43,
+      "mean_repairs_completed": 1.03,
+      "common_horizon_trials": 100,
+      "repairs_below_references_fraction": 0.03,
+      "repairs_below_references_ci95": [
+        0.010254524024038925,
+        0.0845193642905276
+      ],
+      "any_reference_exceeded_fraction": 0.01,
+      "mean_completed_recovery_h": 91.0,
+      "mean_aborted_evas": 0.54,
+      "status_counts": {
+        "mission_continuation_authorized": 1,
+        "no_feasible_recovery_plan": 57,
+        "observation_or_mission_horizon_reached": 42
+      },
+      "mean_max_BFO_mGy_eq": 83.45966769795987,
+      "BFO_reference_hit_cases": 0,
+      "median_first_BFO_hit_h_among_hits": null,
+      "mean_max_Skin_mGy_eq": 334.3737810278971,
+      "Skin_reference_hit_cases": 1,
+      "median_first_Skin_hit_h_among_hits": 7.034728503074035,
+      "mean_max_Lens_mGy_eq": 184.9549228473444,
+      "Lens_reference_hit_cases": 0,
+      "median_first_Lens_hit_h_among_hits": null,
+      "mean_crew_total_bfo_absorbed_person_mGy": 275.5610419197026,
+      "mean_crew_mean_bfo_absorbed_mGy": 55.11220838394051
+    },
+    {
+      "engine": "NEP",
+      "anatomy": "MAX",
+      "strategy": "D",
+      "trials": 100,
+      "all_repairs_completed_fraction": 0.04,
+      "all_repairs_completed_ci95": [
+        0.01566330399154762,
+        0.0983707143588792
+      ],
+      "urgent_repair_on_time_fraction": 0.42,
+      "mean_repairs_completed": 1.08,
+      "common_horizon_trials": 100,
+      "repairs_below_references_fraction": 0.04,
+      "repairs_below_references_ci95": [
+        0.01566330399154762,
+        0.0983707143588792
+      ],
+      "any_reference_exceeded_fraction": 0.01,
+      "mean_completed_recovery_h": 80.375,
+      "mean_aborted_evas": 0.57,
+      "status_counts": {
+        "mission_continuation_authorized": 3,
+        "no_feasible_recovery_plan": 58,
+        "observation_or_mission_horizon_reached": 39
+      },
+      "mean_max_BFO_mGy_eq": 83.4052889776372,
+      "BFO_reference_hit_cases": 0,
+      "median_first_BFO_hit_h_among_hits": null,
+      "mean_max_Skin_mGy_eq": 328.90535867146554,
+      "Skin_reference_hit_cases": 1,
+      "median_first_Skin_hit_h_among_hits": 32.93081365713387,
+      "mean_max_Lens_mGy_eq": 183.70765048298884,
+      "Lens_reference_hit_cases": 0,
+      "median_first_Lens_hit_h_among_hits": null,
+      "mean_crew_total_bfo_absorbed_person_mGy": 275.600194541649,
+      "mean_crew_mean_bfo_absorbed_mGy": 55.120038908329796
+    },
+    {
+      "engine": "NTP",
+      "anatomy": "FAX",
+      "strategy": "B",
+      "trials": 100,
+      "all_repairs_completed_fraction": 0.02,
+      "all_repairs_completed_ci95": [
+        0.00550196755016235,
+        0.07001179072854388
+      ],
+      "urgent_repair_on_time_fraction": 0.42,
+      "mean_repairs_completed": 1.05,
+      "common_horizon_trials": 100,
+      "repairs_below_references_fraction": 0.02,
+      "repairs_below_references_ci95": [
+        0.00550196755016235,
+        0.07001179072854388
+      ],
+      "any_reference_exceeded_fraction": 0.02,
+      "mean_completed_recovery_h": 81.0,
+      "mean_aborted_evas": 0.51,
+      "status_counts": {
+        "mission_continuation_authorized": 2,
+        "no_feasible_recovery_plan": 58,
+        "observation_or_mission_horizon_reached": 40
+      },
+      "mean_max_BFO_mGy_eq": 91.51835416760122,
+      "BFO_reference_hit_cases": 0,
+      "median_first_BFO_hit_h_among_hits": null,
+      "mean_max_Skin_mGy_eq": 322.49244722877734,
+      "Skin_reference_hit_cases": 2,
+      "median_first_Skin_hit_h_among_hits": 20.071855071212767,
+      "mean_max_Lens_mGy_eq": 173.9571214618158,
+      "Lens_reference_hit_cases": 0,
+      "median_first_Lens_hit_h_among_hits": null,
+      "mean_crew_total_bfo_absorbed_person_mGy": 301.0618766918618,
+      "mean_crew_mean_bfo_absorbed_mGy": 60.21237533837237
+    },
+    {
+      "engine": "NTP",
+      "anatomy": "FAX",
+      "strategy": "C",
+      "trials": 100,
+      "all_repairs_completed_fraction": 0.03,
+      "all_repairs_completed_ci95": [
+        0.010254524024038925,
+        0.0845193642905276
+      ],
+      "urgent_repair_on_time_fraction": 0.43,
+      "mean_repairs_completed": 1.03,
+      "common_horizon_trials": 100,
+      "repairs_below_references_fraction": 0.03,
+      "repairs_below_references_ci95": [
+        0.010254524024038925,
+        0.0845193642905276
+      ],
+      "any_reference_exceeded_fraction": 0.02,
+      "mean_completed_recovery_h": 91.0,
+      "mean_aborted_evas": 0.54,
+      "status_counts": {
+        "mission_continuation_authorized": 1,
+        "no_feasible_recovery_plan": 57,
+        "observation_or_mission_horizon_reached": 42
+      },
+      "mean_max_BFO_mGy_eq": 91.81442981439362,
+      "BFO_reference_hit_cases": 0,
+      "median_first_BFO_hit_h_among_hits": null,
+      "mean_max_Skin_mGy_eq": 343.333484166361,
+      "Skin_reference_hit_cases": 2,
+      "median_first_Skin_hit_h_among_hits": 20.128989171515745,
+      "mean_max_Lens_mGy_eq": 176.9667669071242,
+      "Lens_reference_hit_cases": 0,
+      "median_first_Lens_hit_h_among_hits": null,
+      "mean_crew_total_bfo_absorbed_person_mGy": 301.504254616525,
+      "mean_crew_mean_bfo_absorbed_mGy": 60.30085092330499
+    },
+    {
+      "engine": "NTP",
+      "anatomy": "FAX",
+      "strategy": "D",
+      "trials": 100,
+      "all_repairs_completed_fraction": 0.05,
+      "all_repairs_completed_ci95": [
+        0.02154367915436796,
+        0.11175046923191913
+      ],
+      "urgent_repair_on_time_fraction": 0.42,
+      "mean_repairs_completed": 1.08,
+      "common_horizon_trials": 100,
+      "repairs_below_references_fraction": 0.05,
+      "repairs_below_references_ci95": [
+        0.02154367915436796,
+        0.11175046923191913
+      ],
+      "any_reference_exceeded_fraction": 0.01,
+      "mean_completed_recovery_h": 82.9,
+      "mean_aborted_evas": 0.65,
+      "status_counts": {
+        "mission_continuation_authorized": 4,
+        "no_feasible_recovery_plan": 58,
+        "observation_or_mission_horizon_reached": 38
+      },
+      "mean_max_BFO_mGy_eq": 91.47508617409777,
+      "BFO_reference_hit_cases": 0,
+      "median_first_BFO_hit_h_among_hits": null,
+      "mean_max_Skin_mGy_eq": 319.37585283347323,
+      "Skin_reference_hit_cases": 1,
+      "median_first_Skin_hit_h_among_hits": 33.10200419567067,
+      "mean_max_Lens_mGy_eq": 173.50840166311446,
+      "Lens_reference_hit_cases": 0,
+      "median_first_Lens_hit_h_among_hits": null,
+      "mean_crew_total_bfo_absorbed_person_mGy": 301.5106762565377,
+      "mean_crew_mean_bfo_absorbed_mGy": 60.30213525130754
+    },
+    {
+      "engine": "NTP",
+      "anatomy": "MAX",
+      "strategy": "B",
+      "trials": 100,
+      "all_repairs_completed_fraction": 0.02,
+      "all_repairs_completed_ci95": [
+        0.00550196755016235,
+        0.07001179072854388
+      ],
+      "urgent_repair_on_time_fraction": 0.42,
+      "mean_repairs_completed": 1.05,
+      "common_horizon_trials": 100,
+      "repairs_below_references_fraction": 0.02,
+      "repairs_below_references_ci95": [
+        0.00550196755016235,
+        0.07001179072854388
+      ],
+      "any_reference_exceeded_fraction": 0.02,
+      "mean_completed_recovery_h": 81.0,
+      "mean_aborted_evas": 0.51,
+      "status_counts": {
+        "mission_continuation_authorized": 2,
+        "no_feasible_recovery_plan": 58,
+        "observation_or_mission_horizon_reached": 40
+      },
+      "mean_max_BFO_mGy_eq": 83.34420117119664,
+      "BFO_reference_hit_cases": 0,
+      "median_first_BFO_hit_h_among_hits": null,
+      "mean_max_Skin_mGy_eq": 322.79808758600745,
+      "Skin_reference_hit_cases": 2,
+      "median_first_Skin_hit_h_among_hits": 19.977558866608984,
+      "mean_max_Lens_mGy_eq": 182.3142379304948,
+      "Lens_reference_hit_cases": 0,
+      "median_first_Lens_hit_h_among_hits": null,
+      "mean_crew_total_bfo_absorbed_person_mGy": 275.3611053494201,
+      "mean_crew_mean_bfo_absorbed_mGy": 55.07222106988402
+    },
+    {
+      "engine": "NTP",
+      "anatomy": "MAX",
+      "strategy": "C",
+      "trials": 100,
+      "all_repairs_completed_fraction": 0.03,
+      "all_repairs_completed_ci95": [
+        0.010254524024038925,
+        0.0845193642905276
+      ],
+      "urgent_repair_on_time_fraction": 0.43,
+      "mean_repairs_completed": 1.03,
+      "common_horizon_trials": 100,
+      "repairs_below_references_fraction": 0.03,
+      "repairs_below_references_ci95": [
+        0.010254524024038925,
+        0.0845193642905276
+      ],
+      "any_reference_exceeded_fraction": 0.01,
+      "mean_completed_recovery_h": 91.0,
+      "mean_aborted_evas": 0.54,
+      "status_counts": {
+        "mission_continuation_authorized": 1,
+        "no_feasible_recovery_plan": 57,
+        "observation_or_mission_horizon_reached": 42
+      },
+      "mean_max_BFO_mGy_eq": 83.45966769795987,
+      "BFO_reference_hit_cases": 0,
+      "median_first_BFO_hit_h_among_hits": null,
+      "mean_max_Skin_mGy_eq": 334.3737810278971,
+      "Skin_reference_hit_cases": 1,
+      "median_first_Skin_hit_h_among_hits": 7.034728503074035,
+      "mean_max_Lens_mGy_eq": 184.9549228473444,
+      "Lens_reference_hit_cases": 0,
+      "median_first_Lens_hit_h_among_hits": null,
+      "mean_crew_total_bfo_absorbed_person_mGy": 275.5610419197026,
+      "mean_crew_mean_bfo_absorbed_mGy": 55.11220838394051
+    },
+    {
+      "engine": "NTP",
+      "anatomy": "MAX",
+      "strategy": "D",
+      "trials": 100,
+      "all_repairs_completed_fraction": 0.04,
+      "all_repairs_completed_ci95": [
+        0.01566330399154762,
+        0.0983707143588792
+      ],
+      "urgent_repair_on_time_fraction": 0.42,
+      "mean_repairs_completed": 1.08,
+      "common_horizon_trials": 100,
+      "repairs_below_references_fraction": 0.04,
+      "repairs_below_references_ci95": [
+        0.01566330399154762,
+        0.0983707143588792
+      ],
+      "any_reference_exceeded_fraction": 0.01,
+      "mean_completed_recovery_h": 80.375,
+      "mean_aborted_evas": 0.57,
+      "status_counts": {
+        "mission_continuation_authorized": 3,
+        "no_feasible_recovery_plan": 58,
+        "observation_or_mission_horizon_reached": 39
+      },
+      "mean_max_BFO_mGy_eq": 83.4052889776372,
+      "BFO_reference_hit_cases": 0,
+      "median_first_BFO_hit_h_among_hits": null,
+      "mean_max_Skin_mGy_eq": 328.90535867146554,
+      "Skin_reference_hit_cases": 1,
+      "median_first_Skin_hit_h_among_hits": 32.93081365713387,
+      "mean_max_Lens_mGy_eq": 183.70765048298884,
+      "Lens_reference_hit_cases": 0,
+      "median_first_Lens_hit_h_among_hits": null,
+      "mean_crew_total_bfo_absorbed_person_mGy": 275.600194541649,
+      "mean_crew_mean_bfo_absorbed_mGy": 55.120038908329796
+    }
+  ],
+  "paired_comparisons": [
+    {
+      "engine": "NEP",
+      "anatomy": "FAX",
+      "baseline": "B",
+      "candidate": "C",
+      "trials": 100,
+      "completion_fraction_difference": 0.01,
+      "completion_difference_ci95": [
+        -0.024062307732753634,
+        0.04406230773275364
+      ],
+      "candidate_only_completes": 2,
+      "baseline_only_completes": 1,
+      "crew_mean_bfo_absorbed_difference_mGy": 0.08847558493262994,
+      "mean_max_BFO_difference_mGy_eq": 0.2960756467924007,
+      "max_BFO_difference_ci95": [
+        -0.31685524423384404,
+        0.9090065378186455
+      ],
+      "mean_max_Skin_difference_mGy_eq": 20.84103693758369,
+      "max_Skin_difference_ci95": [
+        -22.37602826952978,
+        64.05810214469716
+      ],
+      "mean_max_Lens_difference_mGy_eq": 3.0096454453084043,
+      "max_Lens_difference_ci95": [
+        -3.2299399617377658,
+        9.249230852354575
+      ]
+    },
+    {
+      "engine": "NEP",
+      "anatomy": "FAX",
+      "baseline": "C",
+      "candidate": "D",
+      "trials": 100,
+      "completion_fraction_difference": 0.02,
+      "completion_difference_ci95": [
+        -0.0192,
+        0.0592
+      ],
+      "candidate_only_completes": 3,
+      "baseline_only_completes": 1,
+      "crew_mean_bfo_absorbed_difference_mGy": 0.0012843280025451164,
+      "mean_max_BFO_difference_mGy_eq": -0.3393436402958539,
+      "max_BFO_difference_ci95": [
+        -0.924424002620464,
+        0.24573672202875613
+      ],
+      "mean_max_Skin_difference_mGy_eq": -23.957631332887757,
+      "max_Skin_difference_ci95": [
+        -65.21671777446656,
+        17.30145510869105
+      ],
+      "mean_max_Lens_difference_mGy_eq": -3.4583652440097534,
+      "max_Lens_difference_ci95": [
+        -9.415153094119376,
+        2.4984226060998687
+      ]
+    },
+    {
+      "engine": "NEP",
+      "anatomy": "FAX",
+      "baseline": "B",
+      "candidate": "D",
+      "trials": 100,
+      "completion_fraction_difference": 0.03,
+      "completion_difference_ci95": [
+        -0.003603535167561997,
+        0.063603535167562
+      ],
+      "candidate_only_completes": 3,
+      "baseline_only_completes": 0,
+      "crew_mean_bfo_absorbed_difference_mGy": 0.08975991293517506,
+      "mean_max_BFO_difference_mGy_eq": -0.043267993503453187,
+      "max_BFO_difference_ci95": [
+        -0.5361872785822989,
+        0.44965129157539246
+      ],
+      "mean_max_Skin_difference_mGy_eq": -3.1165943953040682,
+      "max_Skin_difference_ci95": [
+        -37.86782054095608,
+        31.634631750347943
+      ],
+      "mean_max_Lens_difference_mGy_eq": -0.4487197987013493,
+      "max_Lens_difference_ci95": [
+        -5.4661002595058505,
+        4.568660662103152
+      ]
+    },
+    {
+      "engine": "NEP",
+      "anatomy": "MAX",
+      "baseline": "B",
+      "candidate": "C",
+      "trials": 100,
+      "completion_fraction_difference": 0.01,
+      "completion_difference_ci95": [
+        -0.024062307732753634,
+        0.04406230773275364
+      ],
+      "candidate_only_completes": 2,
+      "baseline_only_completes": 1,
+      "crew_mean_bfo_absorbed_difference_mGy": 0.03998731405649245,
+      "mean_max_BFO_difference_mGy_eq": 0.11546652676321997,
+      "max_BFO_difference_ci95": [
+        -0.2282513482812775,
+        0.45918440180771747
+      ],
+      "mean_max_Skin_difference_mGy_eq": 11.575693441889635,
+      "max_Skin_difference_ci95": [
+        -23.024244937248938,
+        46.175631821028205
+      ],
+      "mean_max_Lens_difference_mGy_eq": 2.6406849168495814,
+      "max_Lens_difference_ci95": [
+        -5.250668792696367,
+        10.53203862639553
+      ]
+    },
+    {
+      "engine": "NEP",
+      "anatomy": "MAX",
+      "baseline": "C",
+      "candidate": "D",
+      "trials": 100,
+      "completion_fraction_difference": 0.01,
+      "completion_difference_ci95": [
+        -0.024062307732753634,
+        0.04406230773275364
+      ],
+      "candidate_only_completes": 2,
+      "baseline_only_completes": 1,
+      "crew_mean_bfo_absorbed_difference_mGy": 0.00783052438927939,
+      "mean_max_BFO_difference_mGy_eq": -0.05437872032267208,
+      "max_BFO_difference_ci95": [
+        -0.4103626711027553,
+        0.3016052304574111
+      ],
+      "mean_max_Skin_difference_mGy_eq": -5.468422356431552,
+      "max_Skin_difference_ci95": [
+        -41.31814960237292,
+        30.381304889509813
+      ],
+      "mean_max_Lens_difference_mGy_eq": -1.24727236435554,
+      "max_Lens_difference_ci95": [
+        -9.423491474870449,
+        6.928946746159369
+      ]
+    },
+    {
+      "engine": "NEP",
+      "anatomy": "MAX",
+      "baseline": "B",
+      "candidate": "D",
+      "trials": 100,
+      "completion_fraction_difference": 0.02,
+      "completion_difference_ci95": [
+        -0.007578237650712777,
+        0.04757823765071278
+      ],
+      "candidate_only_completes": 2,
+      "baseline_only_completes": 0,
+      "crew_mean_bfo_absorbed_difference_mGy": 0.04781783844577184,
+      "mean_max_BFO_difference_mGy_eq": 0.06108780644054789,
+      "max_BFO_difference_ci95": [
+        -0.29820633171101607,
+        0.42038194459211187
+      ],
+      "mean_max_Skin_difference_mGy_eq": 6.107271085458083,
+      "max_Skin_difference_ci95": [
+        -30.059656838512698,
+        42.27419900942886
+      ],
+      "mean_max_Lens_difference_mGy_eq": 1.3934125524940415,
+      "max_Lens_difference_ci95": [
+        -6.85534255856607,
+        9.642167663554153
+      ]
+    },
+    {
+      "engine": "NTP",
+      "anatomy": "FAX",
+      "baseline": "B",
+      "candidate": "C",
+      "trials": 100,
+      "completion_fraction_difference": 0.01,
+      "completion_difference_ci95": [
+        -0.024062307732753634,
+        0.04406230773275364
+      ],
+      "candidate_only_completes": 2,
+      "baseline_only_completes": 1,
+      "crew_mean_bfo_absorbed_difference_mGy": 0.08847558493262994,
+      "mean_max_BFO_difference_mGy_eq": 0.2960756467924007,
+      "max_BFO_difference_ci95": [
+        -0.31685524423384404,
+        0.9090065378186455
+      ],
+      "mean_max_Skin_difference_mGy_eq": 20.84103693758369,
+      "max_Skin_difference_ci95": [
+        -22.37602826952978,
+        64.05810214469716
+      ],
+      "mean_max_Lens_difference_mGy_eq": 3.0096454453084043,
+      "max_Lens_difference_ci95": [
+        -3.2299399617377658,
+        9.249230852354575
+      ]
+    },
+    {
+      "engine": "NTP",
+      "anatomy": "FAX",
+      "baseline": "C",
+      "candidate": "D",
+      "trials": 100,
+      "completion_fraction_difference": 0.02,
+      "completion_difference_ci95": [
+        -0.0192,
+        0.0592
+      ],
+      "candidate_only_completes": 3,
+      "baseline_only_completes": 1,
+      "crew_mean_bfo_absorbed_difference_mGy": 0.0012843280025451164,
+      "mean_max_BFO_difference_mGy_eq": -0.3393436402958539,
+      "max_BFO_difference_ci95": [
+        -0.924424002620464,
+        0.24573672202875613
+      ],
+      "mean_max_Skin_difference_mGy_eq": -23.957631332887757,
+      "max_Skin_difference_ci95": [
+        -65.21671777446656,
+        17.30145510869105
+      ],
+      "mean_max_Lens_difference_mGy_eq": -3.4583652440097534,
+      "max_Lens_difference_ci95": [
+        -9.415153094119376,
+        2.4984226060998687
+      ]
+    },
+    {
+      "engine": "NTP",
+      "anatomy": "FAX",
+      "baseline": "B",
+      "candidate": "D",
+      "trials": 100,
+      "completion_fraction_difference": 0.03,
+      "completion_difference_ci95": [
+        -0.003603535167561997,
+        0.063603535167562
+      ],
+      "candidate_only_completes": 3,
+      "baseline_only_completes": 0,
+      "crew_mean_bfo_absorbed_difference_mGy": 0.08975991293517506,
+      "mean_max_BFO_difference_mGy_eq": -0.043267993503453187,
+      "max_BFO_difference_ci95": [
+        -0.5361872785822989,
+        0.44965129157539246
+      ],
+      "mean_max_Skin_difference_mGy_eq": -3.1165943953040682,
+      "max_Skin_difference_ci95": [
+        -37.86782054095608,
+        31.634631750347943
+      ],
+      "mean_max_Lens_difference_mGy_eq": -0.4487197987013493,
+      "max_Lens_difference_ci95": [
+        -5.4661002595058505,
+        4.568660662103152
+      ]
+    },
+    {
+      "engine": "NTP",
+      "anatomy": "MAX",
+      "baseline": "B",
+      "candidate": "C",
+      "trials": 100,
+      "completion_fraction_difference": 0.01,
+      "completion_difference_ci95": [
+        -0.024062307732753634,
+        0.04406230773275364
+      ],
+      "candidate_only_completes": 2,
+      "baseline_only_completes": 1,
+      "crew_mean_bfo_absorbed_difference_mGy": 0.03998731405649245,
+      "mean_max_BFO_difference_mGy_eq": 0.11546652676321997,
+      "max_BFO_difference_ci95": [
+        -0.2282513482812775,
+        0.45918440180771747
+      ],
+      "mean_max_Skin_difference_mGy_eq": 11.575693441889635,
+      "max_Skin_difference_ci95": [
+        -23.024244937248938,
+        46.175631821028205
+      ],
+      "mean_max_Lens_difference_mGy_eq": 2.6406849168495814,
+      "max_Lens_difference_ci95": [
+        -5.250668792696367,
+        10.53203862639553
+      ]
+    },
+    {
+      "engine": "NTP",
+      "anatomy": "MAX",
+      "baseline": "C",
+      "candidate": "D",
+      "trials": 100,
+      "completion_fraction_difference": 0.01,
+      "completion_difference_ci95": [
+        -0.024062307732753634,
+        0.04406230773275364
+      ],
+      "candidate_only_completes": 2,
+      "baseline_only_completes": 1,
+      "crew_mean_bfo_absorbed_difference_mGy": 0.00783052438927939,
+      "mean_max_BFO_difference_mGy_eq": -0.05437872032267208,
+      "max_BFO_difference_ci95": [
+        -0.4103626711027553,
+        0.3016052304574111
+      ],
+      "mean_max_Skin_difference_mGy_eq": -5.468422356431552,
+      "max_Skin_difference_ci95": [
+        -41.31814960237292,
+        30.381304889509813
+      ],
+      "mean_max_Lens_difference_mGy_eq": -1.24727236435554,
+      "max_Lens_difference_ci95": [
+        -9.423491474870449,
+        6.928946746159369
+      ]
+    },
+    {
+      "engine": "NTP",
+      "anatomy": "MAX",
+      "baseline": "B",
+      "candidate": "D",
+      "trials": 100,
+      "completion_fraction_difference": 0.02,
+      "completion_difference_ci95": [
+        -0.007578237650712777,
+        0.04757823765071278
+      ],
+      "candidate_only_completes": 2,
+      "baseline_only_completes": 0,
+      "crew_mean_bfo_absorbed_difference_mGy": 0.04781783844577184,
+      "mean_max_BFO_difference_mGy_eq": 0.06108780644054789,
+      "max_BFO_difference_ci95": [
+        -0.29820633171101607,
+        0.42038194459211187
+      ],
+      "mean_max_Skin_difference_mGy_eq": 6.107271085458083,
+      "max_Skin_difference_ci95": [
+        -30.059656838512698,
+        42.27419900942886
+      ],
+      "mean_max_Lens_difference_mGy_eq": 1.3934125524940415,
+      "max_Lens_difference_ci95": [
+        -6.85534255856607,
+        9.642167663554153
+      ]
+    }
+  ],
+  "interpretation": "Conditional frequencies under specified independent uniform assumptions; not Mars mission probabilities. CIs reflect Monte Carlo sampling only. Paired differences are candidate minus baseline.",
+  "decision_metrics": {
+    "pairs": [
+      {
+        "pair": "B vs C",
+        "emergencies": 400,
+        "different_decisions": 128,
+        "different_decisions_fraction": 0.32,
+        "median_first_divergence_h": 28.5,
+        "first_divergence_kind": {
+          "same decision, different time": 80,
+          "one strategy makes an extra decision": 36,
+          "different repair": 12
+        },
+        "first_divergence_cause": {
+          "estimated risk fell on opposite sides of the gate": 48,
+          "in-EVA assessment differed": 36,
+          "post-abort crew reassessment": 36,
+          "repair held after radiation abort": 8
+        },
+        "evidence_or_in_eva_cause_fraction": 0.65625,
+        "divergent_with_identical_outcome": 48
+      },
+      {
+        "pair": "C vs D",
+        "emergencies": 400,
+        "different_decisions": 154,
+        "different_decisions_fraction": 0.385,
+        "median_first_divergence_h": 20.0,
+        "first_divergence_kind": {
+          "same decision, different time": 96,
+          "one strategy makes an extra decision": 32,
+          "different action": 18,
+          "different repair": 8
+        },
+        "first_divergence_cause": {
+          "in-EVA assessment differed": 54,
+          "estimated risk fell on opposite sides of the gate": 46,
+          "post-abort crew reassessment": 24,
+          "post-EVA review hold": 20,
+          "repair held after radiation abort": 8,
+          "forecast coverage": 2
+        },
+        "evidence_or_in_eva_cause_fraction": 0.6493506493506493,
+        "divergent_with_identical_outcome": 68
+      },
+      {
+        "pair": "B vs D",
+        "emergencies": 400,
+        "different_decisions": 148,
+        "different_decisions_fraction": 0.37,
+        "median_first_divergence_h": 20.0,
+        "first_divergence_kind": {
+          "same decision, different time": 96,
+          "one strategy makes an extra decision": 28,
+          "different action": 18,
+          "different repair": 6
+        },
+        "first_divergence_cause": {
+          "in-EVA assessment differed": 56,
+          "estimated risk fell on opposite sides of the gate": 56,
+          "post-abort crew reassessment": 36
+        },
+        "evidence_or_in_eva_cause_fraction": 0.7567567567567568,
+        "divergent_with_identical_outcome": 64
+      }
+    ],
+    "profiles": [
+      {
+        "strategy": "B",
+        "emergencies": 400,
+        "mean_launch_decisions": 1.56,
+        "mean_aborts": 0.51,
+        "mean_retries_after_abort": 0.3,
+        "mean_credited_work_h": 1.26,
+        "hold_or_wait_decisions_by_rule": {
+          "risk gate": 8058,
+          "post-abort crew reassessment": 3788,
+          "operational timing": 592,
+          "repair held after radiation abort": 88,
+          "forecast coverage": 32
+        }
+      },
+      {
+        "strategy": "C",
+        "emergencies": 400,
+        "mean_launch_decisions": 1.57,
+        "mean_aborts": 0.54,
+        "mean_retries_after_abort": 0.24,
+        "mean_credited_work_h": 1.2525,
+        "hold_or_wait_decisions_by_rule": {
+          "risk gate": 9230,
+          "post-abort crew reassessment": 6336,
+          "operational timing": 610,
+          "post-EVA review hold": 278,
+          "repair held after radiation abort": 94,
+          "forecast coverage": 48,
+          "other": 4
+        }
+      },
+      {
+        "strategy": "D",
+        "emergencies": 400,
+        "mean_launch_decisions": 1.69,
+        "mean_aborts": 0.61,
+        "mean_retries_after_abort": 0.295,
+        "mean_credited_work_h": 1.355,
+        "hold_or_wait_decisions_by_rule": {
+          "risk gate": 9422,
+          "post-abort crew reassessment": 7704,
+          "operational timing": 604,
+          "repair held after radiation abort": 118,
+          "forecast coverage": 42,
+          "post-EVA review hold": 18,
+          "other": 4
+        }
+      }
+    ],
+    "by_engine": {
+      "NEP": [
+        {
+          "pair": "B vs C",
+          "emergencies": 200,
+          "different_decisions": 64,
+          "different_decisions_fraction": 0.32,
+          "median_first_divergence_h": 28.5,
+          "first_divergence_kind": {
+            "same decision, different time": 40,
+            "one strategy makes an extra decision": 18,
+            "different repair": 6
+          },
+          "first_divergence_cause": {
+            "estimated risk fell on opposite sides of the gate": 24,
+            "in-EVA assessment differed": 18,
+            "post-abort crew reassessment": 18,
+            "repair held after radiation abort": 4
+          },
+          "evidence_or_in_eva_cause_fraction": 0.65625,
+          "divergent_with_identical_outcome": 24
+        },
+        {
+          "pair": "C vs D",
+          "emergencies": 200,
+          "different_decisions": 77,
+          "different_decisions_fraction": 0.385,
+          "median_first_divergence_h": 20.0,
+          "first_divergence_kind": {
+            "same decision, different time": 48,
+            "one strategy makes an extra decision": 16,
+            "different action": 9,
+            "different repair": 4
+          },
+          "first_divergence_cause": {
+            "in-EVA assessment differed": 27,
+            "estimated risk fell on opposite sides of the gate": 23,
+            "post-abort crew reassessment": 12,
+            "post-EVA review hold": 10,
+            "repair held after radiation abort": 4,
+            "forecast coverage": 1
+          },
+          "evidence_or_in_eva_cause_fraction": 0.6493506493506493,
+          "divergent_with_identical_outcome": 34
+        },
+        {
+          "pair": "B vs D",
+          "emergencies": 200,
+          "different_decisions": 74,
+          "different_decisions_fraction": 0.37,
+          "median_first_divergence_h": 20.0,
+          "first_divergence_kind": {
+            "same decision, different time": 48,
+            "one strategy makes an extra decision": 14,
+            "different action": 9,
+            "different repair": 3
+          },
+          "first_divergence_cause": {
+            "in-EVA assessment differed": 28,
+            "estimated risk fell on opposite sides of the gate": 28,
+            "post-abort crew reassessment": 18
+          },
+          "evidence_or_in_eva_cause_fraction": 0.7567567567567568,
+          "divergent_with_identical_outcome": 32
+        }
+      ],
+      "NTP": [
+        {
+          "pair": "B vs C",
+          "emergencies": 200,
+          "different_decisions": 64,
+          "different_decisions_fraction": 0.32,
+          "median_first_divergence_h": 28.5,
+          "first_divergence_kind": {
+            "same decision, different time": 40,
+            "one strategy makes an extra decision": 18,
+            "different repair": 6
+          },
+          "first_divergence_cause": {
+            "estimated risk fell on opposite sides of the gate": 24,
+            "in-EVA assessment differed": 18,
+            "post-abort crew reassessment": 18,
+            "repair held after radiation abort": 4
+          },
+          "evidence_or_in_eva_cause_fraction": 0.65625,
+          "divergent_with_identical_outcome": 24
+        },
+        {
+          "pair": "C vs D",
+          "emergencies": 200,
+          "different_decisions": 77,
+          "different_decisions_fraction": 0.385,
+          "median_first_divergence_h": 20.0,
+          "first_divergence_kind": {
+            "same decision, different time": 48,
+            "one strategy makes an extra decision": 16,
+            "different action": 9,
+            "different repair": 4
+          },
+          "first_divergence_cause": {
+            "in-EVA assessment differed": 27,
+            "estimated risk fell on opposite sides of the gate": 23,
+            "post-abort crew reassessment": 12,
+            "post-EVA review hold": 10,
+            "repair held after radiation abort": 4,
+            "forecast coverage": 1
+          },
+          "evidence_or_in_eva_cause_fraction": 0.6493506493506493,
+          "divergent_with_identical_outcome": 34
+        },
+        {
+          "pair": "B vs D",
+          "emergencies": 200,
+          "different_decisions": 74,
+          "different_decisions_fraction": 0.37,
+          "median_first_divergence_h": 20.0,
+          "first_divergence_kind": {
+            "same decision, different time": 48,
+            "one strategy makes an extra decision": 14,
+            "different action": 9,
+            "different repair": 3
+          },
+          "first_divergence_cause": {
+            "in-EVA assessment differed": 28,
+            "estimated risk fell on opposite sides of the gate": 28,
+            "post-abort crew reassessment": 18
+          },
+          "evidence_or_in_eva_cause_fraction": 0.7567567567567568,
+          "divergent_with_identical_outcome": 32
+        }
+      ]
+    }
+  }
+}

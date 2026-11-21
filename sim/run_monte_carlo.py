@@ -59,6 +59,7 @@ class Experiment:
     abort_progress_credit: float = 0.0
     retry_after_abort: bool = False
     b_projection: str = 'current_rate'
+    shared_current_rate: bool = False
 
     def __post_init__(self):
         if type(self.trials) is not int or self.trials < 1 or type(self.seed) is not int or self.seed < 0:
@@ -87,6 +88,8 @@ class Experiment:
             raise ValueError('A positive restart review duration requires matched current-rate mode or retry_after_abort')
         if type(self.retry_after_abort) is not bool or (self.retry_after_abort and self.restart_quiet_hours is None):
             raise ValueError('retry_after_abort requires restart_quiet_hours')
+        if type(self.shared_current_rate) is not bool:
+            raise ValueError('shared_current_rate must be true or false')
         if self.b_projection not in ('current_rate', 'ensemble'):
             raise ValueError('b_projection must be current_rate or ensemble')
         if not math.isfinite(self.abort_progress_credit) or not 0 <= self.abort_progress_credit <= 1:
@@ -166,7 +169,8 @@ def run_pair(spec, draw, engine, anatomy='MAX', *, labels=('B', 'C', 'D')):
                                  share_storm_evidence=spec.wide_forecast,
                                  matched_current_rate=spec.matched_current_rate,
                                  restart_quiet_hours=spec.restart_quiet_hours,
-                                 retry_after_abort=spec.retry_after_abort, b_projection=spec.b_projection)
+                                 retry_after_abort=spec.retry_after_abort, b_projection=spec.b_projection,
+                                 shared_current_rate=spec.shared_current_rate)
     record = dict(draw=draw, engine=engine, anatomy=anatomy, mission=asdict(mission), recovery=asdict(recovery),
                   information=asdict(information), strategies={})
     for label, policy in zip('BCD', (strategy_b, strategy_c, strategy_d)):
@@ -178,7 +182,8 @@ def run_pair(spec, draw, engine, anatomy='MAX', *, labels=('B', 'C', 'D')):
                                   information_config=information)
         entry = summarize_result(result, spec.urgent_repair, information.references)
         entry['aborted_evas'] = sum(eva['aborted'] for eva in entry['evas'])
-        entry['projection_mode'] = ('current_rate' if spec.matched_current_rate or (label == 'B' and spec.b_projection == 'current_rate')
+        entry['projection_mode'] = ('current_rate' if spec.matched_current_rate or spec.shared_current_rate
+                                    or (label == 'B' and spec.b_projection == 'current_rate')
                                     else 'future_storm_ensemble')
         entry['decision_log'] = compact_log(result.event_log)
         entry['returned_measurements'] = sum(r['event'] == 'returned' for r in result.measurement_log)

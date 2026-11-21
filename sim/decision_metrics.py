@@ -196,7 +196,7 @@ def decision_report(metrics):
     lines = ['## Decision differences between strategies (same emergencies)', '',
              'A "different decision" means the sequence of EVA launches/aborts (time, crew, repair) differs. '
              'At hour 0 all strategies hold identical information, so identical early decisions are expected.', '',
-             '| pair | emergencies with different decisions | median first-divergence hour | caused by evidence / in-EVA readings | same final outcome anyway |',
+             '| pair | cases with different decisions (emergency × engine × anatomy) | median first-divergence hour | caused by evidence / in-EVA readings | same final outcome anyway |',
              '|---|---|---|---|---|']
     for row in metrics['pairs']:
         median = row['median_first_divergence_h']

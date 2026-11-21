@@ -200,22 +200,29 @@ simulation outcomes and do not enter the decision policy.
 
 ## Decision-tree experiment (B, C and D decide differently because they know different things)
 
-`configs/monte_carlo_decision_trees.json` is the experiment built to show how the three strategies
-**decide** differently on the same emergency. It replaces the matched current-rate mode, which forced
+`configs/monte_carlo_decision_trees_current_rate.json` is the primary experiment for showing how the three
+strategies **decide** differently on the same emergency. It replaces the matched current-rate mode, which forced
 C and D onto B's rule and so could not show decision differences.
+
+**No strategy knows the future.** B, C and D all project today's *estimated* dose rate forward through the planned EVA
+and return, and re-estimate it every hour (`shared_current_rate`). That is a predictive estimate, not a forecast of the
+storm's future trajectory, so a rising storm makes any of them stop (abort) and a falling one lets them start.
+`configs/monte_carlo_decision_trees.json` is a labelled sensitivity in which all strategies integrate the forecast
+ensemble's future (`b_projection: ensemble`); it is not the primary result.
 
 | Setting | Value | Why |
 |---|---|---|
-| `b_projection` | `ensemble` | B uses the same forecast ensemble as C and D, so C/D gains cannot come from a better forecast |
+| `shared_current_rate` | true | All three project the current estimated rate; none integrates a future trajectory |
 | `forecast_stress_weight` | 0 | The 5% "forecast badly wrong" member equals the launch risk tolerance and exceeds the 2.5% restart tolerance, so it blocked B and the retry rule on its own |
 | `abort_progress_credit` | 1.0 | An abort keeps the hours worked; a retry only finishes what remains. Assumption (0 reproduces the older all-or-nothing repair) |
 | `retry_after_abort` | true, 2 h review | Every strategy holds an aborted repair until the same restart review passes. Previously only C held it, permanently |
 
 What differs between the trees (information and policy, not hard-coded outcomes):
 
-- **B** forecast only. No biology. Crew chosen by rotation. Decisions weights stay at the forecast prior.
+- **B** forecast-derived estimate only. No biology. Crew chosen by rotation. Storm weights stay at the forecast prior.
 - **C** adds returned conventional readings (H2AX, lymphocytes, with their delays). They update the shared storm weights, rank crew by estimated exposure, and hold an astronaut until a post-EVA H2AX result returns.
-- **D** adds faster foci processing and in-suit readings. Adds in-EVA continue/abort decisions and short dose-saving waits on non-urgent work.
+- **D** adds faster foci processing and in-suit readings, which drive in-EVA continue/abort decisions. D's optional dose-saving
+  waits need a future departure projection, so they cannot fire when nobody uses a future projection.
 
 At hour 0 all three hold identical information, so identical early decisions are correct, not a defect.
 Results lead with `DECISIONS.md` (how often decisions differ, the first divergence hour, and what caused it), then outcomes
@@ -223,4 +230,4 @@ with their spread across emergencies. `python -m sim.write_results <folder>` wri
 Decisions are classified using the compact decision log stored in every checkpoint (`sim/decision_metrics.py`).
 
 Limits: the abort credit, restart review, ensemble members and their equal weights are experimental assumptions.
-Hindsight feasibility (results/presentation/final_results/hindsight_feasibility.json) is unchanged by the credit.
+Hindsight feasibility is unchanged by the credit.

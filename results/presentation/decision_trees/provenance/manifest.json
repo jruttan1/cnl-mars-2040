@@ -1,0 +1,146 @@
+{
+  "config": {
+    "trials": 100,
+    "seed": 21,
+    "template": "october_2003_goes10",
+    "severity": "1000",
+    "mixed_storms": true,
+    "wide_forecast": true,
+    "matched_current_rate": false,
+    "true_spe_scale": [
+      0.35,
+      1.25
+    ],
+    "forecast_scale_error": [
+      0.6,
+      1.4
+    ],
+    "engines": [
+      "NTP",
+      "NEP"
+    ],
+    "anatomies": [
+      "MAX",
+      "FAX"
+    ],
+    "observation_hours": 96.0,
+    "true_profile_origin_h": [
+      24.0,
+      72.0
+    ],
+    "forecast_origin_error_h": [
+      -6.0,
+      6.0
+    ],
+    "urgent_deadline_h": [
+      48,
+      48
+    ],
+    "eva_work_hours": [
+      7,
+      7
+    ],
+    "gcr_scale": 1.0,
+    "protected_nep_tasks": [
+      "communications",
+      "monitoring",
+      "propulsion_initial",
+      "propulsion"
+    ],
+    "cleared_ntp_tasks": [
+      "communications",
+      "monitoring",
+      "propulsion_initial",
+      "propulsion"
+    ],
+    "continued_shelter_feasible": true,
+    "warning_hold_h": 0.0,
+    "urgent_repair": "propulsion_initial",
+    "restart_quiet_hours": 2.0,
+    "forecast_stress_weight": 0.0,
+    "abort_progress_credit": 1.0,
+    "retry_after_abort": true,
+    "b_projection": "current_rate",
+    "shared_current_rate": true
+  },
+  "source_sha256": {
+    "bayes_estimator/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bayes_estimator/demo.py": "0a37511a005fac5c95c4c310bde97367366ce5f92828d5172a61e43a0ea170b9",
+    "bayes_estimator/demo_d.py": "7721b4a2597c2d1c63766180c2a9af47e97702f45bc6443c4c4425af577dfb0b",
+    "bayes_estimator/estimator.py": "aa010d6aceed994865104fb854d5f8f9f862e3e34dab0411edd5cb5e30a919e3",
+    "bayes_estimator/longitudinal.py": "4b867852f2840cf55b8701923a8ab7cee3a436e95d15de8f6be9ca1a9181edc8",
+    "bayes_estimator/markers.py": "9c93168cc6cc3d2153a4dd4f266d254bf4b96747d1ab0e5f30aaf3679717ec9c",
+    "bayes_estimator/markers_d.py": "3f82b66ae103414f7200394bc12196111f0c33a290bf67f56285829c3bf3d667",
+    "bayes_estimator/observation_models.py": "a85b4c590e76f8a99298af72be09ec92b5f5d3d433ceb396d08e2ad375672da5",
+    "bayes_estimator/plot.py": "f1ca24f25928a9ddab3d0e5d0109caabc13a35db33ba3a0d3a56069e81f85c6f",
+    "bayes_estimator/plot_d.py": "a31041a1a63b2ae6391bbf589958b09c15fab7da6519bfdeac7630e8f6d06226",
+    "data/processed/oltaris/mission_bfo_environment.csv": "270871c7ea81422f0ad7adf3a7e4b0a01dac0eaae3447efb3dab24a5f3256108",
+    "data/processed/oltaris/mission_bfo_environment_manifest.json": "1e7f3e171dc22f969035acec154de95845ad3e69b8b1a34b0b9378de5faf31db",
+    "data/processed/oltaris/oltaris_sapphire_organ_doses.csv": "70a7f9d12fe53c8e8e821d2367a16bcd8d938031ad7d59165fa630cc6772ec3d",
+    "data/raw/oltaris/fax_2026-11-18/7177050.txt": "8e2c882b7d47075546b72a2c42419adcaa23e6034c066d90240c2e26ae0fb738",
+    "data/raw/oltaris/fax_2026-11-18/7177051.txt": "baac62f4a042902e354cb4a31102ccaaa875b0b3f1103591dbfe55783769ed5a",
+    "data/raw/oltaris/fax_2026-11-18/7177052.txt": "3ba6a44bdb106ff0680ba04b5502527776ce9df42b5a49faf4a961d609d0660d",
+    "data/raw/oltaris/fax_2026-11-18/7177053.txt": "2176a3dd1e007da9226cc1576a1854d51e25bba7edeeccbfac6598b86232e3d6",
+    "data/raw/oltaris/fax_2026-11-18/provenance.json": "8b7217cb6a14faa4cfeb1b706f30b37269e8f873bc5662d3d29086779b596c24",
+    "data/reference/gcr/nasa_tp_2011_216155.pdf": "026410260e8bdb762561f52c98a5fa949f430f5896891fe6388b9e34dbc933ee",
+    "sim/analyze_factorial.py": "c91bda1591e5e187176173b33ec34fcd6a6b9ca400c8636aca02b273460b041c",
+    "sim/anatomical_reference.py": "7ad554ee2e5a112c62dde8e948d19eb0a475db4ceec9f6634dfa8ac0330f5d4b",
+    "sim/assumptions.py": "08b3dd86e61dcc27a759b008f4a49501f1bca438e811458f3d36f97078a0c782",
+    "sim/background_radiation.py": "1d4e88d9228af369f2bd4f04d205b14b18e416c989be76b57ff9dd2e50649a86",
+    "sim/decision_metrics.py": "be7c78c942ffb1e04a9285bc48cbabaf37f95e1c07740d9c764e1468af9a9e88",
+    "sim/defaults.py": "d6f2d5b808f77472210313811c28de46be314cfe50c88f44733d222c4abd5b2a",
+    "sim/informed_config.py": "d2d4a40869e192c5b3771a6432f6cb511937ad1d7db73c3e9d27be3c76ec2043",
+    "sim/mission_recovery.py": "8ca18d35bd6d5cb3e8f30f9a4aba8ba0c1981b3ed6a0fceb5f9deb555b316990",
+    "sim/mission_simulator.py": "8be8cb6381d32c31cebdaf4defbe90b3da11912db2e1a0c30c58fbe98a6d4209",
+    "sim/models.py": "038ffa2eab5534b3e2326d05f3c60ca557f38428aac9bbc915814545c734ff37",
+    "sim/radiation_information.py": "ec3b21e9db17ab3971e7b896b9e52b63a462b8ff002a04afb380288589f3b816",
+    "sim/repair_tasks.py": "6d1e4d7aa963c128ccde664be33137b43fe77c4ab3dad4f93ac2776b43179bbd",
+    "sim/run_comparison.py": "f80ff159a7fba086481b009347cd9b7ed32ca26fd690cee00406d21a16df8317",
+    "sim/run_monte_carlo.py": "b861b32f24a35f18700ce17e5245d09f91d2d188abbab6113d9a585fc992f73f",
+    "sim/run_sensitivity.py": "87d30ce8bd600403a64d114f9ff9c09f0ed9ff0281bfa234825026f0b86358f0",
+    "sim/run_strategy_a.py": "34bb7b6946c7f22e4632e446f491219de26f2104cf43c7997b79b8afefaa943e",
+    "sim/strategies.py": "fd6f4b8de712b40d28b23d954da20a8244f7ba9372748ee390c15cc3b9c5eadc",
+    "sim/write_results.py": "5e7be9c83a0eebd19a83cdc56902390cd854a6193b478d136b9c5d8f32b3b28f"
+  },
+  "background_gcr": {
+    "source_url": "https://ntrs.nasa.gov/api/citations/20130001648/downloads/20130001648.pdf",
+    "source_table": "2.7(a,b), printed pp. 30\u201331",
+    "model": "Constant solar-minimum male reference; emergency interval only",
+    "scale": 1.0,
+    "eva_limitation": "5 g/cm\u00b2 GCR proxy assigned to the 0.4 g/cm\u00b2 EVA channel; not validated suit transport or an upper bound",
+    "quantity_order": [
+      "bfo_absorbed_mGy",
+      "bfo_gray_equivalent_mGy_eq",
+      "skin_gray_equivalent_mGy_eq",
+      "lens_gray_equivalent_mGy_eq"
+    ],
+    "daily_rates": {
+      "0.4": [
+        0.5087671232876712,
+        0.9238356164383561,
+        1.0295890410958906,
+        1.0202739726027397
+      ],
+      "20.0": [
+        0.4986301369863014,
+        0.8627397260273972,
+        0.9378082191780823,
+        0.9271232876712329
+      ]
+    },
+    "source_shielding_g_cm2": {
+      "0.4": 5.0,
+      "20.0": 20.0
+    },
+    "prior_cruise_dose_included": false,
+    "reactor_dose_included": false
+  },
+  "python": "3.12.3 (v3.12.3:f6650f9ad7, Apr  9 2024, 08:18:47) [Clang 13.0.0 (clang-1300.0.29.30)]",
+  "distributions": "Independent uniforms over the named ranges; measurement randomness comes from the existing seeded observation model.",
+  "fixed_assumptions": "Mixed mode: equally sampled historical profiles, continuous fluence multiplier; both profiles in forecast, noisy strength. Fixed source spectral shape, no inferred return period.  noisy forecast origin; configured shape/timing/magnitude forecast ensemble; 5 crew, one outside, four tasks. EVA duration drawn once per emergency and known by all policies. No repair failure draws.",
+  "access_assumption": "Per-task reference clearances explicitly listed in config; they are not geometry calculations.",
+  "prior_exposure": "Emergency interval only; no previous cruise or reactor dose.",
+  "anatomy_assumption": "Separate homogeneous MAX male and FAX female reference cohorts, matched draws. GCR remains the same male-reference proxy for both; no sex-specific biomarker multiplier.",
+  "restart_assumption": "2 h of improved common forecast assessments after return; both forecast-only and evidence-adjusted cumulative risk must pass the restart gate.",
+  "baseline": "B uses estimated current rates through return. C/D retain the future storm ensemble. A is excluded."
+}

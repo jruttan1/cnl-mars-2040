@@ -73,6 +73,9 @@ class InformedConfig:
     # 'current_rate': B assumes today's estimated rate persists. 'ensemble': B integrates the same
     # configured forecast ensemble as C/D (still no biology), so C/D gains cannot come from a better forecast.
     b_projection: str = 'current_rate'
+    # Every strategy (B, C and D) projects today's estimated rate forward and re-estimates it each hour; none
+    # integrates the forecast's future trajectory. Policies still differ in the biology and rules they add.
+    shared_current_rate: bool = False
 
     def __post_init__(self):
         if type(self.matched_current_rate) is not bool:
@@ -85,6 +88,8 @@ class InformedConfig:
             raise ValueError('Storm evidence sharing must be enabled or disabled')
         if not isfinite(self.restart_risk_fraction) or not 0 < self.restart_risk_fraction <= 1:
             raise ValueError('Restart risk fraction must be in (0, 1]')
+        if type(self.shared_current_rate) is not bool:
+            raise ValueError('shared_current_rate must be true or false')
         if type(self.retry_after_abort) is not bool or self.b_projection not in ('current_rate', 'ensemble'):
             raise ValueError('Invalid retry_after_abort or b_projection setting')
         if self.restart_quiet_hours is not None and (

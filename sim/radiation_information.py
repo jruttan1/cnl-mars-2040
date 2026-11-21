@@ -129,7 +129,7 @@ class RadiationInformation:
     def __init__(self, strategy, config, names):
         self.strategy, self.config = strategy, config
         # Policies that assume today's estimated rate persists through the EVA and return.
-        self.current_rate_projection = (config.matched_current_rate
+        self.current_rate_projection = (config.matched_current_rate or config.shared_current_rate
                                         or (strategy == 'B' and config.b_projection == 'current_rate'))
         self.forecast = ForecastEnsemble(config.forecast)
         self.histories = {name: [] for name in names}
