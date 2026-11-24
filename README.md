@@ -87,6 +87,7 @@ frequencies under hypothetical team assumptions, not mission probabilities.
 | `radiation/` | Storm spectra, organ-dose transport and data preparation |
 | `bayes_estimator/` | Biodosimetry estimator for Strategy C and D |
 | `charts/` | Plotting scripts and the gallery builder |
+| `cad/` | SolidWorks CAD for the in-suit sensing hardware (`Assem2`: patch and hub parts, assembly and drawing) |
 | `configs/` | Monte Carlo experiment settings |
 | `docs/` | Method notes |
 | `data/` | Source records and processed tables |
