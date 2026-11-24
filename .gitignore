@@ -51,7 +51,6 @@ htmlcov/
 /results/mission-runs/
 /results/monte-carlo/
 /results/analysis/anatomical_eva/*.csv
-/results/analysis/anatomical_eva/*.png
 /results/model/band_validation/
 /results/model/exploratory_bfo_*.csv
 /results/model/synthetic_sapphire_temporal_weights.csv
