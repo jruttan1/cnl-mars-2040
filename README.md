@@ -92,26 +92,4 @@ frequencies under hypothetical team assumptions, not mission probabilities.
 | `data/` | Source records and processed tables |
 | `results/` | Figures, deck, and selected Monte Carlo and mission outputs |
 
-## Running it
-
-Python 3.12.
-
-```bash
-python3.12 -m venv .venv
-.venv/bin/pip install -r requirements.txt
-
-# one mission, recovery constraints on
-.venv/bin/python -B -m sim.run_strategy_a --recovery
-
-# strategy comparison for one ship
-.venv/bin/python -B -m sim.run_comparison --engine NTP --output-dir results/comparison_ntp
-
-# Monte Carlo (2003 timing, 1-in-1,000 storm)
-.venv/bin/python -m sim.run_monte_carlo --config configs/monte_carlo_2003_1000.json --workers 4 --output-dir results/monte-carlo/my_run
-
-# charts
-.venv/bin/python -B charts/09_anatomical_eva_exposure.py
-.venv/bin/python -B charts/build_final_case.py
-```
-
 Method details are in [`docs/`](docs/), starting with [`docs/mission_recovery.md`](docs/mission_recovery.md). Source data is in [`data/raw/`](data/raw/).
