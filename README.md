@@ -43,16 +43,31 @@ happens, not how big the storm is.
 **Spectrum fit check.** The corrected Band fit against the source spectra.
 ![Spectrum fit](results/validation/oltaris_anatomical/spectrum_overlay.png)
 
-**Monte Carlo results** (100 matched emergencies, both ships, both reference anatomies, evaluated through 96 h):
-![Monte Carlo results](results/presentation/final_results/06_monte_carlo_final_results.png)
+## Monte Carlo: do different information sources change the decisions?
 
-What it says:
-- Urgent repair by 48 h: B 36, C 36, D 37–38 of 100.
-- All repairs below the dose references: 0 for every strategy. With the full storm known in hindsight, 83 of 100 could have.
-- Skin reference reached: B 2, C 1, D 1.
-- Aborted EVAs: B 38–39, C 45–46, D 48–55. In-suit readings let D pull crew back more often, which also costs repairs.
+100 matched emergencies × NTP/NEP × two reference anatomies (400 cases per strategy), 96 h each. B, C and D face
+the identical storm, damage and crew, and every strategy projects today's estimated dose rate (none sees the future).
+Setup and settings: [`results/presentation/decision_trees/README.md`](results/presentation/decision_trees/README.md).
 
-Two matched examples (draw 42 and draw 86) are in [`07_monte_carlo_two_matched_examples.png`](results/presentation/final_results/07_monte_carlo_two_matched_examples.png).
+**1. The decisions differ.** B, C and D choose different EVA launches or aborts in 32–38% of cases. About two thirds of
+the first splits trace to new evidence moving the estimated risk across the 5% gate, or to in-EVA readings.
+![Decisions differ and why](results/presentation/decision_trees/01_decisions_differ_and_why.png)
+
+**2. One emergency, three crews.** The same storm produces three different EVA sequences (two cases picked by rule, not typical).
+![One emergency, three crews](results/presentation/decision_trees/02_one_emergency_three_crews.png)
+
+**3. Outcomes barely change.** Urgent repair on time: B 42%, C 43%, D 42%. All four repairs: 2%, 3%, 4%.
+Median worst-organ BFO dose is about 89 mGy-Eq for all three, and no run reaches the 250 mGy-Eq reference.
+Better information changes the decisions here, but not the repairs completed or the dose received.
+![Outcomes barely change](results/presentation/decision_trees/03_outcomes_barely_change.png)
+
+**4. After an abort.** C goes back out least often after an aborted EVA (48% of aborts are followed by another launch, against 65% for B and 61% for D),
+consistent with its 5 h lab turnaround, though that is not isolated here.
+![What happens after an abort](results/presentation/decision_trees/04_what_happens_after_an_abort.png)
+
+Full tables: [`provenance/RESULTS.md`](results/presentation/decision_trees/provenance/RESULTS.md) and
+[`provenance/DECISIONS.md`](results/presentation/decision_trees/provenance/DECISIONS.md). These are conditional
+frequencies under hypothetical team assumptions, not mission probabilities.
 
 **Gallery of final-case figures:** [`results/final-case/index.html`](results/final-case/index.html).
 
