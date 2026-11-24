@@ -17,7 +17,7 @@ Start here: this folder contains a solar-proton event source, a simplified alumi
 
 ## Solar-proton source: key findings
 
-Source: `solar-proton-fluence-report.pdf`, integral and differential proton spectra table. Energy grid spans **0.10–1000 MeV**.
+Source: `solar-proton-fluence-report.pdf`, integral and differential proton spectra table. Energy grid spans **0.10 to 1000 MeV**.
 
 | Energy threshold | Integral fluence above threshold (protons/cm²) |
 |---|---|
@@ -33,8 +33,8 @@ The spectrum contains many more low-energy than high-energy protons. The log-ene
 
 - `2.087E+10` means 20,870,000,000. MeV is particle energy, not absorbed dose.
 - Integral fluence (protons/cm²) counts protons above a stated energy. Differential fluence (protons/cm²/MeV) describes the spectrum per energy interval. These are event totals, not particles per second. Do not add integral rows together.
-- Both source reports say no magnetic shielding, model fluence at **1.2 AU**, and exposure factors **1.0000**. Mission total and segment exposure are **72 hours**; a separate orbit-exposure column says **8 hours**. Confirm what that orbit setting represents before using it. The saved MULASSIS metadata gives a **3-day** duration; the 1-in-100 SHIELDOSE text explicitly gives 1–4 July 2040.
-- The report says ion range H–U, but the displayed spectra and dose source are solar protons. These files do not establish a complete heavy-ion or galactic cosmic-ray environment.
+- Both source reports say no magnetic shielding, model fluence at **1.2 AU**, and exposure factors **1.0000**. Mission total and segment exposure are **72 hours**; a separate orbit-exposure column says **8 hours**. Confirm what that orbit setting represents before using it. The saved MULASSIS metadata gives a **3-day** duration; the 1-in-100 SHIELDOSE text explicitly gives 1 to 4 July 2040.
+- The report says ion range H to U, but the displayed spectra and dose source are solar protons. These files do not establish a complete heavy-ion or galactic cosmic-ray environment.
 - The return-period label describes the model's rare-event scenario. It is not a prediction that an event will happen during this mission, nor a multiplier for the 3-day exposure.
 
 ## Shielding result: useful trend, uncertain scenario association

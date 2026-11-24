@@ -194,8 +194,8 @@ def decision_metrics(records):
 
 def decision_report(metrics):
     lines = ['## Decision differences between strategies (same emergencies)', '',
-             'A "different decision" means the sequence of EVA launches/aborts (time, crew, repair) differs. '
-             'At hour 0 all strategies hold identical information, so identical early decisions are expected.', '',
+             'A different decision means the sequence of EVA launches and aborts (time, crew member, repair) differs. '
+             'At hour 0 all strategies hold the same information, so identical early decisions are expected.', '',
              '| pair | cases with different decisions (emergency × engine × anatomy) | median first-divergence hour | caused by evidence / in-EVA readings | same final outcome anyway |',
              '|---|---|---|---|---|']
     for row in metrics['pairs']:
@@ -204,13 +204,15 @@ def decision_report(metrics):
         lines.append(f"| {row['pair']} | {row['different_decisions']}/{row['emergencies']} "
                      f"({row['different_decisions_fraction']:.0%}) | {'-' if median is None else f'{median:.1f}'} | "
                      f"{'-' if share is None else f'{share:.0%}'} | {row['divergent_with_identical_outcome']} |")
+    counts = lambda d: ', '.join(f'{k} ({v})' for k, v in d.items()) or 'none'
     lines += ['', '### What separated them first', '']
     for row in metrics['pairs']:
-        lines.append(f"- **{row['pair']}** kind: {row['first_divergence_kind'] or 'none'}; cause: {row['first_divergence_cause'] or 'none'}")
-    lines += ['', '### Decision profile per strategy (per emergency)', '',
+        lines.append(f"- {row['pair']}: first difference was {counts(row['first_divergence_kind'])}. "
+                     f"Cause: {counts(row['first_divergence_cause'])}.")
+    lines += ['', '### Decision profile per strategy (per case)', '',
               '| strategy | launches | aborts | retries after abort | work hours credited | hold/wait decisions by rule |',
               '|---|---|---|---|---|---|']
     for p in metrics['profiles']:
         lines.append(f"| {p['strategy']} | {p['mean_launch_decisions']:.2f} | {p['mean_aborts']:.2f} | "
-                     f"{p['mean_retries_after_abort']:.2f} | {p['mean_credited_work_h']:.2f} | {p['hold_or_wait_decisions_by_rule']} |")
+                     f"{p['mean_retries_after_abort']:.2f} | {p['mean_credited_work_h']:.2f} | {counts(p['hold_or_wait_decisions_by_rule'])} |")
     return '\n'.join(lines) + '\n'

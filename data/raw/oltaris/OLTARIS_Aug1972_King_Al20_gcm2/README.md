@@ -1,4 +1,4 @@
-# OLTARIS — August 1972 King SPE, Al 20 g/cm²
+# OLTARIS: August 1972 King SPE, Al 20 g/cm²
 
 ## Scenario and assignment
 
@@ -24,7 +24,7 @@ The `.dat` exports contain OLTARIS headers, dimension records and wrapped arrays
 - Effective Dose Equivalent: **89.81773000000001 mSv**; Bfo: **48.20886 mSv**; Brain: **150.5727 mSv**; Lens: **251.643 mSv**; Skin: **306.4029 mSv**. These are exported radiation-weighted totals, not absorbed doses in Gy. Bone is exported as 0.0, without explanation.
 - The four paired depth databases (absorbed dose, leukemia dose equivalent, solid-cancer dose equivalent and fluence) have **identical non-comment content** to the job_1 downloads. Their job/time headers differ. Consequently these database exports do not themselves demonstrate a shielding-dependent change between the selected spheres. They tabulate multiple depths rather than a single selected sphere's organ result.
 - The organ totals do differ from the saved 0.4 dataset (effective dose equivalent 1238.012 mSv; Bfo 1255.8992 mSv). Attribution solely to shielding assumes the remaining job settings were unchanged, as reported by the user.
-- Dose tables contain 21 × 21 aluminium/tissue depth grids spanning 0–100 g/cm². The fluence database declares 100 energy points × 66 particle entries × 21 × 21 depths. Grid coordinates are not proof of the selected sphere thickness.
+- Dose tables contain 21 × 21 aluminium/tissue depth grids spanning 0 to 100 g/cm². The fluence database declares 100 energy points × 66 particle entries × 21 × 21 depths. Grid coordinates are not proof of the selected sphere thickness.
 - No time profile or populated exposure duration is supplied; these totals do not establish a particular EVA dose or dose rate.
 
 ## Byte-preservation manifest

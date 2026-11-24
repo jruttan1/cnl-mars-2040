@@ -1,43 +1,41 @@
 # Operational decisions and comparable exposure
 
-The experiment begins **after initial damage assessment and protective actions**. Configuration
-records available confirmations; zero-time `stabilize` acknowledges them, rather than simulating
-instant reactor shutdown or cooling. Unknown shutdown, cooling, shielding or task access blocks EVA.
-These changes implement decision rules, not reactor transients or dose-based illness diagnosis.
+The experiment starts after the first damage assessment and protective actions. The configuration records which
+confirmations are available, and the zero-time `stabilize` action acknowledges them. It does not simulate an
+instant reactor shutdown or cooling. Unknown shutdown, cooling, shielding or task access blocks EVA. These rules
+are decision logic. They are not reactor transients or a dose-based diagnosis of illness.
 
 ## Urgency and prerequisites
 
-The comparison runner names an urgent task (default `propulsion_initial`, override with
-`--urgent-repair`). NTP/NEP task descriptions remain different. The urgent task and its transitive
-prerequisites precede otherwise ready work. Monitoring is required only with `--monitoring-required`
-or an explicit `RecoveryConfig.repair_prerequisites` edge. The second propulsion task depends on
-the first by default; cycles are rejected. Omitted prerequisite tasks mean already-functional systems,
-not a way to skip damaged systems. Legacy API calls may leave urgency unset, with no asserted urgency.
+The comparison runner names an urgent task (default `propulsion_initial`, override with `--urgent-repair`). NTP
+and NEP keep different task descriptions. The urgent task and its prerequisites go ahead of other ready work.
+Monitoring is a prerequisite only with `--monitoring-required` or an explicit `RecoveryConfig.repair_prerequisites`
+edge. The second propulsion task depends on the first by default, and cycles are rejected. A task left out of the
+prerequisites means an already working system, so it cannot be used to skip a damaged one. Legacy API calls can
+leave urgency unset.
 
-Optional deadlines apply to completed urgent **work**, not its final return. Planning includes
-inter-task travel/turnaround. No universal deadline or physical deterioration rate is inferred.
+Optional deadlines apply to completed urgent work, not to the final return. Planning includes travel between
+tasks and turnaround. No universal deadline or deterioration rate is assumed.
 
 ## Holds and authorization
 
-- `wait`, `safe_hold`, `shelter`: time advances, cabin exposure accumulates, results arrive, and
-  observations are reevaluated. They do not declare the spacecraft unrecoverable.
-- `no_recovery_plan`: a terminal recovery decision, e.g. an explicit urgent deadline is infeasible.
-- `abort_mission`: abandon the objective; an astronaut outside still returns.
-- `resume_mission`: separate readiness/authorization after repairs and crew return.
+- `wait`, `safe_hold`, `shelter`: time advances, cabin exposure builds up, results arrive and observations are
+  re-evaluated. None of these declares the spacecraft unrecoverable.
+- `no_recovery_plan`: a terminal recovery decision, for example when an explicit urgent deadline cannot be met.
+- `abort_mission`: abandon the objective. An astronaut who is outside still returns.
+- `resume_mission`: a separate readiness and authorization step after repairs and crew return.
 
-Use `simulate_mission(..., recovery_schedule=((hour, updated_config), ...))` for explicit future
-assessment changes. They are logged and applied at that hour; policies only see current assessments,
-not the schedule. Unknown conditions do not become confirmed merely because time passes.
+`simulate_mission(..., recovery_schedule=((hour, updated_config), ...))` applies explicit future changes to the
+assessments. They are logged and applied at that hour, and policies see only the current assessment, never the
+schedule. Unknown conditions do not become confirmed just because time passes.
 
-Each astronaut must be explicitly `medically_fit_for_eva` and `rested_for_eva`, in addition to consent,
-qualifications, availability and `rest_until_h`. Unknown fitness blocks authorization. Minimum rest
-after arrival defaults to one hour as a configurable scenario assumption. Radiation does not diagnose
-illness or alter these assessments automatically.
+Each astronaut must be explicitly `medically_fit_for_eva` and `rested_for_eva`, on top of consent, qualification,
+availability and `rest_until_h`. Unknown fitness blocks authorization. Minimum rest after arrival defaults to one
+hour, a configurable assumption. Radiation does not change these assessments automatically.
 
-Without confirmed ground contact, only `preapproved_repairs` can be authorized locally. This is
-preapproved emergency authority, not unlimited autonomy. Antenna repair does not automatically prove
-contact restoration. Mission continuation separately requires readiness and approval, with confirmed
-ground contact required by default.
+Without confirmed ground contact, only `preapproved_repairs` can be authorized locally. That is preapproved
+emergency authority, not unlimited autonomy. An antenna repair does not prove contact is restored. Mission
+continuation separately needs readiness and approval, with confirmed ground contact required by default.
 
 ```python
 RecoveryConfig(urgent_repair='propulsion_initial', ground_contact_available=False,
@@ -47,53 +45,50 @@ RecoveryConfig(urgent_repair='propulsion_initial', ground_contact_available=Fals
 
 ## Return and instrument burden
 
-`return_to_airlock_h` defaults to **0.5 h as an illustrative assumption**, not a flight-procedure value.
-It is added to the existing seven-hour repair-work duration: normal exposure is 7.5 h before turnaround
-at zero sampling burden. Override with `--return-hours`. Earlier presentation charts integrate exactly
-seven hours and are not automatically updated to this work-plus-return convention.
+`return_to_airlock_h` defaults to 0.5 h as an illustrative assumption, not a flight-procedure value. It is added
+to the seven-hour repair work, so normal exposure is 7.5 h before turnaround at zero sampling burden. Override it
+with `--return-hours`. Earlier presentation charts integrate exactly seven hours and do not use this convention.
 
-Abort stops work and starts return; EVA shielding and exposure continue until actual airlock arrival.
-Normal completed work also has a return phase. Rest/turnaround start at arrival, not at the command.
-A time cap reserves return time. Completed work is retained despite a new assessment at completion;
-incomplete work earns no credit. If observation ends before arrival, the active EVA and unset actual
-arrival time identify censoring; the astronaut is not teleported to the cabin.
+An abort stops work and starts the return, and EVA shielding and exposure continue until the airlock is reached.
+A completed repair also has a return phase. Rest and turnaround start at arrival, not at the command. A time cap
+reserves return time. Completed work is kept even if a new assessment arrives at completion, and incomplete work
+earns no credit unless `abort_progress_credit` says otherwise (see `informed_strategies.md`). If observation ends
+before arrival, the active EVA and the unset arrival time mark the run as censored, and the astronaut is not
+moved into the cabin.
 
-D stress controls retain biological kernels and C/D's common estimator/decision policy:
+These D stress controls keep the biological kernels and the shared C and D estimator and policy:
 
 | Setting | Effect |
 | --- | --- |
-| `--d-processing-delay HOURS` | Adds latency to current marker-specific processing defaults |
-| `--d-availability FRACTION` | Seeded probability an attempted reading is available |
-| `--d-unavailable-marker NAME` | Explicit marker outage; repeat for multiple outages |
-| `--d-sampling-burden HOURS` | Occupied time per panel; delays cabin availability or repair completion |
+| `--d-processing-delay HOURS` | Adds latency to each marker's default processing time |
+| `--d-availability FRACTION` | Seeded probability that an attempted reading is available |
+| `--d-unavailable-marker NAME` | Marks a marker as down; repeat for several |
+| `--d-sampling-burden HOURS` | Time a panel occupies; delays cabin availability or repair completion |
 
-The four-gene panel incurs one collection burden. A failed attempted reading still costs collection
-time; a known wholly unavailable panel is not collected. Results wait for collection burden plus
-processing. Preflight samples are not repeatedly charged while waiting for the same result. Sampling
-does not delay emergency return; in-suit panels are suspended during return. Planning reserves the
-configured workload using a conservative discrete panel count and burden/cadence; actual pauses are logged. Biological response
-times remain independent of hardware delay and the time the result reaches the estimator.
+The four-gene panel costs one collection burden. A failed attempt still costs collection time, and a panel known
+to be wholly unavailable is not collected. A result waits for collection burden plus processing. Preflight samples
+are not charged again while waiting for the same result. Sampling never delays an emergency return, and in-suit
+panels pause during the return. Planning reserves the workload with a conservative count of discrete panels, and
+actual pauses are logged. Biological response times do not depend on hardware delay or on when the result reaches
+the estimator.
 
 ## Exposure comparison
 
-`outcome_hour` records the end of the recovery decision; `exposure_observation_end_h` records the
-exposure ledger endpoint. Outputs include exposure through both endpoints.
+`outcome_hour` is the end of the recovery decision, and `exposure_observation_end_h` is the end of the exposure
+ledger. The outputs report exposure through both.
 
-Use **both** `--observation-hours N` and `--continued-shelter-feasible` for comparable totals. After
-recovery ends, any modeled return is completed, then the crew shelters to that common endpoint.
-Cabin dose and pending tests continue, without new repairs. Shelter feasibility is an explicit
-conditional assumption, not established by the engineering model. Periods beyond radiation-data
-coverage are rejected rather than given an artificial zero-dose tail.
+For comparable totals, pass both `--observation-hours N` and `--continued-shelter-feasible`. After recovery ends,
+any modeled return finishes and the crew then shelters to the common endpoint. Cabin dose and pending tests
+continue, with no new repairs. Shelter feasibility is an explicit assumption that the engineering model does not
+establish. A period beyond the radiation-data coverage is rejected and not given an artificial zero-dose tail.
 
-Otherwise `exposure_ranking_permitted` is false and `repairs_completed_below_references` is null.
-The separately labelled at-reported-end result remains available. Low exposure caused by early
-termination is not a benefit. A common observation endpoint does not itself establish survival,
-clinical safety, or a feasible return trajectory.
+Without both options, `exposure_ranking_permitted` is false and `repairs_completed_below_references` is null. The
+at-reported-end result stays available under its own label. Low exposure from early termination is not a benefit.
+A common endpoint does not establish survival, clinical safety or a feasible return trajectory.
 
 ## Reproduction
 
 ```bash
-.venv/bin/python -B -m unittest sim.tests.test_operational_realism -v
 .venv/bin/python -B -m sim.run_comparison --urgent-repair propulsion_initial \
   --observation-hours 96 --continued-shelter-feasible --output-dir results/operational_reference
 .venv/bin/python -B -m sim.run_comparison --urgent-repair propulsion_initial \

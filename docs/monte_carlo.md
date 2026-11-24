@@ -1,233 +1,143 @@
-# Paired Monte Carlo experiment
+# Monte Carlo experiment
 
-The runner calls the existing mission engine. It does not introduce a second simulator, new
-clinical outcomes, or a weighted score. The initial experiment fixes the **2003 timing profile and
-1-in-1,000 SAPPHIRE spectrum**. NTP/NEP and MAX/FAX reference cohorts are reported separately.
+The runner calls the same mission engine as everything else. It adds no second simulator, no clinical
+outcome and no weighted score. Strategies B, C and D face the same random emergency, so any
+difference between them comes from what they know and how they decide. Strategy A is not in the Monte Carlo.
+Its old implementation stays in the repo as a baseline for the single-mission runs.
 
-## Run it
+## The primary experiment
 
-```sh
-.venv/bin/python -m sim.run_monte_carlo --trials 100 --output-dir results/monte-carlo/2003_1000_100draws
-```
-
-This means 100 independent emergencies, each evaluated for two engines, two reference anatomies,
-and A–D: **1,600 mission executions**. A pilot with `--trials 2` runs 32 executions and is only a
-software check, not a stable performance estimate. Output is written after each four-strategy group.
-Repeat the exact command with `--resume` after interruption. Resume refuses changed configuration
-or source hashes. To change assumptions, use a new folder.
-
-Edit `configs/monte_carlo_2003_1000.json` or pass `--config PATH`.
-
-## Starting random inputs
-
-| Input | Distribution | Interpretation |
-|---|---|---|
-| Historical profile origin | Uniform 24–72 h | Which hour in the historical storm record corresponds to emergency hour zero |
-| Forecast origin error | Uniform −6 to +6 h | Noisy forecast center = true profile origin + error; individual strategies do not receive the true origin |
-| Urgent-repair deadline | Uniform 24–72 h | Team assumption, shared by every strategy; applies to `propulsion_initial` |
-| EVA work duration | Uniform 6–8 h | Drawn once for the emergency and shared by all four tasks; represents uncertain workload across cases, **not an unannounced mid-EVA overrun** |
-| Biological measurement noise | Existing seeded observation model | New seed each emergency, shared across C/D and matched engine/anatomy cohorts |
-
-These ranges and their independence are experimental choices, not measured distributions or CNL
-facts. Source-profile origin is not a validated SPE-onset time relative to Mission Control's warning.
-The selected historical shape and severity class are assumed known to the forecast; timing is imperfect.
-Forecast ensemble uncertainty remains the existing ±6 h and 0.7/1/1.3 magnitude factors. The true
-SAPPHIRE event magnitude is fixed within this first experiment. Return periods are not encounter
-probabilities. No probability-weighted average over engine types or sexes is produced.
-
-Keep shielding, crew count, task access, GCR, and biomarker calibration fixed initially. Test D
-processing latency, availability, and calibration as separate controlled sensitivity experiments.
-Otherwise it becomes hard to identify what caused a performance difference.
-
-## Matched current-rate recovery experiment
-
-Use `configs/monte_carlo_matched_bounded_forecast.json` for the same 100
-emergencies, both engines and both reference anatomies as the original matched
-current-rate run. Each strategy keeps its original assay schedule and evaluates
-the same departure and continuation rules. The forecast magnitude grid
-approximates the sampled forecast-error range. The original 5% out-of-range
-strength tail is a separate sensitivity condition in
-`configs/monte_carlo_matched_restart.json`, which uses the same restart protocol.
-
-The [restart protocol](informed_strategies.md#forecast-and-quantities) checks
-both the forecast's recent rate and the selected astronaut's accumulated dose
-before a return to an interrupted repair. Two qualifying hours after return is a
-scenario assumption. The main comparison retains atomic repair work and assumes
-the current estimated rate persists for the planned EVA and return.
+`configs/monte_carlo_decision_trees_current_rate.json` asks one question: does extra information change
+what the crew does? Each of 100 emergencies runs for NTP and NEP, for the MAX and FAX reference anatomies
+and for B, C and D, which is 1,200 mission runs.
 
 ```bash
-.venv/bin/python -m sim.run_monte_carlo \
-  --config configs/monte_carlo_matched_bounded_forecast.json \
-  --output-dir results/monte-carlo/bcd_bounded_forecast_full_100 --workers 8
+export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1   # stops worker processes fighting over CPU cores
+.venv/bin/python -m sim.run_monte_carlo --config configs/monte_carlo_decision_trees_current_rate.json \
+  --output-dir results/monte-carlo/decision_trees_current_rate_100 --workers 10
+.venv/bin/python -m sim.write_results results/monte-carlo/decision_trees_current_rate_100
+.venv/bin/python charts/12_decision_tree_results.py
 ```
 
-## Fixed starter assumptions
+It takes about 11 minutes on 10 cores. If a run is interrupted, repeat the same command with `--resume`.
+Resume refuses to continue if the config or source code has changed, so use a new folder when you change
+assumptions. A pilot with `--trials 2` is a software check, not a performance estimate.
 
-- Five crew, one astronaut outside at a time, four tasks, existing return/rest/turnaround rules.
-- All four NTP worksites cleared and all four NEP routes/worksites protected, explicitly listed
-  task by task in the configuration. Omit a task from its clearance list to block it. These are
-  a repairable reference scenario, not measured spacecraft geometry or approval of real EVA access.
-- First propulsion task urgent; second depends on first. Monitoring is not automatically a prerequisite.
-- Zero shared warning hold: A is the existing immediate/procedural comparator, not a clinically
-  validated conservative response to an SPE. Set `warning_hold_h` for a shared hold sensitivity.
-- Common 96-hour dose observation, assuming continued cabin shelter remains feasible after
-  recovery termination. If that assumption is disabled, exposure rankings are suppressed when
-  observation periods differ. Mission recovery time remains distinct from exposure end time.
-- Constant GCR enabled with the documented EVA proxy; prior cruise exposure and reactor dose excluded.
+### What each strategy knows
 
-## Male and female reference cohorts
+No strategy knows the future. B, C and D all project today's estimated dose rate through the planned EVA and
+the return, and they re-estimate it every hour (`shared_current_rate`). That is a predictive estimate of the
+current rate, not a forecast of where the storm goes next. A rising storm makes any of them abort, and a
+falling one lets them start. At hour 0 the three hold the same information, so identical early decisions
+are expected.
 
-`MAX` and `FAX` are separate homogeneous reference-anatomy cohorts. The same random emergency
-is reused across both, as well as across engines and strategies. No mixed-sex crew optimization
-or personalized body-size response is claimed. Each policy's forecast uses the known cohort anatomy.
-Astronaut gender labels alone do not change physics; the explicit scenario anatomy selects transport.
+- **B** uses the forecast-derived estimate only. It has no biology and picks crew by rotation.
+- **C** adds returned blood readings (γ-H2AX with a 5 h lab delay, lymphocytes). They update the storm
+  weights, rank the crew by estimated exposure, and hold an astronaut until a post-EVA γ-H2AX result is back.
+- **D** adds faster foci processing (1 h) and in-suit readings, which can trigger an abort mid-EVA.
+  Its optional dose-saving waits need a projection of the future, so they never fire under a shared
+  current-rate estimate.
 
-MAX uses the preserved corrected anatomical table. FAX uses the four archived OLTARIS exports
-in `data/raw/oltaris/fax_2026-11-18`, verified against their saved SHA-256 checksums. FAX Gray
-Equivalent values are in cGy-Eq and are multiplied by 10, while absorbed doses already use mGy.
-Separate full-event BFO, skin and lens totals are distributed using the same historical weights.
-This is an organ-specific transport change, not a generic female sensitivity multiplier.
-The existing GCR reference remains a male-reference proxy shared by both cohorts. Biomarker
-response functions/noise are also shared; no sex-specific medical calibration has been established.
+All three clear the same gate: the probability that any organ reaches its reference (BFO 250, skin 1,500,
+lens 1,000 mGy-Eq) must be 5% or less to launch or continue.
 
-## Outcomes
-
-There is no single numerical grade. Report these side by side:
-
-1. Fraction completing the urgent repair by its deadline (checked against actual completion time).
-2. Fraction completing all four repairs within the observation window.
-3. Fraction completing all repairs while every crew member remains below all three modeled organ
-   references over the common observation period. This is not proof of clinical safety.
-4. Maximum individual BFO, skin and lens Gray Equivalent; reference exceedance frequency.
-5. Repair count, completion time conditional on finishing, aborted EVAs, and termination categories.
-
-The same thresholds apply to A–D. The worst-exposed crew member is assessed for each organ;
-these maxima need not be the same person. No crew-death probability is inferred.
-
-Outputs: `strategy_summary.csv`, `paired_differences.csv`, `trial_results.csv`, `draws.csv`,
-`summary.json`, and `manifest.json`. Trial checkpoints retain configurations, individual crew
-outcomes and EVA attempts. Trial zero also retains detailed exposure, measurement and decision logs.
-Paired comparisons report B−A, C−B, D−C, and D−A for the same emergencies. Proportion intervals
-use Wilson's method; paired mean differences use an approximate 95% Monte Carlo standard-error
-interval (unavailable with one draw). They quantify sampling noise under this chosen experiment,
-not uncertainty in radiation physics, biology, ethical judgment, or the assumed distributions.
-
-## Mixed-storm experiment (18 November)
-
-Run `OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -m sim.run_monte_carlo --config configs/monte_carlo_mixed_storms.json --workers 4 --output-dir results/monte-carlo/mixed_storms_100`.
-
-One hundred independent emergencies reuse exactly the same draws for A–D, NTP/NEP,
-and MAX/FAX reference cohorts. Each draw chooses either historical profile with
-probability 0.5, then a continuous proton-fluence multiplier uniformly from 0.35 to
-1.25 of the corrected 1,000-year source spectrum. This includes magnitudes below,
-between, and above the reference scenarios. It does **not** reproduce the 100-year
-spectral shape or establish intermediate return periods. Spectral hardness remains
-fixed. These are deliberately selected stress-test distributions, not inferred
-space-weather probabilities.
-
-The forecast contains both historical shapes, three timing offsets and three strength
-factors (18 members). Its central strength is the true multiplier times an independent
-uniform error from 0.6 to 1.4. Its origin has an independent ±6-hour error. No true
-profile selection is supplied to the policy. Ensemble bounds are illustrative and
-need not contain truth; they are not a calibrated 95% forecast interval.
-
-The emergency begins at historical-profile hour 24–72. This varies storm phase at
-emergency onset, **not** a future storm-arrival time. Earlier exposure before mission
-hour zero is excluded. Seven hours of repair work, the additional half-hour return,
-four tasks, five crew and a 48-hour urgent deadline remain fixed. All exposure
-comparisons use 96 hours including cabin exposure after operational termination,
-conditional on continued shelter being feasible. The deadline is a team assumption.
-
-SPE multipliers scale only solar exposure. They do not scale GCR or reactor fields.
-Reactor access remains a task-specific clearance assumption; no quantitative reactor
-radiation is calculated. MAX and FAX are separate reference cohorts, not mixed-sex
-crews or personalized biological response models. All tasks have reference clearance,
-so this batch may show little NTP/NEP differentiation. Strategy A with zero warning
-hold is the existing immediate-repair procedural comparator.
-
-Parallel workers checksum-validate source tables on first load and cache them locally.
-Checkpoints retain paired outcomes; the manifest records code/data hashes, checked
-again before accepting the batch. Sampling intervals cannot cover model inadequacy,
-forecast calibration errors, biomarker extrapolation, or unmodeled engineering hazards.
-
-## B–D revision
-
-Current comparison and Monte Carlo runners exclude Strategy A. The old A implementation
-and historical results remain for provenance, but are withdrawn as evidence for a
-health-first numerical baseline. New checkpoints require B/C/D only and changed code
-hashes prevent resuming pre-revision batches.
-
-The revised shared policy uses posterior scenario probabilities for coherent total
-BFO/skin/lens exposure, including the proposed EVA and return. It gates the joint
-probability of any reference exceedance at 5%. Six-hour cabin panels let C and D
-collect delayed evidence while sheltered. See `informed_strategies.md` for the
-persistent-scenario assumption and limits. This does not establish clinical validation
-or guarantee C/D superiority.
-
-A pilot can use the first 12 emergencies of the mixed-storm seed, selected without regard to
-outcomes. It retains both engines, both reference anatomies, the same physical draws, and all
-workload/reference values.
-Use a new output directory; old 100-emergency results are not results for this revision.
-
-The first full revised BCD run (`bcd_full_100`) was stopped during behavioral audit
-because crew rotation allowed repeated short aborted attempts on the same task.
-It is incomplete and is not a final comparison. `bcd_reassessed_full_100` is the
-fresh rerun with shared reassessment and restart hysteresis. No checkpoints from
-the old policy are reused. Its watchdog stops on invariant failures or three
-aborted attempts on one task, requiring inspection rather than silently accepting
-repeated launch/abort cycles.
-
-A further audit stopped `bcd_reassessed_full_100`: a fast post-return lymphocyte
-result allowed a restart while the post-return H2AX result was pending, followed
-by another abort at H2AX arrival. The final rerun is `bcd_reassessed_v2_full_100`.
-C/D now specifically require the returned post-return H2AX result. Compact restart
-and returned-H2AX logs are retained for every checkpoint, and the watchdog checks
-the actual evidence and risk margin for each post-abort launch. Neither interrupted
-batch is a completed comparison, and none of its checkpoints is reused.
-
-## Dose and reference timing outputs
-
-The trial outputs include total crew BFO absorbed dose in person-mGy and the same
-total divided by crew size in mGy. Each checkpoint records the first hour each
-astronaut reaches each BFO, skin or lens reference, plus the earliest such hour
-across the crew for each organ. A missing crossing means the reference was never
-reached within that run's observation window. Crossing times are linearly
-interpolated within the exposure intervals, using the accumulated mGy-Eq for each
-organ. The strategy summary reports the number of cases reaching each reference
-and the median crossing hour among those cases. It compares doses only over a
-common observation period. The individual and crew timings are retrospective
-simulation outcomes and do not enter the decision policy.
-
-## Decision-tree experiment (B, C and D decide differently because they know different things)
-
-`configs/monte_carlo_decision_trees_current_rate.json` is the primary experiment for showing how the three
-strategies **decide** differently on the same emergency. It replaces the matched current-rate mode, which forced
-C and D onto B's rule and so could not show decision differences.
-
-**No strategy knows the future.** B, C and D all project today's *estimated* dose rate forward through the planned EVA
-and return, and re-estimate it every hour (`shared_current_rate`). That is a predictive estimate, not a forecast of the
-storm's future trajectory, so a rising storm makes any of them stop (abort) and a falling one lets them start.
-`configs/monte_carlo_decision_trees.json` is a labelled sensitivity in which all strategies integrate the forecast
-ensemble's future (`b_projection: ensemble`); it is not the primary result.
+### Settings
 
 | Setting | Value | Why |
 |---|---|---|
-| `shared_current_rate` | true | All three project the current estimated rate; none integrates a future trajectory |
-| `forecast_stress_weight` | 0 | The 5% "forecast badly wrong" member equals the launch risk tolerance and exceeds the 2.5% restart tolerance, so it blocked B and the retry rule on its own |
-| `abort_progress_credit` | 1.0 | An abort keeps the hours worked; a retry only finishes what remains. Assumption (0 reproduces the older all-or-nothing repair) |
-| `retry_after_abort` | true, 2 h review | Every strategy holds an aborted repair until the same restart review passes. Previously only C held it, permanently |
+| `shared_current_rate` | true | All three project the current estimated rate and none integrates a future trajectory |
+| `forecast_stress_weight` | 0 | The 5% "forecast badly wrong" member equals the launch tolerance and exceeds the 2.5% restart tolerance, so by itself it blocked B and the retry rule |
+| `abort_progress_credit` | 1.0 | An abort keeps the hours worked, and a retry only finishes what remains. This is an assumption; 0 gives the older all-or-nothing repair |
+| `retry_after_abort` | true, 2 h review | Every strategy holds an aborted repair until the same restart review passes. Before this, only C held it, and permanently |
 
-What differs between the trees (information and policy, not hard-coded outcomes):
+The defaults in the code keep the older behavior (`abort_progress_credit` 0, `retry_after_abort` off), so older
+configs still reproduce.
 
-- **B** forecast-derived estimate only. No biology. Crew chosen by rotation. Storm weights stay at the forecast prior.
-- **C** adds returned conventional readings (H2AX, lymphocytes, with their delays). They update the shared storm weights, rank crew by estimated exposure, and hold an astronaut until a post-EVA H2AX result returns.
-- **D** adds faster foci processing and in-suit readings, which drive in-EVA continue/abort decisions. D's optional dose-saving
-  waits need a future departure projection, so they cannot fire when nobody uses a future projection.
+### What it found
 
-At hour 0 all three hold identical information, so identical early decisions are correct, not a defect.
-Results lead with `DECISIONS.md` (how often decisions differ, the first divergence hour, and what caused it), then outcomes
-with their spread across emergencies. `python -m sim.write_results <folder>` writes `RESULTS.md`.
-Decisions are classified using the compact decision log stored in every checkpoint (`sim/decision_metrics.py`).
+Decisions differ in 32 to 38% of cases, and most first splits come from new evidence moving the risk
+estimate across the 5% gate or from an in-EVA reading. Outcomes barely move. The urgent repair finishes on
+time in 42 to 43% of cases for all three, all four repairs finish in 2 to 4%, and no run reaches the 250 mGy-Eq
+BFO reference (the worst is 158). More information changes the decisions here, but it does not raise the
+repair count or lower crew dose. Figures and tables are in `results/presentation/decision_trees/`.
 
-Limits: the abort credit, restart review, ensemble members and their equal weights are experimental assumptions.
-Hindsight feasibility is unchanged by the credit.
+## Random inputs
+
+| Input | Distribution | Meaning |
+|---|---|---|
+| Storm shape | 1972 or 2003 profile, 50/50 | Which historical profile times the dose |
+| Storm strength | Uniform 0.35 to 1.25 of the corrected 1,000-year spectrum | Spans weaker and stronger than the reference storms. It does not change spectral hardness or give intermediate return periods |
+| Emergency start | Uniform, profile hour 24 to 72 | Storm phase at mission hour 0. It is not a storm arrival time, and earlier exposure is excluded |
+| Forecast origin error | Uniform, plus or minus 6 h | The forecast's timing is off by this much |
+| Forecast strength error | Uniform 0.6 to 1.4 times the true strength | The forecast's central strength |
+| Biological measurement noise | Seeded observation model | A new seed per emergency, shared by C and D and by matched engine and anatomy cases |
+
+The forecast holds both historical shapes, three timing offsets and three strength factors (18 members). It is
+never told the true shape. Its bounds are illustrative and need not contain the truth, so they are not a
+calibrated interval.
+
+Fixed in the primary config: seven hours of work per EVA plus a 0.5 h return, four tasks, five crew, one
+astronaut outside at a time, and a 48 h deadline for the urgent task (`propulsion_initial`). All doses are
+compared over 96 h, including cabin exposure after recovery ends, which assumes continued sheltering stays
+feasible. The deadline is a team assumption. These ranges and their independence are experimental choices.
+They are not measured distributions or CNL facts, and return periods are not encounter probabilities.
+
+Storm strength scales only the solar dose. GCR and reactor fields are untouched. No reactor dose is calculated,
+and task access is an assumption: all four NTP worksites are cleared and all four NEP routes are protected. That
+is a repairable reference scenario, not measured spacecraft geometry. Because every task is cleared, NTP and
+NEP may look alike.
+
+## Male and female cohorts
+
+`MAX` and `FAX` are separate reference anatomies, not mixed crews. The same random emergency runs on both, on
+both engines and under every strategy, and each strategy's forecast uses the known cohort anatomy. MAX uses
+the preserved corrected anatomical table. FAX uses the four archived OLTARIS exports in
+`data/raw/oltaris/fax_2026-11-18`, checked against their saved SHA-256 hashes. FAX Gray Equivalent values are in
+cGy-Eq and get multiplied by 10, while its absorbed doses are already in mGy. This changes organ-specific
+transport only. It is not a generic female multiplier. The GCR reference and the biomarker response and noise
+are shared by both cohorts, and no sex-specific medical calibration exists.
+
+## Outcomes
+
+There is no single score. The runner reports these side by side:
+
+1. Fraction that finish the urgent repair by its deadline (checked against actual completion time).
+2. Fraction that finish all four repairs within the observation window.
+3. Fraction that finish all repairs with every crew member below all three organ references over the 96 h.
+   This does not prove clinical safety.
+4. Maximum individual BFO, skin and lens Gray Equivalent, and how often a reference is reached.
+5. Repair count, completion time, aborted EVAs and how each run ended.
+
+The worst-exposed crew member is assessed per organ, and those maxima can be different people. The runner
+infers no crew-death probability.
+
+Decision metrics come first in the results. For each pair of strategies, `sim/decision_metrics.py` finds the
+first point where their launch and abort sequences differ and sorts the cause into four groups: new evidence
+moved the risk across the gate, an abort call differed mid-EVA, a post-abort reassessment differed, or another
+rule applied. It works from the compact decision log stored in every checkpoint and never re-simulates.
+
+Output files: `strategy_summary.csv`, `paired_differences.csv`, `trial_results.csv`, `draws.csv`,
+`summary.json`, `manifest.json`, and the written `RESULTS.md` and `DECISIONS.md`. Checkpoints keep the
+configuration, each crew member's outcome and every EVA attempt, and trial 0 also keeps the detailed logs.
+Proportion intervals use Wilson's method. Paired mean differences use an approximate 95% standard-error
+interval, which is unavailable with one draw. These intervals measure sampling noise only. They say nothing
+about uncertainty in the radiation physics, the biology or the assumed distributions.
+
+The runner also records when each crew member first reaches each organ reference, interpolated within the
+exposure intervals, and compares doses only over the common 96 h window. These crossing times are results.
+They never feed a decision.
+
+## Other configurations
+
+These are sensitivities and earlier experiments, kept so results can be traced. None is the primary result.
+
+| Config | Purpose |
+|---|---|
+| `monte_carlo_factorial_*.json` (four) | Separates the forecast stress allowance from the retry rule on identical emergencies. Neither changes outcomes much, because the stress member blocks retries on its own. `sim/analyze_factorial.py` writes the attribution report |
+| `monte_carlo_decision_trees.json` | Same as the primary but every strategy integrates the forecast ensemble's future (`b_projection: ensemble`). B never aborted in this mode, so it is a labelled sensitivity |
+| `monte_carlo_matched_*.json` | Forces C and D onto B's decision rule so only the evidence differs. It cannot show decision differences |
+| `monte_carlo_mixed_storms.json`, `monte_carlo_bcd_biomarker_decisions.json` | Mixed-storm runs from before the retry and restart changes |
+| `monte_carlo_2003_*` and `monte_carlo_1972_*` | Early single-profile runs with random deadlines (24 to 72 h) and work durations (6 to 8 h) |
+
+Parallel workers checksum-validate the source tables on first load and cache them locally. The manifest records
+code and data hashes, and the runner checks them again before accepting the batch.

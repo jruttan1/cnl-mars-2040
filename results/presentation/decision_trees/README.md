@@ -1,26 +1,29 @@
 # Decision-tree Monte Carlo: figures and provenance
 
-Figures (PNG for slides, SVG to edit):
+Figures come as PNG for slides and SVG for editing.
 
 | File | Message |
 |---|---|
-| `01_decisions_differ_and_why` | B, C and D decide differently in 32–38% of cases; most first splits trace to new evidence |
-| `02_one_emergency_three_crews` | One storm, three EVA sequences (a gain and a loss, picked by rule, not typical cases) |
-| `03_outcomes_barely_change` | Outcomes and exposure are nearly the same; no run reaches the 250 mGy-Eq reference |
-| `04_what_happens_after_an_abort` | C restarts least often after an abort; consistent with its 5 h lab turnaround, not isolated |
+| `01_decisions_differ_and_why` | B, C and D decide differently in 32 to 38% of cases, and most first splits trace to new evidence |
+| `02_one_emergency_three_crews` | One storm, three EVA sequences (a gain and a loss picked by rule, not typical cases) |
+| `03_outcomes_barely_change` | Outcomes and exposure are nearly the same, and no run reaches the 250 mGy-Eq reference |
+| `04_what_happens_after_an_abort` | C goes back out least often after an abort, which fits its 5 h lab turnaround but is not isolated |
 
-Every number printed on a figure is computed from the run's checkpoints by `charts/12_decision_tree_results.py`.
-Results are conditional frequencies under the configured hypothetical emergency distribution, not mission probabilities.
+`charts/12_decision_tree_results.py` computes every number printed on a figure from the run's checkpoints.
+Results are conditional frequencies under a hypothetical emergency distribution and are not mission probabilities.
 
 ## Provenance
 
-- Run: `configs/monte_carlo_decision_trees_current_rate.json` (copy in `provenance/config.json`), seed 21, 100 emergencies × NTP/NEP × MAX/FAX × B/C/D.
-- Settings: all strategies project today's estimated dose rate (none sees the future); forecast stress allowance off;
-  abort progress credit 1.0; retry after abort for every strategy with a 2 h restart review. All are team assumptions, not CNL facts.
-- Raw checkpoints (about 70 MB) are git-ignored under `results/monte-carlo/decision_trees_current_rate_100/`. `provenance/` keeps the small tables:
-  `RESULTS.md`, `DECISIONS.md`, `summary.json`, `manifest.json`.
-- The manifest's source hashes were taken when the run started. `sim/decision_metrics.py` later got a wording-only change
-  (a table column label); no simulation or decision logic changed after the run.
+- **Run:** `configs/monte_carlo_decision_trees_current_rate.json` (copied to `provenance/config.json`). Seed 21,
+  100 emergencies, each on NTP and NEP, on MAX and FAX, under B, C and D.
+- **Settings:** all strategies project today's estimated dose rate and none sees the future. The forecast stress
+  allowance is off, abort progress credit is 1.0, and every strategy can retry after an abort with a 2 h restart
+  review. These are team assumptions, not CNL facts.
+- **Raw data:** the checkpoints (about 70 MB) are git-ignored under
+  `results/monte-carlo/decision_trees_current_rate_100/`. `provenance/` keeps the small tables: `RESULTS.md`,
+  `DECISIONS.md`, `summary.json` and `manifest.json`.
+- **Source hashes:** the manifest hashes were taken when the run started. `sim/decision_metrics.py` has since
+  changed only the wording of the report tables. No simulation or decision logic changed after the run.
 
 ## Reproduce
 
@@ -32,6 +35,7 @@ export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 MKL_NUM
 .venv/bin/python charts/12_decision_tree_results.py
 ```
 
-## Known limits
+## Known limit
 
-- Outcomes barely differ between strategies here; the safety gate keeps everyone far below the exposure reference.
+Outcomes barely differ between strategies here, because the safety gate keeps everyone far below the exposure
+reference.

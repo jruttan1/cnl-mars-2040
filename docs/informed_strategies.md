@@ -1,253 +1,181 @@
-# Forecast-informed and biological EVA decisions
+# How B, C and D decide
 
-## Purpose and boundaries
+## Purpose and limits
 
-One simulator advances all strategies through the same emergency. The experiment asks whether
-different information changes repair timing, crew choice and exposure, not whether D can be made
-to win. NTP/NEP share solar radiation physics. Existing engineering gates and different repair
-priorities remain; hard repair deadlines are disabled by default. Without a separately specified
-deterioration model, waiting does not progressively damage the spacecraft. Report that boundary
-when interpreting delayed-repair results; no mission-success rate or clinical benefit is established.
+One simulator runs all three strategies through the same emergency. The experiment asks whether different
+information changes repair timing, crew choice and exposure. It does not try to make D win. NTP and NEP share the
+solar radiation physics, keep their own engineering gates and repair priorities, and have hard repair deadlines
+off by default. Without a separate deterioration model, waiting does not damage the spacecraft, so delayed-repair
+results need that caveat. The model establishes no mission-success rate and no clinical benefit.
 
-The model supports one astronaut per EVA, sequential repairs, explicit return travel after completion or abort,
-zero initial exposure, and a mission interval of at most 30 days. Initial nonzero doses are rejected
-for informed runs because their exposure history and blood/skin/lens priors are not supplied.
-A constant published-reference GCR component is added during the emergency in both cabin and EVA.
-See `docs/background_radiation.md` for the EVA proxy and source conditions. Reactor dose and prior
-cruise exposure remain excluded.
+It supports one astronaut per EVA, sequential repairs, an explicit return trip after completion or abort, zero
+starting exposure, and a mission interval of at most 30 days. Nonzero starting doses are rejected because their
+exposure history and blood, skin and lens priors are not supplied. A constant GCR component applies in the cabin
+and on EVA (see `background_radiation.md`). Reactor dose and earlier cruise exposure are excluded.
 
 ## Code map
 
-| File | Responsibility |
+| File | Job |
 | --- | --- |
-| `sim/informed_config.py` | Explicit forecast, reference, cadence and noise settings |
-| `sim/radiation_information.py` | Forecast integration, sample/result scheduling, immutable policy observations |
-| `bayes_estimator/longitudinal.py` | History-dependent signals and shared C/D Bayesian likelihood |
-| `sim/strategies.py` | Common safety gates with distinct crew selection and departure rules |
-| `sim/mission_simulator.py` | Existing authoritative mission clock and physical exposure accounting |
-| `sim/run_comparison.py` | Paired B–D runs and auditable output files |
+| `sim/informed_config.py` | Forecast, reference, cadence and noise settings |
+| `sim/radiation_information.py` | Forecast integration, sample and result scheduling, immutable policy observations |
+| `bayes_estimator/longitudinal.py` | History-dependent signals and the shared C/D Bayesian likelihood |
+| `sim/strategies.py` | Common safety gates with separate crew selection and departure rules |
+| `sim/mission_simulator.py` | The mission clock and the physical exposure accounting |
+| `sim/run_comparison.py` | Paired B, C, D runs and output files |
 
 ## Decision rule
 
 1. Honor stabilization, worksite clearance, consent, skills, repair prerequisites and operational restrictions.
-2. For the highest-priority feasible repair, project each eligible astronaut's accumulated exposure through
-   their return. B takes the first acceptable crew member in rotation order. B only estimates current dose rates
-   from the configured uncertain storm profiles. It checks launch and continuation assuming those current rates
-   persist through return, then recalculates when the mission clock advances. This is a persistence assumption
-   applied to an imperfect estimate, rather than a direct radiation measurement. C ranks acceptable crew
-   by the highest upper dose across organs, expressed as a fraction of each organ's own reference.
-   D ranks using the larger of the biological estimate and the forecast estimate. Rotation breaks ties.
-   For C and D, both the unadjusted forecast and the biological estimate must clear the launch gate.
-3. D may wait up to four hours on a nonurgent task if the estimated dose score drops by more than 20%
-   and the remaining work fits before the cutoff assuming no further waits. This optional target
-   can move earlier but cannot move later. It is an experimental scheduling assumption.
-   C and D search hourly departures over the next 24 hours when no acceptable EVA can start now,
-   including cabin exposure during the wait. B waits for a new current-rate assessment and does not pick a
-   future departure from the simulated storm profile.
-   Respect known operational restrictions and any explicitly enabled recovery deadline. A candidate is
-   provisional: wait and recompute on the next observation, rather than commit to a perfect-future schedule.
-4. With no acceptable candidate, shelter/wait and flag recovery reassessment in the decision log. A lack
-   of a candidate inside the search horizon is not proof that no later candidate exists. No threshold override
-   is allowed. Insufficient remaining forecast coverage requests temporary shelter and reassessment.
-5. During EVA, reevaluate accumulated plus remaining planned exposure. Abort when the criterion fails,
-   measurements conflict with the forecast hypotheses, or the remaining EVA cannot be forecast.
-6. Completed repairs alone do not authorize mission continuation: engineering and current crew exposure
-   assessments must also permit it. A hold or abandoned objective is not a prediction of crew death.
+2. For the highest-priority feasible repair, project each eligible astronaut's accumulated exposure through the
+   return. B takes the first acceptable astronaut in rotation order. It estimates the current dose rate from the
+   uncertain storm profiles, assumes that rate persists through the return, and rechecks as the clock advances. C
+   ranks astronauts by their highest upper dose, as a fraction of each organ's own reference. D ranks by the larger
+   of its biological estimate and the forecast estimate. Rotation breaks ties. For C and D, the unadjusted
+   forecast and the biological estimate must both clear the launch gate.
+3. D may wait up to four hours on a nonurgent task if the estimated dose score would drop by more than 20% and the
+   remaining work still fits. This is an experimental scheduling assumption. When no acceptable EVA can start now,
+   C and D search hourly departures over the next 24 hours, counting cabin exposure during the wait. B waits for
+   a new current-rate assessment and never picks a future departure from the simulated storm. A candidate
+   departure is provisional: the strategy waits, then recomputes at the next observation.
+4. With no acceptable candidate, the crew shelters and the decision log flags a reassessment. Not finding a window
+   inside the search horizon does not prove none exists later. No threshold override is allowed, and too little
+   remaining forecast coverage requests temporary shelter.
+5. During an EVA, the strategy rechecks accumulated plus remaining planned exposure. It aborts when the check
+   fails, when measurements conflict with the forecast scenarios, or when the remaining EVA cannot be forecast.
+6. Completed repairs alone do not authorize mission continuation. Engineering and current crew exposure must also
+   permit it, and a hold or abandoned objective is not a prediction of crew death.
 
-## Forecast and quantities
+## Forecast and the shared gate
 
-`configs/monte_carlo_matched_current_rate.json` compares the value of the
-biological observations under a common policy. B, C and D all estimate the current
-dose rate, assume it persists through the EVA and return, and assess departure now.
-They share crew rotation, organ references, launch and abort criteria, and a hold
-on any task stopped for a radiation abort. The matched experiment uses no optional
-dose-saving waits or mandatory test-specific holds. Returned biological results can
-change the estimates used at the same decision gates. B receives no biological
-measurements, C receives conventional cabin and post-EVA tests, and D adds its
-modeled in-suit measurements and faster foci processing.
+`ForecastSpec` is independent of the true `Scenario`. Its default is a 100-year, August-1972-shaped nominal
+forecast with origin at profile hour 48, timing shifts of -6, 0 and +6 hours, and magnitude factors of 0.7, 1
+and 1.3. The nine resulting histories get equal prior weights, which are experimental choices and not calibrated
+forecast probabilities. The nominal forecast is fixed during a run. Later decisions re-evaluate it but never get
+an update from the true storm. The Monte Carlo configs widen this to both historical shapes and 18 members.
+Matching nominal and true templates is an idealized reference case, not a reconstruction of a real forecast, and
+no zero-dose tail is invented beyond the data coverage.
 
-`configs/monte_carlo_matched_restart.json` changes the post-abort rule for all
-three strategies. After the astronaut returns, the common forecast must indicate
-two hours of lower upper-bound exposure than at the abort. Throughout that
-interval, the forecast-only risk of exceeding any organ reference from a fresh
-EVA must be within the 2.5% restart tolerance. The actual launch must also pass
-the forecast-only and evidence-adjusted cumulative dose checks for the selected
-astronaut. A crew swap or a favorable lab result alone cannot reopen the task.
-The two-hour requirement is a modeled operating assumption. The forecast may
-still be wrong, and each interrupted task still requires a full new attempt.
+Each member carries absorbed BFO dose in mGy and the original OLTARIS BFO, skin and lens dose in mGy-Eq, spread
+over time with the same normalized timing as the environment, and each is one coherent past-and-future
+exposure scenario. B keeps the equal prior. C and D reweight the scenarios from returned biological results, and
+the same weights apply to that member's organ doses and its future. The assumption is that evidence about earlier
+exposure helps tell persistent storm hypotheses apart. It is not a blood-to-skin conversion, a storm-peak
+detector, or a validated way to predict spectral change. An incomplete scenario library can still produce
+confidently wrong decisions.
 
-The mixed-storm experiment in `configs/monte_carlo_bcd_biomarker_decisions.json`
-uses the revised trees. It spans the configured forecast-strength error range and
-adds a 5% stress tail at three times the largest in-range strength correction.
-B uses the forecast prior. In C and D, the crew combines compatible returned readings
-to update the shared storm probabilities, then separately projects the dose of each
-candidate astronaut. Individual dose, review holds, qualifications and rest stay
-with the astronaut. The model assumes assay errors are independent across people
-conditional on the storm member and accounts for correlated markers within each person.
+The gate computes the weighted probability that any BFO, skin or lens reference is reached by the end of the
+proposed EVA, counting prior dose, waiting and the return. Launch or continuation needs that probability at 5% or
+less. This is one joint scenario risk, not three separate 95% checks. The references are 250, 1,500 and
+1,000 mGy-Eq, and equal counts as reached. Marginal upper estimates are logged, but only the joint probability
+decides. It is a conditional model probability, not clinically calibrated safety or NASA compliance. A gross
+biomarker conflict still forces a hold or abort.
 
-The resulting organ-reference risk drives launch in all three strategies. In the
-revised experiment, C/D can clear a forecast-only hold when returned evidence supports
-the departure and continue to stop for conflicting evidence or an excessive estimate.
-The older experiment configuration retains its forecast-only launch veto. Both
-configurations preserve the 5% criterion and the stricter restart margin. The
-revised prior and shared likelihood are experimental choices to test, including
-cases where changes in evidence lead to an abort or prevent repair.
+Biological likelihoods use absorbed BFO dose only. Scenario transport keeps the organ-specific Gray Equivalents,
+and there is no universal mGy to mSv factor. No reference or noise coefficient was relaxed to favor C or D.
 
-`ForecastSpec` is independent of the true `Scenario`. Its default is a 100-year August-1972-shaped
-nominal forecast, origin at profile hour 48, with timing shifts −6/0/+6 hours and magnitude multipliers
-0.7/1/1.3. Nine coherent histories receive equal **experimental prior weights**, not calibrated forecast
-probabilities. No measured forecasting performance is asserted. The nominal forecast is fixed during a
-run; successive decisions reevaluate it but do not receive an oracle update from the true storm.
+### Experiment modes
 
-The runner explicitly selects a nominal template and accepts independent forecast severity, template,
-and origin overrides. Matching nominal and true templates is an idealized reference experiment, not a
-historical forecast reconstruction. Check bias and out-of-support storms before interpreting benefits.
-No extrapolated zero-dose tail is used beyond forecast data coverage.
-
-Each forecast history carries absorbed BFO mGy and original OLTARIS BFO/skin/lens mGy-Eq, integrated
-using the same normalized timing assumption as the existing environment. Each member is one
-coherent past-and-future exposure scenario. B retains the equal scenario prior; C/D update scenario
-weights using returned biological measurements. The same weights apply to the member's transported
-organ doses and its future trajectory. This assumes that evidence about earlier exposure helps distinguish
-persistent storm shape/strength hypotheses. It is NOT a direct blood-to-skin conversion, an instant
-storm-peak detector, or a validated ability to predict future spectral evolution. A wrong or incomplete
-scenario library can still produce confidently wrong decisions.
-
-The shared gate computes the weighted probability that **any** BFO, skin or lens reference is reached
-by the end of the proposed EVA, including prior dose, waiting and return travel. Launch/continue requires
-that probability to be at most 5% (the existing 95% policy setting). This is a joint scenario-risk criterion,
-not three independent marginal 95% checks. The organ references remain 250/1,500/1,000 mGy-Eq.
-Equality counts as an exceedance within each member. Marginal upper estimates remain logged for
-interpretation, but the joint probability drives the decision. This is conditional model probability,
-not clinically calibrated safety or NASA compliance. Gross biomarker conflict still forces a hold/abort.
-
-Biological likelihoods use absorbed BFO mGy only. Scenario transport retains the original organ-specific
-Gray Equivalents; there is no universal `mGy × 1.5` conversion. No reference or noise coefficient was
-relaxed to favor C or D. A is excluded from the comparison runners; its old standalone implementation
-remains available for legacy tests, not as a validated health-first comparator.
+- **Shared current rate** (`shared_current_rate`, the primary experiment). B, C and D all estimate the current rate,
+  assume it persists, and use the gate above. They differ only in evidence, crew choice and the rules in
+  `monte_carlo.md`.
+- **Ensemble projection** (`b_projection: ensemble`). Every strategy integrates the forecast ensemble's future. This
+  is a sensitivity.
+- **Matched current rate** (`matched_current_rate`). C and D follow B's rule, so returned results can only change
+  the estimates behind the same gates. There are no dose-saving waits and no test-specific holds.
+- **Stress tail.** `forecast_stress_weight` adds an extra forecast member at three times the largest in-range
+  strength correction. The primary experiment sets it to 0.
 
 ## Collection and biological timing
 
-C and D use the same estimator with different collection schedules and operational rules.
-Sampling rules below are explicit experiment choices, not facts specified by CNL. Both C and D
-receive the same six-hour cabin panel (H2AX and lymphocytes), beginning with a baseline at hour zero.
-This permits learning while sheltered before any EVA. Six-hour cadence, onboard capacity and the
-default zero sampling burden are assumptions, not demonstrated instrument capability.
+C and D use the same estimator with different collection schedules and rules. Both get a six-hour cabin panel
+(γ-H2AX and lymphocytes) starting with a baseline at hour 0, so they can learn while sheltered. The cadence, the
+onboard capacity and the zero sampling burden are assumptions, not demonstrated instrument capability.
 
-| Measurement | C collection | Additional D collection | Response used |
+| Marker | C collection | D collection | Response used |
 | --- | --- | --- | --- |
-| γ-H2AX | Every 6 h in cabin and 0.5 h after return; result after 5 h | Before departure, hourly while working outside and after return, with 1 h processing | Early foci response, with 0.5–8 h decay |
-| Lymphocytes | Every 6 h in cabin and 12/24/48 h after return; 0.1 h processing | Same follow-ups and 0.1 h processing | 12–48 h response |
-| 53BP1 | None | Before departure, hourly while working outside and 0.5 h after return, with 1 h processing | 0.5–2 h early response |
-| AEN | None | Hourly while outside | 2–8 h |
-| TRAF4 | None | Hourly while outside | 4–8 h |
-| DDB2 | None | Hourly while outside | 4–8 h, retained through 24 h |
-| TRIAP1 | None | Hourly while outside | 8–24 h |
-| FDXR | None | Hourly inside from mission hour 24 | 24–48 h illustrative response |
+| γ-H2AX | Every 6 h in cabin and 0.5 h after return; result after 5 h | Same, plus before departure and hourly while outside; 1 h processing | Early foci response, 0.5 to 8 h decay |
+| Lymphocytes | Every 6 h in cabin and 12, 24 and 48 h after return; 0.1 h processing | Same | 12 to 48 h response |
+| 53BP1 | None | Before departure, hourly outside, 0.5 h after return; 1 h processing | 0.5 to 2 h early response |
+| AEN | None | Hourly outside | 2 to 8 h |
+| TRAF4 | None | Hourly outside | 4 to 8 h |
+| DDB2 | None | Hourly outside | 4 to 8 h, retained through 24 h |
+| TRIAP1 | None | Hourly outside | 8 to 24 h |
+| FDXR | None | Hourly inside from mission hour 24 | 24 to 48 h, illustrative |
 
-After an EVA, C and D hold that astronaut from another EVA until a γ-H2AX result collected
-after return is available. A result that leaves current exposure risk above the configured
-criterion, or conflicts with the modeled scenarios, keeps the individual under review.
-Other cleared astronauts may still work, subject to the shared restart rules after a radiation abort.
+After an EVA, C and D keep that astronaut out of another EVA until a γ-H2AX result collected after the return is
+back. A result that leaves risk above the criterion, or conflicts with the scenarios, keeps that person under
+review. Other cleared astronauts may still work.
 
-In C, a radiation abort also suspends the repair for everyone until independent
-radiation clearance is available. A new astronaut or a returned blood test alone
-cannot release the repair. The current model provides no new independent clearance,
-so the repair stays suspended for that emergency. Other tasks may proceed if they
-pass the shared restart and engineering checks. A suspended urgent prerequisite
-blocks the urgent chain, and the mission can miss its deadline.
+During D's EVA, each returned in-suit result enters the estimate at its result time. D checks exposure through an
+immediate return and through planned completion plus return, and orders an early return if either check fails.
+`in_eva_monitoring` turns this off to isolate its effect. The device and its timing are simulated. Biology
+updates the estimate of exposure already received, and the forecast scenarios supply the projection through work
+and return.
 
-During D's EVA, each returned in-suit result enters the exposure estimate at its result time.
-D checks estimated exposure through an immediate return and through planned completion plus
-return. It orders an early return if the assessment fails either check. In-EVA measurement
-collection can be disabled through `in_eva_monitoring` to isolate its effect in paired experiments.
-The proposed device and its assay timing are simulated. Biology updates the estimate of exposure
-already received, while the forecast scenarios supply the projection through work and return.
+The response clock belongs to each earlier exposure interval, not to the EVA start or the result arrival. Every
+marker integrates its age-response kernel against the full cabin and EVA dose history, so TRIAP1 measured during
+a seven-hour EVA can inform older exposure without claiming to detect new exposure instantly. Inference uses sample
+time, never result time, for the biological response.
 
-The response clock belongs to **each earlier exposure interval**, not the EVA start or result arrival.
-Every marker integrates its age-response kernel against the full cabin/EVA dose history. This allows
-TRIAP1 during a seven-hour EVA to inform older exposure, without pretending it detects brand-new
-irradiation instantly. Integration of piecewise-linear kernels is invariant to subdividing a constant
-dose-rate interval. Late samples can retain information after an EVA; the inference uses sample time,
-never result time, for biological response.
+Follow-ups due while outside wait until return, and the actual collection time is recorded. D's pre-departure
+results enter before the launch decision and can change the crew choice or delay departure. A sample whose result
+is still pending neither informs that departure nor forces a hold.
 
-Onboard follow-ups due while outside are deferred until return; their actual collection time is recorded.
-Available pre-departure D results are incorporated before authorizing the launch; a changed estimate
-can change the crew selection or postpone departure.
-Lymphocyte processing takes 0.1 h in both C and D, separate from the unchanged 12/24/48 h
-post-return collection schedule and biological response. C's γ-H2AX processing remains 5 h.
-D's γ-H2AX and 53BP1 processing takes 1 h, an explicitly assumed automated 2040 imaging
-turnaround. These choices follow the user-supplied `biomarker_parameters_all_sources.numbers`
-(lymphocyte processing entry citing Li 2022 Table 5; automated imaging entry labelled assumption).
-They are configurable through `lymphocyte_processing_delay_h` and `automated_foci_delay_h`;
-explicit `instrument_delays_h` overrides take precedence. Other D markers retain zero unspecified
-processing delay in this idealized experiment. Biological delays remain in all cases.
-Result-availability times are simulation boundaries, so a six-minute processing interval does not
-have to wait for the next hourly decision step.
-A pre-departure sample with a pending result does not inform that departure or itself force a hold.
-One-hour sampling is a numerical approximation to the proposed continuous in-suit system, not an
-assertion that a real instrument samples instantaneously. Configurable sampling burden delays cabin
-availability or pauses repair work while outside exposure continues. Unavailable measurements are
-logged without inventing readings. See `operational_realism.md` for instrument stress cases and
-fixed-period follow-up. Pending results can arrive during temporary holds and declared shelter follow-up;
-results beyond the stated observation end remain pending.
+Lymphocyte processing takes 0.1 h in both C and D. C's γ-H2AX processing takes 5 h. D's γ-H2AX and 53BP1 processing
+takes 1 h, an assumed automated turnaround for a 2040 imaging device. Both are configurable through
+`lymphocyte_processing_delay_h` and `automated_foci_delay_h`, and explicit `instrument_delays_h` override them.
+Other D markers have no processing delay. Result times are simulation boundaries, so a six-minute result does not
+wait for the next hourly step. Hourly sampling approximates a continuous in-suit system and does not claim a real
+instrument samples instantly. A configurable sampling burden delays cabin availability or pauses repair work while
+outside exposure continues. Unavailable readings are logged, never invented. `operational_realism.md` covers
+the instrument stress cases.
 
-## Calibration and noise provenance
+## Calibration and noise
 
-The user's slides supply AEN/TRAF4/DDB2/TRIAP1 response windows and 2-Gy time-point anchors, citing
-Li et al., *Life* 2022;12:99. The code uses fold-change **above baseline divided by 2 Gy**, with explicitly
-exploratory interpolation in time and linear superposition in absorbed dose. This is not a demonstrated
-low-dose SPE-proton calibration or a validated chronic-exposure model. Kernel values at uncovered
-times, the AEN early point, and DDB2/TRIAP1 late points are slide-plot approximations.
+The team slides give the AEN, TRAF4, DDB2 and TRIAP1 response windows and 2 Gy time-point anchors from Li et al.,
+*Life* 2022;12:99. The code uses fold change above baseline divided by 2 Gy, with exploratory interpolation in
+time and linear scaling in absorbed dose. That is not a demonstrated low-dose SPE-proton calibration. Kernel
+values at uncovered times, the AEN early point and the DDB2 and TRIAP1 late points are read off slide plots.
 
-γ-H2AX uses the existing module's approximately 11 foci/Gy and five-hour decay scale, associated with
-the slide's Ivashkevich et al. 2011 reference. 53BP1 temporarily uses the same early foci scale as an
-explicit surrogate, not an independently fitted calibration. Lymphocyte depletion coefficients remain
-exploratory. FDXR has a deliberately labelled illustrative 1-unit/Gy sensitivity and 24–48 h window;
-the slide provides a next-day signal, not a full fitted dose/time curve. FDXR and 53BP1 therefore require
-sensitivity testing or replacement calibration before any quantitative claim about D's benefit.
+γ-H2AX uses about 11 foci per Gy and a five-hour decay scale (Ivashkevich et al. 2011). 53BP1 borrows the same
+early foci scale as a surrogate. Lymphocyte depletion coefficients are exploratory. FDXR has an illustrative
+1 unit per Gy sensitivity and a 24 to 48 h window, since the slide gives a next-day signal and not a fitted curve. FDXR and
+53BP1 need sensitivity tests or a real calibration before anyone makes a quantitative claim about D.
 
-Additional assumptions:
+Other assumptions:
 
-- BFO absorbed exposure is a proxy for the sampled blood response; anatomical/nonuniform exposure,
-  mixed radiation, interindividual biology and calibration transfer are not resolved by this model.
-- Positive signals have log-normal noise: group log-SD 0.20, individual-marker log-SD 0.20,
-  reading log-SD 0.15. These values are experimental, not source-derived performance estimates.
-- A shared group offset and individual-marker offsets persist for an astronaut. Gene/foci correlations
-  are included in the joint likelihood. Named, seeded draws reproduce common measurements across
-  strategies rather than making noise depend on how many other assays were requested.
-- Only the latest returned sample per marker enters the likelihood. The posterior is recomputed from
-  the prior; repeated observations are not multiplied as independent evidence. This conservative
-  simplification avoids false precision but discards some longitudinal information.
-- Grossly incompatible results (minimum normalized Mahalanobis distance beyond the configured
-  three-SD criterion) retain the broad prior and flag a hold/abort assessment. The finite ensemble
-  cannot estimate an arbitrary dose outside its hypothesis support; matching kernels in generation
-  and inference are an idealized experiment, not external validation.
-- Skin/lens checks can dominate this light-shielding scenario. Similar B/C/D decisions are a legitimate
-  result. No policy or calibration is adjusted just to force a D advantage.
+- BFO absorbed dose stands in for the sampled blood response. Nonuniform exposure, mixed radiation, individual
+  biology and calibration transfer are not resolved.
+- Positive signals carry log-normal noise: group log-SD 0.20, marker log-SD 0.20, reading log-SD 0.15. These
+  values are experimental, not source-derived.
+- Group and marker offsets persist for each astronaut, and gene and foci correlations are in the joint likelihood.
+  Seeded draws give every strategy the same measurements, whatever else it requests.
+- Only the latest returned sample per marker enters the likelihood, and the posterior is recomputed from the
+  prior. This avoids false precision from treating repeats as independent, but it discards some longitudinal
+  information.
+- Grossly incompatible results (beyond three standard deviations of normalized Mahalanobis distance) keep the
+  broad prior and flag a hold or abort. The finite ensemble cannot estimate a dose outside its support, and
+  using matching kernels to generate and infer is an idealized setup, not external validation.
+- Skin and lens checks can dominate in this lightly shielded scenario, so similar B, C and D decisions are a
+  legitimate result. No policy or calibration was adjusted to force a D advantage.
 
-Source context: https://www.mdpi.com/2075-1729/12/1/99 and the repository's
-`bayes_estimator/markers.py`, user-supplied slides, OLTARIS summaries, and archived standard:
+Sources: https://www.mdpi.com/2075-1729/12/1/99, `bayes_estimator/markers.py`, the team slides, the OLTARIS
+summaries, and the archived standard at
 https://www.nasa.gov/wp-content/uploads/2023/11/nasa-std-3001-vol-1-rev-c-with-signature.pdf
 
-## Checks and use
+## Running and checking
 
-Run `python -B -m sim.run_comparison` from the repository virtual environment. Separate output folders
-preserve distinct experiments; the existing write-preservation helper archives changed in-repository outputs.
-The runner exports true outcomes for evaluation separately from policy estimates and measurement
-logs. `received_h` records when a result enters the decision system; pending samples expose no values
-to policies. Operational observations are immutable and contain no true dose, environment or crew objects.
+`python -B -m sim.run_comparison` runs one paired B, C, D comparison, and separate output folders keep separate
+experiments. True outcomes are exported separately from policy estimates and measurement logs. `received_h` records
+when a result reaches the decision system, and pending samples expose no values to policies. Observations are
+immutable and carry no true dose, environment or crew objects.
 
-The NEP access gate is preserved: without an explicitly confirmed protected route/worksite or approved
-alternative, all policies request a hold. `--nep-protected-access` enables the protected-access scenario
-for comparison; it is a scenario assertion, never something inferred from the SPE forecast.
+The NEP access gate stays on: without a confirmed protected route and worksite, or an approved alternative, every
+policy requests a hold. `--nep-protected-access` turns on the protected-access scenario for comparison. It is a
+scenario assertion and is never inferred from the forecast.
 
-Tests cover policy gates, cabin accumulation while waiting, finite forecast coverage, response onset,
-older-exposure signals, interval integration, duplicate evidence, conflicting measurements, lab delay,
-in-EVA sampling, fixed-forecast independence from hidden severity, repeatability and dose conservation.
-Passing these tests verifies software behavior, not medical or biological validity.
-
-## Executable decision flow after the B–D revision
+## Decision flow
 
 ```mermaid
 flowchart TD
@@ -256,11 +184,11 @@ flowchart TD
     H -->|Yes| I[Update exposure scenarios with available information]
     B[B: forecast scenario prior] --> I
     C[C: returned cabin and post-EVA tests] --> I
-    D[D: same framework plus advanced measurements] --> I
+    D[D: same framework plus in-suit measurements] --> I
     I --> X{Biomarkers conflict with all modeled scenarios?}
     X -->|Yes| STOP[Hold or return to airlock; reassess]
     X -->|No| R[Project each scenario through work and return]
-    R --> P{Joint organ-reference exceedance probability at most 5%?}
+    R --> P{Joint organ-reference probability at most 5%?}
     P -->|Yes| GO[Start or continue; recheck as observations arrive]
     P -->|No, already outside| STOP
     P -->|No, inside| W[Try another eligible crew member or later departure]
@@ -269,44 +197,34 @@ flowchart TD
     F -->|No| HOLD
 ```
 
-The diagram summarizes `strategies.py` and `radiation_information.py`; it is not a
-separate policy implementation. Reference risk is calculated jointly across organs
-under the modeled scenarios. It is not the probability of death or illness. A hard
-engineering deadline can end the recovery attempt; it never automatically relaxes
-exposure gates. Cabin sampling does not create new information before a marker's
-response and processing delays permit it. No first-EVA requirement remains for C.
+The diagram summarizes `strategies.py` and `radiation_information.py` and is not a separate implementation. A
+hard engineering deadline can end the recovery attempt, but it never relaxes an exposure gate.
 
-## Crew reassessment after radiation abort (18 November revision)
+## After a radiation abort
 
-A radiation-related abort now registers the affected astronaut as a witness for a
-crew-wide restart review. Swapping to a lower-dose astronaut does not erase that
-witness's evidence about the shared storm. No true dose or physical environment is
-used for this review.
+A radiation abort registers the affected astronaut as a witness for a crew-wide restart review. Swapping in a
+lower-dose astronaut does not erase what that witness showed about the shared storm. No true dose is used.
 
-- Wait for the astronaut to return. C/D additionally require a returned post-return
-  H2AX sample. A fast lymphocyte result cannot clear this review while H2AX is pending. Its usual biological and processing delays remain.
-- Unresolved conflict between any abort witness's biological evidence and the modeled
-  scenarios blocks all subsequent EVAs. New results can resolve the conflict.
-- For a candidate EVA, evaluate the candidate's own accumulated and projected exposure
-  using both their own scenario weights and each abort witness's scenario weights.
-  Take the largest modeled exceedance probability. Do not transfer the witness's
-  personal accumulated dose to another astronaut and do not multiply correlated
-  crew likelihoods as independent evidence.
-- Restart requires risk at most 2.5%, half the normal 5% tolerance. After departure,
-  continuation retains the normal 5% criterion. This explicit hysteresis assumption
-  reduces launch/abort cycling near the boundary; it is not a new medical limit.
-- Witness assessments persist for the remaining emergency and update as results arrive.
-  A personal cumulative-dose problem may permit a lower-dose replacement; a shared
-  unresolved forecast problem does not. B has no biological-result prerequisite but
-  retains its forecast-based restart check.
+- Wait for the astronaut to return. C and D also need a returned post-return γ-H2AX sample, and a fast
+  lymphocyte result cannot clear the review while that sample is pending.
+- An unresolved conflict between any witness's biology and the scenarios blocks every later EVA until new results
+  resolve it.
+- For a candidate EVA, use the candidate's own accumulated and projected exposure with both the candidate's
+  scenario weights and each witness's weights, and take the largest probability. Never transfer one astronaut's
+  dose to another, and never multiply correlated likelihoods as if independent.
+- Restart needs risk at 2.5% or less (`restart_risk_fraction` 0.5, half the normal 5%). Once outside, continuation
+  uses the normal 5%. This hysteresis cuts launch and abort cycling near the boundary and is not a medical limit.
+- Witness assessments last for the rest of the emergency and update as results arrive. A personal dose problem
+  can allow a lower-dose replacement, but an unresolved shared forecast problem cannot.
 
-`restart_risk_fraction` controls the operational margin. Its default 0.5 and the
-post-return review protocol require sensitivity testing. In the two detected failure
-cases, D's five aborts became one, and C's three urgent-task aborts became one, without
-changing organ references, physics, deadlines or biomarker calibration. This does not
-establish universal recovery improvement.
+With `retry_after_abort` and `restart_quiet_hours` set (the primary experiment), all three strategies share one
+restart review. The common estimate must show two hours of improvement after the abort, the restart risk must stay
+within the tighter 2.5% tolerance throughout, and the launch itself must pass the dose checks for the chosen
+astronaut. A crew swap or a favorable lab result alone cannot reopen the task. The two hours are an assumption.
+Without these settings the older rules apply. B and D follow the shared restart review, and C suspends the repair for
+everyone until an independent radiation clearance arrives, which the model never provides, so that repair stays
+suspended.
 
-Repairs remain atomic seven-hour tasks in this version: aborted work does not count
-as completed progress. That limitation particularly affects strategies with more
-aborts and must accompany performance claims. Partial-progress preservation requires
-separate task-specific assumptions; it was not silently added during this repair.
+With `abort_progress_credit` at 1.0, an abort keeps the hours worked and a retry only finishes what remains. At the
+default of 0, repairs are atomic seven-hour tasks and aborted work earns nothing, which penalizes strategies that
+abort more. Partial progress is an assumption about the repair work and is not established for any real task.

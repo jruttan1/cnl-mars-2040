@@ -3,7 +3,7 @@
 Validated 2026-11-12. The two downloads were found with added `.txt` suffixes. Originals remain in CNL; byte-identical copies are in `originals/`. SHA-256 hashes and detailed gap times are in `validation.json`.
 
 ## What the data contain
-264 consecutive hourly records, August 2 00:00 through August 12 23:00 UTC, 1972 (leap-year days 215–225). The final bin ends August 13 00:00. No duplicate or absent timestamp rows. All three selected quantities really are integral proton flux above 10, 30 and 60 MeV, not solar-wind density. NASA identifies IMP-5 SPME as the source for this period.
+264 consecutive hourly records, August 2 00:00 through August 12 23:00 UTC, 1972 (leap-year days 215 to 225). The final bin ends August 13 00:00. No duplicate or absent timestamp rows. All three selected quantities are integral proton flux above 10, 30 and 60 MeV, not solar-wind density. NASA identifies IMP-5 SPME as the source for this period.
 
 The format file defines six fields: year (I4), day of year (I4), hour (I3), and three fluxes (F9.2). NASA's documentation supplies the units cm^-2 s^-1 sr^-1 and missing code 99999.99, which the format file does not include. Each hour denotes the beginning of an hourly average, not an instantaneous measurement. The thresholds overlap: do not add the three channels.
 

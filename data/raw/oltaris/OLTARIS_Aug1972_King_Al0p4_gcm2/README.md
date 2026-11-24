@@ -1,4 +1,4 @@
-# OLTARIS — August 1972 King SPE, Al 0.4 g/cm²
+# OLTARIS: August 1972 King SPE, Al 0.4 g/cm²
 
 ## Scenario and provenance
 
@@ -24,8 +24,8 @@ EU* is MeV for photons, electrons and positrons, and MeV/amu for all other parti
 ## Findings verified from the files
 
 - The effective-dose file reports Effective Dose Equivalent **1238.012 mSv**, Bfo **1255.8992 mSv**, Brain **2453.724 mSv**, Lens **29692.66 mSv**, and Skin **88166.23 mSv**. These are the exported mSv values, not absorbed doses in mGy or Gy. `Bone;0.0` is also present; the export does not explain this zero.
-- Each dose database declares a 21 × 21 grid. Both depth axes include 0, 0.4, 20 and 100 g/cm² and span 0–100 g/cm². Those are transport database coordinates; the presence of 20 g/cm² does not establish a separate sphere configuration.
-- The full fluence database declares 100 energy points × 66 particle entries × 21 aluminium depths × 21 tissue depths. The Point 1 export declares 100 energy points × 66 particle entries. The energy grid spans 0.01–2500 EU*.
+- Each dose database declares a 21 × 21 grid. Both depth axes include 0, 0.4, 20 and 100 g/cm² and span 0 to 100 g/cm². Those are transport database coordinates; the presence of 20 g/cm² does not establish a separate sphere configuration.
+- The full fluence database declares 100 energy points × 66 particle entries × 21 aluminium depths × 21 tissue depths. The Point 1 export declares 100 energy points × 66 particle entries. The energy grid spans 0.01 to 2500 EU*.
 - No exposure duration is populated in the organ text, so daily or annual rates cannot be established from it. No whole-body dose is inferred here from an individual depth-grid value.
 
 ## Original names and byte-preservation record
