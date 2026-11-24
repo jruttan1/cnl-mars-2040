@@ -69,6 +69,8 @@ Full tables: [`provenance/RESULTS.md`](results/presentation/decision_trees/prove
 [`provenance/DECISIONS.md`](results/presentation/decision_trees/provenance/DECISIONS.md). These are conditional
 frequencies under hypothetical team assumptions, not mission probabilities.
 
+**Presentation deck:** [`results/presentation/CNL_Team21_Presentation.pptx`](results/presentation/CNL_Team21_Presentation.pptx).
+
 **Gallery of final-case figures:** [`results/final-case/index.html`](results/final-case/index.html).
 
 ## Honest limits
